@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFiHuset 🏠 Fremtidens Intelligente Hjem</title>
-    <meta name="description" content="Dit hjem bliver levende. WiFi, Matter, Thread, Zigbee & Bluetooth – vi bygger det mest avancerede, selvhelende og vanvittigt smarte hjem i Danmark.">
+    <meta name="description" content="Dit hjem bliver levende. WiFi, Matter, Thread, Zigbee & Bluetooth.">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -51,34 +53,36 @@
         /* HEADER */
         header {
             position:fixed; width:100%; z-index:1000; padding:1.5rem 0;
-            background:rgba(0,0,0,0.7); backdrop-filter:blur(20px);
+            background:rgba(0,0,0,0.8); backdrop-filter:blur(20px);
             border-bottom:1px solid rgba(255,255,255,0.1);
         }
         .nav-container { display:flex; justify-content:space-between; align-items:center; }
-        .logo { font-size:1.8rem; font-weight:900; color:white; text-decoration:none; }
+        .logo { font-size:1.8rem; font-weight:900; color:white; text-decoration:none; display:flex; align-items:center; gap:10px; }
         nav { display:flex; gap:2rem; align-items: center; }
-        .nav-link { color:#ccc; text-decoration:none; font-weight:600; transition: color 0.3s; }
+        .nav-link { color:#ccc; text-decoration:none; font-weight:600; transition: color 0.3s; font-size: 0.95rem; }
         .nav-link:hover { color: var(--electric); }
         .btn-cta {
             background:linear-gradient(90deg,#a855f7,#6366f1);
             padding:0.8rem 2rem; border-radius:50px;
             color:white; text-decoration:none; font-weight:700;
-            transition: transform 0.3s;
+            transition: transform 0.3s; white-space: nowrap;
         }
         .btn-cta:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(168,85,247,0.5); }
 
         /* HERO */
         #hero {
-            height: 100vh; display: flex; align-items: center; text-align: center; position: relative;
+            min-height: 100vh; /* Changed to min-height for mobile safety */
+            display: flex; align-items: center; text-align: center; position: relative;
+            padding-top: 80px; /* Space for header */
         }
         #hero h1 {
-            font-size: clamp(3.5rem, 9vw, 8rem);
-            line-height: 1; margin-bottom: 1.5rem;
+            font-size: clamp(3rem, 9vw, 7.5rem); /* Adjusted clamp for mobile */
+            line-height: 1.1; margin-bottom: 1.5rem;
         }
         
         /* PROTOCOL CARDS */
         .protocol-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Smaller minmax for phones */
             gap: 2rem; margin-top: 4rem;
         }
         .protocol-card {
@@ -93,33 +97,45 @@
             border-color: var(--electric);
             box-shadow: 0 20px 50px rgba(168,85,247,0.2);
         }
-        .pros { color: #34d399; margin-top: 1rem; font-size: 0.9rem; }
-        .cons { color: #f87171; margin-top: 0.5rem; font-size: 0.9rem; }
+        .protocol-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; margin-bottom: 1rem;}
+        .pros { color: #34d399; margin-top: 1rem; font-size: 0.9rem; line-height: 1.6; }
+        .cons { color: #f87171; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.6; }
 
         /* DEVICES GRID */
         .devices-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem; margin: 4rem 0;
+            display: grid; grid-template-columns: repeat(2, 1fr); /* Force 2 columns on mobile */
+            gap: 1rem; margin: 4rem 0;
         }
+        @media (min-width: 768px) {
+             .devices-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        }
+
         .device-item {
-            background: rgba(99,102,241,0.1); padding: 1.5rem;
+            background: rgba(99,102,241,0.1); padding: 1.5rem 1rem;
             border-radius: 16px; text-align: center;
             border: 1px solid rgba(99,102,241,0.3);
-            transition: 0.4s;
+            transition: 0.4s; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .device-item:hover {
             background: rgba(168,85,247,0.2); transform: translateY(-5px);
             border-color: var(--electric);
         }
-        .device-item span { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+        .device-item i { font-size: 2.5rem; margin-bottom: 0.8rem; color: var(--electric); }
 
         /* MOBILE FIXES */
         @media (max-width: 768px) {
+            .container { padding: 0 1.2rem; } /* Less padding on phones */
             header { padding: 1rem 0; }
             .nav-container { flex-direction: column; gap: 1rem; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 1rem; }
-            .btn-cta { width: 100%; text-align: center; }
-            #hero h1 { font-size: 3.5rem; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 1rem; width: 100%; }
+            .nav-link { font-size: 0.9rem; }
+            .btn-cta { width: 100%; text-align: center; font-size: 1rem; padding: 1rem; }
+            
+            #hero h1 { font-size: 3rem; }
+            #hero p { font-size: 1.1rem !important; }
+            
+            /* Improve grid on small screens */
+            .protocol-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -129,11 +145,10 @@
 
 <header>
     <div class="container nav-container">
-        <a href="#" class="logo">WiFiHuset 🏠</a>
+        <a href="#" class="logo"><i class="ph-fill ph-house-line"></i> WiFiHuset</a>
         <nav>
             <a href="#teknologi" class="nav-link">Teknologi</a>
             <a href="#kontrol" class="nav-link">Hvad Kan Styres?</a>
-            <a href="#protokoller" class="nav-link">Info</a>
             <a href="#kontakt" class="btn-cta">Book Gratis Rådgivning</a>
         </nav>
     </div>
@@ -154,53 +169,53 @@
     </div>
 </section>
 
-<section id="kontrol" style="padding:8rem 0; text-align:center;">
+<section id="kontrol" style="padding:5rem 0; text-align:center;">
     <div class="container">
-        <h2 style="font-size:clamp(2.5rem, 5vw, 4rem);" class="gradient-text gsap-fade">Hvad Kan Du Faktisk Styre?</h2>
-        <p style="font-size:1.2rem; max-width:900px; margin:2rem auto; color:#94a3b8;" class="gsap-fade">
+        <h2 style="font-size:clamp(2rem, 5vw, 4rem);" class="gradient-text gsap-fade">Hvad Kan Du Faktisk Styre?</h2>
+        <p style="font-size:1.1rem; max-width:900px; margin:1.5rem auto; color:#94a3b8;" class="gsap-fade">
             Alt dette (og meget mere) bliver en del af dit intelligente økosystem:
         </p>
 
         <div class="devices-grid">
-            <div class="device-item gsap-card"><span>💡</span> Alt lys</div>
-            <div class="device-item gsap-card"><span>🔐</span> Døre & Låse</div>
-            <div class="device-item gsap-card"><span>📹</span> Kameraer</div>
-            <div class="device-item gsap-card"><span>🌡️</span> Varme & Klima</div>
-            <div class="device-item gsap-card"><span>🎵</span> Multi-room Lyd</div>
-            <div class="device-item gsap-card"><span>🪜</span> Gardiner</div>
-            <div class="device-item gsap-card"><span>💧</span> Vand & Lækage</div>
-            <div class="device-item gsap-card"><span>⚡</span> Strømforbrug</div>
-            <div class="device-item gsap-card"><span>☕</span> Køkkenet</div>
-            <div class="device-item gsap-card"><span>🛏️</span> Sengen</div>
-            <div class="device-item gsap-card"><span>🚿</span> Badet</div>
-            <div class="device-item gsap-card"><span>🤖</span> Haven</div>
+            <div class="device-item gsap-card"><i class="ph ph-lightbulb"></i> Alt lys</div>
+            <div class="device-item gsap-card"><i class="ph ph-lock-key"></i> Døre & Låse</div>
+            <div class="device-item gsap-card"><i class="ph ph-video-camera"></i> Kameraer</div>
+            <div class="device-item gsap-card"><i class="ph ph-thermometer"></i> Varme</div>
+            <div class="device-item gsap-card"><i class="ph ph-speaker-hifi"></i> Lyd</div>
+            <div class="device-item gsap-card"><i class="ph ph-blinds"></i> Gardiner</div>
+            <div class="device-item gsap-card"><i class="ph ph-drop"></i> Vand</div>
+            <div class="device-item gsap-card"><i class="ph ph-lightning"></i> Strøm</div>
+            <div class="device-item gsap-card"><i class="ph ph-coffee"></i> Køkkenet</div>
+            <div class="device-item gsap-card"><i class="ph ph-bed"></i> Sengen</div>
+            <div class="device-item gsap-card"><i class="ph ph-shower"></i> Badet</div>
+            <div class="device-item gsap-card"><i class="ph ph-plant"></i> Haven</div>
         </div>
     </div>
 </section>
 
-<section id="protokoller" style="padding:8rem 0; background:rgba(10,0,30,0.8);">
+<section id="protokoller" style="padding:6rem 0; background:rgba(10,0,30,0.8);">
     <div class="container">
-        <h2 style="font-size:clamp(2.5rem, 5vw, 4rem); text-align:center; margin-bottom:3rem;" class="gradient-text gsap-fade">
+        <h2 style="font-size:clamp(2rem, 5vw, 4rem); text-align:center; margin-bottom:3rem;" class="gradient-text gsap-fade">
             Teknologien Bag Magien
         </h2>
 
         <div class="protocol-grid">
             <div class="protocol-card gsap-up">
-                <h3>🌐 Matter (WiFi/Thread)</h3>
+                <h3><i class="ph ph-globe-simple"></i> Matter</h3>
                 <p><strong>Den nye konge!</strong> Universel standard fra Apple, Google, Amazon m.fl.</p>
                 <p class="pros">✅ Virker med alt <br>✅ Lokal styring (lynhurtigt)</p>
                 <p><strong>Bedst til:</strong> Dig, der vil have én app til ALT.</p>
             </div>
 
             <div class="protocol-card gsap-up">
-                <h3>🕸️ Thread</h3>
+                <h3><i class="ph ph-share-network"></i> Thread</h3>
                 <p>Det selvhelende mesh-netværk.</p>
                 <p class="pros">✅ Lavt strømforbrug <br>✅ Bliver stærkere jo flere enheder du har</p>
                 <p><strong>Bedst til:</strong> Det ultimative smarthome.</p>
             </div>
 
             <div class="protocol-card gsap-up">
-                <h3>🔌 Zigbee</h3>
+                <h3><i class="ph ph-plugs"></i> Zigbee</h3>
                 <p>Den klassiske mester (Philips Hue, IKEA).</p>
                 <p class="pros">✅ Super stabilt <br>✅ Kæmpe udvalg af enheder</p>
                 <p><strong>Bedst til:</strong> Sensorer og belysning.</p>
@@ -208,8 +223,8 @@
         </div>
 
         <div style="text-align:center; margin-top:5rem;" class="gsap-fade">
-            <h3 style="font-size:2rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
-            <p style="font-size:1.5rem; color:#a855f7; font-weight:900;">
+            <h3 style="font-size:1.8rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
+            <p style="font-size:1.4rem; color:#a855f7; font-weight:900;">
                 🚀 Matter + Thread <br>
                 <span style="font-size:1rem; color:#94a3b8; font-weight:400;">(Det bedste fra begge verdener)</span>
             </p>
@@ -217,27 +232,27 @@
     </div>
 </section>
 
-<section id="kontakt" style="padding:10rem 0; text-align:center; background:linear-gradient(135deg,#1a0033,#0a0a2a);">
+<section id="kontakt" style="padding:8rem 0; text-align:center; background:linear-gradient(135deg,#1a0033,#0a0a2a);">
     <div class="container">
-        <h2 style="font-size:clamp(2.5rem, 6vw, 5rem);" class="gradient-text gsap-fade">Klar Til At Vågne Op I Fremtiden?</h2>
-        <p style="font-size:1.5rem; max-width:800px; margin:2rem auto; color:#ccc;" class="gsap-fade">
+        <h2 style="font-size:clamp(2rem, 6vw, 5rem);" class="gradient-text gsap-fade">Klar Til At Vågne Op I Fremtiden?</h2>
+        <p style="font-size:1.3rem; max-width:800px; margin:2rem auto; color:#ccc;" class="gsap-fade">
             Book en 100% gratis og uforpligtende konsultation – vi kommer gerne forbi og viser dig magien live.
         </p>
-        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade" style="display:inline-block; margin-top:2rem; padding:1.5rem 4rem; font-size:1.5rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
+        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade" style="display:inline-block; margin-top:2rem; padding:1.5rem 4rem; font-size:1.3rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
             📅 BOOK GRATIS BESØG
         </a>
     </div>
 </section>
 
 <script>
-// 1. PARTICLE BACKGROUND (Keep existing logic)
+// 1. PARTICLE BACKGROUND
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-for(let i = 0; i < 60; i++) { // Reduced count slightly for performance
+for(let i = 0; i < 50; i++) {
     particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -265,10 +280,9 @@ function animateParticles() {
 animateParticles();
 window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-// 2. GSAP ANIMATIONS (New!)
+// 2. GSAP ANIMATIONS
 gsap.registerPlugin(ScrollTrigger);
 
-// Animate Hero Section on Load
 gsap.from(".gsap-hero", {
     duration: 1.5,
     y: 50,
@@ -277,12 +291,11 @@ gsap.from(".gsap-hero", {
     delay: 0.2
 });
 
-// Animate Section Titles
 gsap.utils.toArray(".gsap-fade").forEach(element => {
     gsap.from(element, {
         scrollTrigger: {
             trigger: element,
-            start: "top 80%",
+            start: "top 85%",
             toggleActions: "play none none reverse"
         },
         y: 30,
@@ -291,24 +304,22 @@ gsap.utils.toArray(".gsap-fade").forEach(element => {
     });
 });
 
-// Stagger Animate Device Cards
 gsap.from(".gsap-card", {
     scrollTrigger: {
         trigger: ".devices-grid",
-        start: "top 75%"
+        start: "top 80%"
     },
     y: 50,
     opacity: 0,
     duration: 0.8,
-    stagger: 0.1, // Delays each card slightly
+    stagger: 0.05,
     ease: "back.out(1.7)"
 });
 
-// Stagger Animate Protocol Cards
 gsap.from(".gsap-up", {
     scrollTrigger: {
         trigger: ".protocol-grid",
-        start: "top 75%"
+        start: "top 80%"
     },
     y: 60,
     opacity: 0,
