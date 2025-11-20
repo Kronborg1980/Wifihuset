@@ -252,7 +252,7 @@
             <div class="device-box gsap-fade-up"><i class="ph ph-lock-key"></i><span>Smarte Låse</span></div>
             <div class="device-box gsap-fade-up"><i class="ph ph-video-camera"></i><span>Overvågning</span></div>
             <div class="device-box gsap-fade-up"><i class="ph ph-speaker-hifi"></i><span>Multiroom Lyd</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-blinds"></i><span>Solafskærmning</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph ph-sun-dim"></i><span>Solafskærmning</span></div>
             <div class="device-box gsap-fade-up"><i class="ph ph-robot"></i><span>Robotter</span></div>
             <div class="device-box gsap-fade-up"><i class="ph ph-wifi-high"></i><span>Netværk</span></div>
         </div>
@@ -345,11 +345,9 @@ function animateParticles() {
 animateParticles();
 
 // --- 2. SCROLL ANIMATIONS (The Safe Way) ---
-// We wait for the page to fully load before initializing animations
 window.addEventListener("load", () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animate Hero Content
     gsap.from(".gsap-hero-content", {
         duration: 1.2,
         y: 40,
@@ -358,8 +356,6 @@ window.addEventListener("load", () => {
         delay: 0.2
     });
 
-    // Animate all elements with class 'gsap-fade-up' when they scroll into view
-    // batch() handles multiple elements cleanly
     ScrollTrigger.batch(".gsap-fade-up", {
         onEnter: batch => gsap.to(batch, {
             opacity: 1,
@@ -369,8 +365,8 @@ window.addEventListener("load", () => {
             ease: "power2.out",
             overwrite: true
         }),
-        start: "top 85%", // Animation starts when element hits 85% of viewport height
-        once: true // Only animate once, don't hide again when scrolling up
+        start: "top 85%", 
+        once: true 
     });
 });
 </script>
