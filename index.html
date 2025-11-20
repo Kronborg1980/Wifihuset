@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFiHuset ⚡️ Fremtidens Intelligente Hjem Starter Her</title>
-    <meta name="description" content="Dit hjem bliver levende. WiFi, Matter, Thread, Zigbee & Bluetooth – vi bygger det mest avancerede, selvhelende og vanvittigt smarte hjem i Danmark. Velkommen til fremtiden.">
+    <title>WiFiHuset 🏠 Fremtidens Intelligente Hjem</title>
+    <meta name="description" content="Dit hjem bliver levende. WiFi, Matter, Thread, Zigbee & Bluetooth – vi bygger det mest avancerede, selvhelende og vanvittigt smarte hjem i Danmark.">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
             --bg-dark: #0a0a0a;
-            --bg-medium: #111111;
             --primary: #6366f1;
             --secondary: #a855f7;
             --electric: #00f2ff;
@@ -23,7 +25,8 @@
             --text-muted: #94a3b8;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background: #000;
@@ -32,11 +35,12 @@
             background: radial-gradient(circle at 50% 50%, #1a0033 0%, #000 70%);
         }
 
-        canvas { position: fixed; top:0; left:0; z-index:0; opacity:0.3; }
+        canvas { position: fixed; top:0; left:0; z-index:0; opacity:0.3; pointer-events: none; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position:relative; z-index:2; }
 
         h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.05em; }
+        
         .gradient-text {
             background: linear-gradient(90deg, #a855f7, #6366f1, #00f2ff);
             -webkit-background-clip: text;
@@ -44,76 +48,78 @@
             background-clip: text;
         }
 
-        /* HERO – MEGA IMPACT */
+        /* HEADER */
+        header {
+            position:fixed; width:100%; z-index:1000; padding:1.5rem 0;
+            background:rgba(0,0,0,0.7); backdrop-filter:blur(20px);
+            border-bottom:1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container { display:flex; justify-content:space-between; align-items:center; }
+        .logo { font-size:1.8rem; font-weight:900; color:white; text-decoration:none; }
+        nav { display:flex; gap:2rem; align-items: center; }
+        .nav-link { color:#ccc; text-decoration:none; font-weight:600; transition: color 0.3s; }
+        .nav-link:hover { color: var(--electric); }
+        .btn-cta {
+            background:linear-gradient(90deg,#a855f7,#6366f1);
+            padding:0.8rem 2rem; border-radius:50px;
+            color:white; text-decoration:none; font-weight:700;
+            transition: transform 0.3s;
+        }
+        .btn-cta:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(168,85,247,0.5); }
+
+        /* HERO */
         #hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            position: relative;
+            height: 100vh; display: flex; align-items: center; text-align: center; position: relative;
         }
         #hero h1 {
-            font-size: clamp(4rem, 10vw, 9rem);
-            line-height: 0.9;
-            margin-bottom: 1rem;
-            animation: glow 3s ease-in-out infinite alternate;
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            line-height: 1; margin-bottom: 1.5rem;
         }
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #a855f7; }
-            to { text-shadow: 0 0 60px #6366f1, 0 0 100px #00f2ff; }
-        }
-
-        /* PROTOCOL COMPARISON SECTION */
+        
+        /* PROTOCOL CARDS */
         .protocol-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; margin-top: 4rem;
         }
         .protocol-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(168,85,247,0.3);
-            border-radius: 20px;
-            padding: 2rem;
+            border-radius: 20px; padding: 2rem;
             backdrop-filter: blur(10px);
             transition: all 0.4s;
-            cursor: pointer;
         }
         .protocol-card:hover {
-            transform: translateY(-20px) scale(1.05);
+            transform: translateY(-10px);
             border-color: var(--electric);
-            box-shadow: 0 20px 50px rgba(168,85,247,0.4);
+            box-shadow: 0 20px 50px rgba(168,85,247,0.2);
         }
-        .protocol-card h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .pros { color: #34d399; }
-        .cons { color: #f87171; }
+        .pros { color: #34d399; margin-top: 1rem; font-size: 0.9rem; }
+        .cons { color: #f87171; margin-top: 0.5rem; font-size: 0.9rem; }
 
-        /* CONTROLLABLE DEVICES MEGA LIST */
+        /* DEVICES GRID */
         .devices-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin: 4rem 0;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem; margin: 4rem 0;
         }
         .device-item {
-            background: rgba(99,102,241,0.1);
-            padding: 1.5rem;
-            border-radius: 16px;
-            text-align: center;
+            background: rgba(99,102,241,0.1); padding: 1.5rem;
+            border-radius: 16px; text-align: center;
             border: 1px solid rgba(99,102,241,0.3);
             transition: 0.4s;
         }
         .device-item:hover {
-            background: rgba(168,85,247,0.2);
-            transform: translateY(-10px);
+            background: rgba(168,85,247,0.2); transform: translateY(-5px);
+            border-color: var(--electric);
         }
-        .device-item span {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 0.5rem;
+        .device-item span { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+
+        /* MOBILE FIXES */
+        @media (max-width: 768px) {
+            header { padding: 1rem 0; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+            .btn-cta { width: 100%; text-align: center; }
+            #hero h1 { font-size: 3.5rem; }
         }
     </style>
 </head>
@@ -121,108 +127,91 @@
 
 <canvas id="particles"></canvas>
 
-<header style="position:fixed; width:100%; z-index:1000; padding:1.5rem 0; background:rgba(0,0,0,0.7); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,0.1);">
-    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
-        <a href="#" style="font-size:2rem; font-weight:900; color:white; text-decoration:none;">WiFiHuset ⚡️</a>
-        <nav style="display:flex; gap:2rem;">
-            <a href="#teknologi" style="color:#ccc; text-decoration:none; font-weight:600;">Teknologi</a>
-            <a href="#kontrol" style="color:#ccc; text-decoration:none; font-weight:600;">Hvad Kan Styres?</a>
-            <a href="#protokoller" style="color:#ccc; text-decoration:none; font-weight:600;">Sammenligning</a>
-            <a href="#kontakt" class="btn-primary" style="background:linear-gradient(90deg,#a855f7,#6366f1); padding:0.8rem 2rem; border-radius:50px; color:white; text-decoration:none; font-weight:700;">Book Gratis Rådgivning</a>
+<header>
+    <div class="container nav-container">
+        <a href="#" class="logo">WiFiHuset 🏠</a>
+        <nav>
+            <a href="#teknologi" class="nav-link">Teknologi</a>
+            <a href="#kontrol" class="nav-link">Hvad Kan Styres?</a>
+            <a href="#protokoller" class="nav-link">Info</a>
+            <a href="#kontakt" class="btn-cta">Book Gratis Rådgivning</a>
         </nav>
     </div>
 </header>
 
 <section id="hero">
     <div class="container">
-        <h1 class="gradient-text">DIT HJEM<br>BLEVER<br>LEVENDIGT</h1>
-        <p style="font-size:1.5rem; max-width:800px; margin:2rem auto; color:#cbd5e1;">
-            Forestil dig et hjem, der forudser dine ønsker, før du selv ved dem. <br>
-            <strong>Dette er ikke science fiction – det er dit nye liv. Nu.</strong>
-        </p>
-        <a href="#kontakt" style="display:inline-block; margin-top:2rem; padding:1.2rem 3rem; background:linear-gradient(45deg,#a855f7,#6366f1); border-radius:50px; color:white; font-weight:900; font-size:1.3rem; text-decoration:none; box-shadow:0 20px 40px rgba(168,85,247,0.5);">
-            ⚡️ JA, JEG VIL HAVE FREMTIDEN NU!
-        </a>
+        <div class="gsap-hero">
+            <h1 class="gradient-text">DIT HJEM<br>BLIVER<br>LEVENDIGT</h1>
+            <p style="font-size:1.3rem; max-width:800px; margin:2rem auto; color:#cbd5e1; line-height:1.6;">
+                Forestil dig et hjem, der forudser dine ønsker, før du selv kender dem. <br>
+                <strong>Dette er ikke science fiction – det er dit nye liv. Nu.</strong>
+            </p>
+            <a href="#kontakt" class="btn-cta" style="padding: 1.2rem 3rem; font-size:1.2rem;">
+                🚀 JA, JEG VIL HAVE FREMTIDEN NU!
+            </a>
+        </div>
     </div>
 </section>
 
 <section id="kontrol" style="padding:8rem 0; text-align:center;">
     <div class="container">
-        <h2 style="font-size:4rem;" class="gradient-text">Hvad Kan Du Faktisk Styre Trådløst?</h2>
-        <p style="font-size:1.4rem; max-width:900px; margin:2rem auto; color:#94a3b8;">
-            Alt dette (og meget mere) kan blive en del af dit intelligente økosystem:
+        <h2 style="font-size:clamp(2.5rem, 5vw, 4rem);" class="gradient-text gsap-fade">Hvad Kan Du Faktisk Styre?</h2>
+        <p style="font-size:1.2rem; max-width:900px; margin:2rem auto; color:#94a3b8;" class="gsap-fade">
+            Alt dette (og meget mere) bliver en del af dit intelligente økosystem:
         </p>
 
         <div class="devices-grid">
-            <div class="device-item"><span>💡</span> Alt lys – RGB, dæmpning, scener</div>
-            <div class="device-item"><span>🔒</span> Døre, låse & garageporte</div>
-            <div class="device-item"><span>📷</span> Overvågningskameraer & ringeklokker</div>
-            <div class="device-item"><span>🌡️</span> Varme, aircondition & ventilation</div>
-            <div class="device-item"><span>🎵</span> Multi-room lyd & højttalere</div>
-            <div class="device-item"><span>🪟</span> Gardiner, persienner & markiser</div>
-            <div class="device-item"><span>🚰</span> Vandhaner & lækagesensorer</div>
-            <div class="device-item"><span>🔌</span> Stikkontakter & strømmåling</div>
-            <div class="device-item"><span>☕</span> Kaffemaskine & køkkenapparater</div>
-            <div class="device-item"><span>🛏️</span> Senge, der justerer sig selv</div>
-            <div class="device-item"><span>🚿</span> Bruser med forudindstillet temperatur</div>
-            <div class="device-item"><span>🌱</span> Havevanding & robotplæneklipper</div>
+            <div class="device-item gsap-card"><span>💡</span> Alt lys</div>
+            <div class="device-item gsap-card"><span>🔐</span> Døre & Låse</div>
+            <div class="device-item gsap-card"><span>📹</span> Kameraer</div>
+            <div class="device-item gsap-card"><span>🌡️</span> Varme & Klima</div>
+            <div class="device-item gsap-card"><span>🎵</span> Multi-room Lyd</div>
+            <div class="device-item gsap-card"><span>🪜</span> Gardiner</div>
+            <div class="device-item gsap-card"><span>💧</span> Vand & Lækage</div>
+            <div class="device-item gsap-card"><span>⚡</span> Strømforbrug</div>
+            <div class="device-item gsap-card"><span>☕</span> Køkkenet</div>
+            <div class="device-item gsap-card"><span>🛏️</span> Sengen</div>
+            <div class="device-item gsap-card"><span>🚿</span> Badet</div>
+            <div class="device-item gsap-card"><span>🤖</span> Haven</div>
         </div>
     </div>
 </section>
 
 <section id="protokoller" style="padding:8rem 0; background:rgba(10,0,30,0.8);">
     <div class="container">
-        <h2 style="font-size:4rem; text-align:center; margin-bottom:3rem;" class="gradient-text">
-            Den Ultimative Trådløse Protokol-Sammenligning 2025
+        <h2 style="font-size:clamp(2.5rem, 5vw, 4rem); text-align:center; margin-bottom:3rem;" class="gradient-text gsap-fade">
+            Teknologien Bag Magien
         </h2>
 
         <div class="protocol-grid">
-            <div class="protocol-card">
-                <h3>🟣 Matter (over WiFi eller Thread)</h3>
-                <p><strong>Den nye konge!</strong> Universel standard fra Apple, Google, Amazon, Samsung m.fl.</p>
-                <p class="pros">✓ Virker med alt og alle<br>✓ Lokal styring (ingen sky nødvendigt)<br>✓ Super fremtidssikret</p>
-                <p class="cons">✗ Kræver Matter-controller (Apple TV, Google Nest, etc.)</p>
-                <p><strong>Bedst til:</strong> Dig, der vil have én app til ALT for evigt.</p>
+            <div class="protocol-card gsap-up">
+                <h3>🌐 Matter (WiFi/Thread)</h3>
+                <p><strong>Den nye konge!</strong> Universel standard fra Apple, Google, Amazon m.fl.</p>
+                <p class="pros">✅ Virker med alt <br>✅ Lokal styring (lynhurtigt)</p>
+                <p><strong>Bedst til:</strong> Dig, der vil have én app til ALT.</p>
             </div>
 
-            <div class="protocol-card">
-                <h3>📶 Pure WiFi</h3>
-                <p>Den klassiske – hver enhed har sin egen app og sky.</p>
-                <p class="pros">✓ Ingen hub nødvendigt<br>✓ Virker med eksisterende router</p>
-                <p class="cons">✗ Belaster dit WiFi-netværk<br>✗ Kræver ofte internet<br>✗ 20 forskellige apps</p>
-                <p><strong>Bedst til:</strong> 1-2 enheder eller midlertidige løsninger</p>
+            <div class="protocol-card gsap-up">
+                <h3>🕸️ Thread</h3>
+                <p>Det selvhelende mesh-netværk.</p>
+                <p class="pros">✅ Lavt strømforbrug <br>✅ Bliver stærkere jo flere enheder du har</p>
+                <p><strong>Bedst til:</strong> Det ultimative smarthome.</p>
             </div>
 
-            <div class="protocol-card">
-                <h3>🟢 Thread + Matter</h3>
-                <p>Det selvhelende mesh-netværk – lynhurtigt og ekstremt stabilt.</p>
-                <p class="pros">✓ Lavt strømforbrug<br>✓ Selvhelende mesh<br>✓ 100+ enheder uden problemer<br>✓ Virker offline</p>
-                <p class="cons">✗ Kræver Thread Border Router</p>
-                <p><strong>Bedst til:</strong> Det ultimative fremtidssikrede hjem</p>
-            </div>
-
-            <div class="protocol-card">
-                <h3>🔵 Zigbee</h3>
-                <p>Den gamle mester i mesh – stadig ekstremt populær.</p>
-                <p class="pros">✓ Super stabilt<br>✓ Kæmpe udvalg af enheder<br>✓ Lavt strømforbrug</p>
-                <p class="cons">✗ Kræver hub (Philips Hue, IKEA, etc.)<br>✗ Ikke kompatibelt med Matter endnu (kommer)</p>
-                <p><strong>Bedst til:</strong> Masser af sensorer og pærer</p>
-            </div>
-
-            <div class="protocol-card">
-                <h3>🔴 Bluetooth</h3>
-                <p>Direkte fra telefon til enhed – ingen hub.</p>
-                <p class="pros">✓ Virker uden internet<br>✓ Super enkelt</p>
-                <p class="cons">✗ Kort rækkevidde<br>✗ Ingen mesh<br>✗ Langsom automatisering</p>
-                <p><strong>Bedst til:</strong> Låse, højttalere, termometre</p>
+            <div class="protocol-card gsap-up">
+                <h3>🔌 Zigbee</h3>
+                <p>Den klassiske mester (Philips Hue, IKEA).</p>
+                <p class="pros">✅ Super stabilt <br>✅ Kæmpe udvalg af enheder</p>
+                <p><strong>Bedst til:</strong> Sensorer og belysning.</p>
             </div>
         </div>
 
-        <div style="text-align:center; margin-top:4rem;">
-            <h3 style="font-size:2.5rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
-            <p style="font-size:2rem; color:#a855f7; font-weight:900;">
-                🎯 Matter + Thread = Det bedste fra begge verdener<br>
-                + Zigbee som backup for tusindvis af eksisterende enheder
+        <div style="text-align:center; margin-top:5rem;" class="gsap-fade">
+            <h3 style="font-size:2rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
+            <p style="font-size:1.5rem; color:#a855f7; font-weight:900;">
+                🚀 Matter + Thread <br>
+                <span style="font-size:1rem; color:#94a3b8; font-weight:400;">(Det bedste fra begge verdener)</span>
             </p>
         </div>
     </div>
@@ -230,25 +219,25 @@
 
 <section id="kontakt" style="padding:10rem 0; text-align:center; background:linear-gradient(135deg,#1a0033,#0a0a2a);">
     <div class="container">
-        <h2 style="font-size:5rem;" class="gradient-text">Er Du Klar Til At Vågne Op I Fremtiden?</h2>
-        <p style="font-size:1.6rem; max-width:800px; margin:2rem auto;">
+        <h2 style="font-size:clamp(2.5rem, 6vw, 5rem);" class="gradient-text gsap-fade">Klar Til At Vågne Op I Fremtiden?</h2>
+        <p style="font-size:1.5rem; max-width:800px; margin:2rem auto; color:#ccc;" class="gsap-fade">
             Book en 100% gratis og uforpligtende konsultation – vi kommer gerne forbi og viser dig magien live.
         </p>
-        <a href="mailto:kronborg@outlook.com" style="display:inline-block; margin-top:3rem; padding:1.5rem 4rem; background:linear-gradient(45deg,#00f2ff,#a855f7); border-radius:50px; color:black; font-weight:900; font-size:1.8rem; text-decoration:none;">
-            ⚡️ BOOK GRATIS BESØG NU
+        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade" style="display:inline-block; margin-top:2rem; padding:1.5rem 4rem; font-size:1.5rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
+            📅 BOOK GRATIS BESØG
         </a>
     </div>
 </section>
 
 <script>
-// Simple particle background
+// 1. PARTICLE BACKGROUND (Keep existing logic)
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-for(let i = 0; i < 80; i++) {
+for(let i = 0; i < 60; i++) { // Reduced count slightly for performance
     particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -259,7 +248,7 @@ for(let i = 0; i < 80; i++) {
     });
 }
 
-function animate() {
+function animateParticles() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     particles.forEach(p => {
         ctx.fillStyle = p.color;
@@ -271,13 +260,61 @@ function animate() {
         if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
         if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
     });
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animateParticles);
 }
-animate();
+animateParticles();
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// 2. GSAP ANIMATIONS (New!)
+gsap.registerPlugin(ScrollTrigger);
+
+// Animate Hero Section on Load
+gsap.from(".gsap-hero", {
+    duration: 1.5,
+    y: 50,
+    opacity: 0,
+    ease: "power3.out",
+    delay: 0.2
+});
+
+// Animate Section Titles
+gsap.utils.toArray(".gsap-fade").forEach(element => {
+    gsap.from(element, {
+        scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        },
+        y: 30,
+        opacity: 0,
+        duration: 1
+    });
+});
+
+// Stagger Animate Device Cards
+gsap.from(".gsap-card", {
+    scrollTrigger: {
+        trigger: ".devices-grid",
+        start: "top 75%"
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1, // Delays each card slightly
+    ease: "back.out(1.7)"
+});
+
+// Stagger Animate Protocol Cards
+gsap.from(".gsap-up", {
+    scrollTrigger: {
+        trigger: ".protocol-grid",
+        start: "top 75%"
+    },
+    y: 60,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.2,
+    ease: "power2.out"
 });
 </script>
 </body>
