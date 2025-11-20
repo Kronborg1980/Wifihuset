@@ -61,7 +61,7 @@
         header {
             position:fixed; top: 0; left: 0; width:100%; z-index:1000; 
             padding:1rem 0;
-            background:rgba(5, 5, 5, 0.9);
+            background:rgba(5, 5, 5, 0.95); /* Lidt mørkere for læsbarhed på mobil */
             backdrop-filter:blur(12px);
             border-bottom:1px solid rgba(255,255,255,0.05);
         }
@@ -86,12 +86,12 @@
 
         /* --- HERO SECTION --- */
         #hero {
-            min-height: 100vh; display: flex; align-items: center; position: relative;
-            padding-top: 100px; padding-bottom: 4rem;
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative;
+            padding-top: 80px; padding-bottom: 4rem;
         }
         .hero-content { max-width: 800px; margin: 0 auto; text-align: center; }
         #hero h1 {
-            font-size: clamp(2.8rem, 7vw, 5.5rem); 
+            font-size: clamp(2.5rem, 8vw, 5.5rem); 
             line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800;
         }
         #hero p.subheadline {
@@ -122,18 +122,19 @@
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 16px; padding: 2.5rem;
             transition: 0.3s; height: 100%;
+            text-align: center; /* Centered text in cards looks better on mobile */
         }
         .info-card:hover {
             background: rgba(255,255,255,0.05);
             border-color: var(--primary);
             transform: translateY(-5px);
         }
-        .info-card i { font-size: 2.5rem; color: var(--electric); margin-bottom: 1.5rem; display: block; }
+        .info-card i { font-size: 3rem; color: var(--electric); margin-bottom: 1.5rem; display: block; margin-left: auto; margin-right: auto; }
         .info-card h3 { font-size: 1.4rem; margin-bottom: 1rem; }
         .info-card p { font-size: 0.95rem; color: #cbd5e1; }
 
         /* --- LIST STYLES --- */
-        ul.feature-list { list-style: none; margin-top: 1rem; }
+        ul.feature-list { list-style: none; margin-top: 1rem; text-align: left; display: inline-block; }
         ul.feature-list li { 
             display: flex; align-items: start; gap: 10px; margin-bottom: 0.8rem; color: #cbd5e1; font-size: 0.95rem; 
         }
@@ -141,32 +142,68 @@
 
         /* --- DEVICE GRID --- */
         .device-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
         }
         .device-box {
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px; padding: 1.5rem;
             text-align: center; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .device-box:hover { border-color: var(--secondary); background: rgba(168,85,247,0.1); }
         .device-box i { font-size: 2rem; color: var(--secondary); margin-bottom: 0.5rem; }
-        .device-box span { display: block; font-weight: 600; color: white; }
+        .device-box span { display: block; font-weight: 600; color: white; font-size: 0.9rem; }
 
-        /* --- MOBILE OPTIMIZATIONS --- */
+        /* --- MOBILE OPTIMIZATIONS (FIXED) --- */
         @media (max-width: 768px) {
-            .container { padding: 0 1.5rem; }
+            .container { padding: 0 1.5rem; width: 100%; }
+            
             header { padding: 1rem 0; }
-            .nav-container { flex-direction: column; gap: 1rem; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; }
-            #hero { padding-top: 180px; align-items: flex-start; text-align: left; }
-            .hero-content { text-align: left; }
-            #hero h1 { font-size: 3rem; } 
+            
+            /* Center the Menu */
+            .nav-container { flex-direction: column; gap: 1.2rem; text-align: center; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 1rem; width: 100%; }
+            
+            /* HERO FIXES - FORCE CENTER */
+            #hero { 
+                padding-top: 160px; 
+                align-items: center; /* Center Vertically */
+                text-align: center;  /* Center Text */
+                display: flex;
+                flex-direction: column;
+            }
+            .hero-content { 
+                text-align: center; 
+                width: 100%;
+                padding: 0 10px;
+            }
+            
+            /* Headline Sizing */
+            #hero h1 { font-size: 2.8rem; margin-bottom: 1rem; } 
+            #hero p.subheadline { font-size: 1.1rem; margin-bottom: 2rem; }
+
+            /* Buttons on Mobile */
+            .btn-cta { 
+                width: 100%; 
+                text-align: center; 
+                margin-bottom: 0.5rem; 
+                padding: 1rem; /* Bigger touch target */
+            }
+            
+            /* Center buttons wrapper */
+            .hero-content div {
+                justify-content: center;
+                width: 100%;
+            }
+
+            /* Grid adjustments */
             .device-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .grid-3 { gap: 1.5rem; }
         }
 
-        /* --- ANIMATION CLASSES (Initial States) --- */
+        /* --- ANIMATION CLASSES --- */
         .gsap-fade-up { opacity: 0; transform: translateY(30px); }
     </style>
 </head>
@@ -188,15 +225,15 @@
 <section id="hero">
     <div class="container hero-content">
         <div class="gsap-hero-content">
-            <span style="color:var(--electric); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; font-size:0.9rem;">Fremtidens Bolig Er Her</span>
+            <span style="color:var(--electric); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; font-size:0.8rem; display: block; margin-bottom: 0.5rem;">Fremtidens Bolig Er Her</span>
             <h1 class="gradient-text">DIT HJEM<br>PÅ AUTOPILOT</h1>
             <p class="subheadline">
                 Vi hjælper dig med at navigere i junglen af Smart Home løsninger. 
                 Få et hjem der sparer på varmen, tænder lyset når du vågner, og låser døren når du går.
             </p>
-            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content: center;">
                 <a href="#kontakt" class="btn-cta">🚀 Start din rejse her</a>
-                <a href="#fordele" class="nav-link" style="padding:0.8rem 1rem; border:1px solid rgba(255,255,255,0.2); border-radius:50px;">Læs mere ↓</a>
+                <a href="#fordele" class="nav-link" style="padding:0.8rem 1rem; border:1px solid rgba(255,255,255,0.2); border-radius:50px; white-space: nowrap;">Læs mere ↓</a>
             </div>
         </div>
     </div>
@@ -211,19 +248,19 @@
             <div class="info-card gsap-fade-up">
                 <i class="ph ph-leaf"></i>
                 <h3>Spar Energi & Penge</h3>
-                <p>Hvorfor varme huset op, når du ikke er hjemme? Intelligent varmestyring sænker temperaturen, når du tager på arbejde, og sørger for det er lunt, når du kommer retur.</p>
+                <p>Hvorfor varme huset op, når du ikke er hjemme? Intelligent varmestyring sænker temperaturen, når du tager på arbejde.</p>
                 <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> Spar op til 20-30% på varme</li>
-                    <li><i class="ph-bold ph-check"></i> Sluk standby-strøm automatisk</li>
+                    <li><i class="ph-bold ph-check"></i> Spar op til 20-30% varme</li>
+                    <li><i class="ph-bold ph-check"></i> Ingen spildstrøm</li>
                 </ul>
             </div>
 
             <div class="info-card gsap-fade-up">
                 <i class="ph ph-shield-check"></i>
                 <h3>Tryghed & Sikkerhed</h3>
-                <p>Få besked på din telefon, hvis en dør åbnes, eller røgalarmen går i gang. Simuler tilstedeværelse med lys, der tænder og slukker tilfældigt, når du er på ferie.</p>
+                <p>Få besked på din telefon, hvis en dør åbnes, eller røgalarmen går i gang. Simuler tilstedeværelse når du er på ferie.</p>
                 <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> Live videoovervågning</li>
+                    <li><i class="ph-bold ph-check"></i> Live video</li>
                     <li><i class="ph-bold ph-check"></i> Automatiske låse</li>
                 </ul>
             </div>
@@ -231,10 +268,10 @@
             <div class="info-card gsap-fade-up">
                 <i class="ph ph-armchair"></i>
                 <h3>Komfort & Stemning</h3>
-                <p>Lyset tilpasser sig døgnets rytme. Koldt lys til arbejde om morgenen, varmt og dæmpet lys om aftenen for bedre søvn. Alt sker helt automatisk.</p>
+                <p>Lyset tilpasser sig døgnets rytme. Koldt lys til arbejde, varmt lys til hygge. Alt sker helt automatisk.</p>
                 <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> Cirkadisk belysning</li>
-                    <li><i class="ph-bold ph-check"></i> Stemmestyring (Siri/Google)</li>
+                    <li><i class="ph-bold ph-check"></i> Cirkadisk lys</li>
+                    <li><i class="ph-bold ph-check"></i> Stemmestyring</li>
                 </ul>
             </div>
         </div>
@@ -261,23 +298,23 @@
 
 <section id="teknologi">
     <div class="container">
-        <h2 class="section-title gsap-fade-up">Teknologien Bag Magien</h2>
-        <p class="section-desc gsap-fade-up">Vi bygger dit system på åbne standarder, så du ikke bliver låst fast. Fremtiden taler samme sprog.</p>
+        <h2 class="section-title gsap-fade-up">Teknologien</h2>
+        <p class="section-desc gsap-fade-up">Vi bygger dit system på åbne standarder, så du ikke bliver låst fast.</p>
 
         <div class="grid-3">
             <div class="info-card gsap-fade-up">
                 <h3><i class="ph ph-globe-simple" style="color:#facc15"></i> Matter</h3>
-                <p>Den nye, universelle standard støttet af Apple, Google og Amazon. Matter sikrer, at enheder kan tale sammen på tværs af mærker. Det er slut med "Virker denne pære med min iPhone?".</p>
+                <p>Den nye, universelle standard støttet af Apple, Google og Amazon. Sikrer at alt taler sammen.</p>
             </div>
 
             <div class="info-card gsap-fade-up">
                 <h3><i class="ph ph-share-network" style="color:#00f2ff"></i> Thread</h3>
-                <p>Et lynhurtigt trådløst netværk skabt specielt til smarthome. I modsætning til WiFi og Bluetooth, skaber Thread et "Mesh"-netværk, der bliver stærkere og mere stabilt, jo flere enheder du tilføjer.</p>
+                <p>Et lynhurtigt trådløst netværk, der bliver stærkere og mere stabilt, jo flere enheder du tilføjer.</p>
             </div>
 
             <div class="info-card gsap-fade-up">
                 <h3><i class="ph ph-plugs" style="color:#a855f7"></i> Zigbee</h3>
-                <p>Den gennemtestede veteran. Bruges af Philips Hue og IKEA. Det er utroligt stabilt, bruger næsten ingen strøm, og der findes tusindvis af kompatible sensorer og kontakter.</p>
+                <p>Den gennemtestede veteran (Hue, IKEA). Utroligt stabilt med tusindvis af kompatible sensorer.</p>
             </div>
         </div>
     </div>
@@ -287,12 +324,11 @@
     <div class="container" style="text-align:center;">
         <h2 class="section-title gsap-fade-up">Skal vi kigge på dit hus?</h2>
         <p style="font-size:1.2rem; max-width:600px; margin: 0 auto 2rem auto; color:#ccc;" class="gsap-fade-up">
-            Det kan være uoverskueligt at starte. Book en uforpligtende snak, hvor vi gennemgår dine behov og muligheder.
+            Det kan være uoverskueligt at starte. Book en uforpligtende snak.
         </p>
-        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade-up" style="padding:1.5rem 3rem; font-size:1.2rem;">
-            📅 BOOK EN GRATIS GENNEMGANG
+        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade-up" style="padding:1.2rem 2rem; font-size:1.1rem; width: 100%; max-width: 350px;">
+            📅 BOOK GRATIS BESØG
         </a>
-        <p style="margin-top:2rem; font-size:0.9rem; color:#666;" class="gsap-fade-up">Vi svarer typisk indenfor 24 timer.</p>
     </div>
 </section>
 
@@ -303,7 +339,7 @@
 </footer>
 
 <script>
-// --- 1. PARTICLE BACKGROUND (Optimized) ---
+// --- 1. PARTICLE BACKGROUND ---
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 
@@ -344,7 +380,7 @@ function animateParticles() {
 }
 animateParticles();
 
-// --- 2. SCROLL ANIMATIONS (The Safe Way) ---
+// --- 2. SCROLL ANIMATIONS ---
 window.addEventListener("load", () => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -365,7 +401,7 @@ window.addEventListener("load", () => {
             ease: "power2.out",
             overwrite: true
         }),
-        start: "top 85%", 
+        start: "top 90%", 
         once: true 
     });
 });
