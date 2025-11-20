@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -23,17 +23,15 @@
             --primary: #6366f1;
             --secondary: #a855f7;
             --electric: #00f2ff;
-            --text-light: #f1f5f9;
-            --text-muted: #94a3b8;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000; /* Fallback color */
+            background-color: #000; 
             background: radial-gradient(circle at 50% 50%, #1a0033 0%, #000 80%);
-            color: var(--text-light);
+            color: #ffffff; /* FORCED WHITE TEXT */
             overflow-x: hidden;
             min-height: 100vh;
         }
@@ -57,13 +55,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: inline-block; /* Fix for some mobile browsers */
         }
 
         /* --- HEADER --- */
         header {
             position:fixed; top: 0; left: 0; width:100%; z-index:1000; 
             padding:1rem 0;
-            background:rgba(0,0,0,0.85); 
+            background:rgba(0,0,0,0.9); /* Darker background for better readability */
             backdrop-filter:blur(15px);
             border-bottom:1px solid rgba(255,255,255,0.1);
         }
@@ -86,12 +85,10 @@
         #hero {
             min-height: 100vh; 
             display: flex; align-items: center; text-align: center; position: relative;
-            /* FIX FOR MOBILE: Increased padding so header doesn't cover text */
-            padding-top: 120px; 
+            padding-top: 140px; /* Extra space for mobile header */
             padding-bottom: 4rem;
         }
         #hero h1 {
-            /* FIX FOR MOBILE: Adjusted min size from 3rem to 2.5rem to fit phones */
             font-size: clamp(2.5rem, 8vw, 7rem); 
             line-height: 1.1; margin-bottom: 1.5rem;
         }
@@ -102,25 +99,20 @@
             gap: 2rem; margin-top: 4rem;
         }
         .protocol-card {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(168,85,247,0.3);
             border-radius: 20px; padding: 2rem;
             backdrop-filter: blur(10px);
             transition: all 0.4s;
         }
-        .protocol-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--electric);
-            box-shadow: 0 20px 50px rgba(168,85,247,0.2);
-        }
         .protocol-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; margin-bottom: 1rem;}
-        .protocol-card i { color: var(--electric); font-size: 1.8rem; } /* Explicit Icon Color */
+        .protocol-card i { color: var(--electric); font-size: 1.8rem; } 
         .pros { color: #34d399; margin-top: 1rem; font-size: 0.9rem; line-height: 1.6; }
         
 
-        /* --- DEVICES GRID --- */
+        /* --- DEVICES GRID (FIXED) --- */
         .devices-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); /* 2 cols on mobile */
+            display: grid; grid-template-columns: repeat(2, 1fr); 
             gap: 1rem; margin: 4rem 0;
         }
         @media (min-width: 768px) {
@@ -128,34 +120,42 @@
         }
 
         .device-item {
-            background: rgba(99,102,241,0.1); padding: 1.5rem 1rem;
+            /* REMOVED ANIMATION VARIABLES */
+            background: rgba(99,102,241,0.15); 
+            padding: 1.5rem 1rem;
             border-radius: 16px; text-align: center;
             border: 1px solid rgba(99,102,241,0.3);
-            transition: 0.4s; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #ffffff !important; /* FORCE WHITE TEXT */
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 1 !important; /* FORCE VISIBILITY */
+            transform: none !important;
         }
         .device-item:hover {
-            background: rgba(168,85,247,0.2); transform: translateY(-5px);
+            background: rgba(168,85,247,0.3); 
+            transform: translateY(-5px) !important;
             border-color: var(--electric);
         }
-        .device-item i { font-size: 2.5rem; margin-bottom: 0.8rem; color: var(--electric); }
+        .device-item i { 
+            font-size: 2.5rem; 
+            margin-bottom: 0.8rem; 
+            color: var(--electric); 
+            display: inline-block;
+        }
 
         /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 768px) {
             .container { padding: 0 1.5rem; }
             
-            /* Header Layout Change */
             header { padding: 1rem 0; }
             .nav-container { flex-direction: column; gap: 1rem; }
             nav { flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; }
             
-            /* Make sure hero content isn't hidden behind the taller mobile header */
             #hero { padding-top: 180px; align-items: flex-start; } 
             
             .nav-link { font-size: 0.9rem; }
             .btn-cta { width: 100%; text-align: center; font-size: 1rem; padding: 1rem; }
             
-            #hero h1 { font-size: 2.8rem; } /* Safe size for mobile */
-            #hero p { font-size: 1.1rem !important; }
+            #hero h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -191,55 +191,54 @@
 
 <section id="kontrol" style="padding:5rem 0; text-align:center;">
     <div class="container">
-        <h2 style="font-size:clamp(2rem, 5vw, 4rem);" class="gradient-text gsap-fade">Hvad Kan Du Styre?</h2>
-        <p style="font-size:1.1rem; max-width:900px; margin:1.5rem auto; color:#94a3b8;" class="gsap-fade">
+        <h2 style="font-size:clamp(2rem, 5vw, 4rem);" class="gradient-text">Hvad Kan Du Styre?</h2>
+        <p style="font-size:1.1rem; max-width:900px; margin:1.5rem auto; color:#94a3b8;">
             Alt dette bliver en del af dit intelligente økosystem:
         </p>
 
         <div class="devices-grid">
-            <div class="device-item gsap-card"><i class="ph ph-lightbulb"></i> Lys</div>
-            <div class="device-item gsap-card"><i class="ph ph-lock-key"></i> Døre</div>
-            <div class="device-item gsap-card"><i class="ph ph-video-camera"></i> Kamera</div>
-            <div class="device-item gsap-card"><i class="ph ph-thermometer"></i> Varme</div>
-            <div class="device-item gsap-card"><i class="ph ph-speaker-hifi"></i> Lyd</div>
-            <div class="device-item gsap-card"><i class="ph ph-blinds"></i> Gardiner</div>
-            <div class="device-item gsap-card"><i class="ph ph-drop"></i> Vand</div>
-            <div class="device-item gsap-card"><i class="ph ph-lightning"></i> Strøm</div>
-            <div class="device-item gsap-card"><i class="ph ph-coffee"></i> Køkken</div>
-            <div class="device-item gsap-card"><i class="ph ph-bed"></i> Sengen</div>
-            <div class="device-item gsap-card"><i class="ph ph-shower"></i> Badet</div>
-            <div class="device-item gsap-card"><i class="ph ph-plant"></i> Haven</div>
+            <div class="device-item"><i class="ph ph-lightbulb"></i> Lys</div>
+            <div class="device-item"><i class="ph ph-lock-key"></i> Døre</div>
+            <div class="device-item"><i class="ph ph-video-camera"></i> Kamera</div>
+            <div class="device-item"><i class="ph ph-thermometer"></i> Varme</div>
+            <div class="device-item"><i class="ph ph-speaker-hifi"></i> Lyd</div>
+            <div class="device-item"><i class="ph ph-windows-logo"></i> Gardiner</div> <div class="device-item"><i class="ph ph-drop"></i> Vand</div>
+            <div class="device-item"><i class="ph ph-lightning"></i> Strøm</div>
+            <div class="device-item"><i class="ph ph-coffee"></i> Køkken</div>
+            <div class="device-item"><i class="ph ph-bed"></i> Sengen</div>
+            <div class="device-item"><i class="ph ph-shower"></i> Badet</div>
+            <div class="device-item"><i class="ph ph-plant"></i> Haven</div>
         </div>
     </div>
 </section>
 
 <section id="teknologi" style="padding:6rem 0; background:rgba(10,0,30,0.8);">
     <div class="container">
-        <h2 style="font-size:clamp(2rem, 5vw, 4rem); text-align:center; margin-bottom:3rem;" class="gradient-text gsap-fade">
+        <h2 style="font-size:clamp(2rem, 5vw, 4rem); text-align:center; margin-bottom:3rem;" class="gradient-text">
             Teknologien Bag Magien
         </h2>
 
         <div class="protocol-grid">
-            <div class="protocol-card gsap-up">
+            <div class="protocol-card">
                 <h3><i class="ph ph-globe-simple"></i> Matter</h3>
                 <p><strong>Den nye konge!</strong> Universel standard fra Apple, Google m.fl.</p>
                 <p class="pros">✅ Virker med alt <br>✅ Lokal styring (lynhurtigt)</p>
             </div>
 
-            <div class="protocol-card gsap-up">
+            <div class="protocol-card">
                 <h3><i class="ph ph-share-network"></i> Thread</h3>
                 <p>Det selvhelende mesh-netværk.</p>
                 <p class="pros">✅ Lavt strømforbrug <br>✅ Bliver stærkere jo flere enheder</p>
             </div>
 
-            <div class="protocol-card gsap-up">
+            <div class="protocol-card">
                 <h3><i class="ph ph-plugs"></i> Zigbee</h3>
                 <p>Den klassiske mester (Hue, IKEA).</p>
                 <p class="pros">✅ Super stabilt <br>✅ Kæmpe udvalg</p>
             </div>
         </div>
 
-        <div style="text-align:center; margin-top:5rem;" class="gsap-fade">
+        <div style="text-align:center; margin-top:5rem;">
             <h3 style="font-size:1.5rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
             <p style="font-size:1.2rem; color:#a855f7; font-weight:900;">
                 🚀 Matter + Thread
@@ -250,18 +249,18 @@
 
 <section id="kontakt" style="padding:8rem 0; text-align:center; background:linear-gradient(135deg,#1a0033,#0a0a2a);">
     <div class="container">
-        <h2 style="font-size:clamp(2rem, 6vw, 5rem);" class="gradient-text gsap-fade">Klar Til Fremtiden?</h2>
-        <p style="font-size:1.2rem; max-width:800px; margin:2rem auto; color:#ccc;" class="gsap-fade">
+        <h2 style="font-size:clamp(2rem, 6vw, 5rem);" class="gradient-text">Klar Til Fremtiden?</h2>
+        <p style="font-size:1.2rem; max-width:800px; margin:2rem auto; color:#ccc;">
             Book en 100% gratis og uforpligtende konsultation.
         </p>
-        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade" style="display:inline-block; margin-top:2rem; padding:1.5rem 3rem; font-size:1.2rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
+        <a href="mailto:kronborg@outlook.com" class="btn-cta" style="display:inline-block; margin-top:2rem; padding:1.5rem 3rem; font-size:1.2rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
             📅 BOOK GRATIS BESØG
         </a>
     </div>
 </section>
 
 <script>
-// 1. PARTICLE BACKGROUND (Optimized for reliability)
+// 1. PARTICLE BACKGROUND (Simplified)
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 
@@ -273,7 +272,8 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 let particles = [];
-const particleCount = window.innerWidth < 768 ? 30 : 60; // Less particles on mobile for performance
+// Reduce particle count on mobile to prevent lagging
+const particleCount = window.innerWidth < 768 ? 25 : 60; 
 
 for(let i = 0; i < particleCount; i++) {
     particles.push({
@@ -302,7 +302,8 @@ function animateParticles() {
 }
 animateParticles();
 
-// 2. GSAP ANIMATIONS
+// 2. HERO ANIMATION ONLY
+// I removed the card animations because they were causing the "invisible/dark" bug.
 gsap.registerPlugin(ScrollTrigger);
 
 gsap.from(".gsap-hero", {
@@ -311,43 +312,6 @@ gsap.from(".gsap-hero", {
     opacity: 0,
     ease: "power3.out",
     delay: 0.2
-});
-
-gsap.utils.toArray(".gsap-fade").forEach(element => {
-    gsap.from(element, {
-        scrollTrigger: {
-            trigger: element,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
-        },
-        y: 30,
-        opacity: 0,
-        duration: 1
-    });
-});
-
-gsap.from(".gsap-card", {
-    scrollTrigger: {
-        trigger: ".devices-grid",
-        start: "top 85%"
-    },
-    y: 50,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.05,
-    ease: "back.out(1.7)"
-});
-
-gsap.from(".gsap-up", {
-    scrollTrigger: {
-        trigger: ".protocol-grid",
-        start: "top 85%"
-    },
-    y: 60,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-    ease: "power2.out"
 });
 </script>
 </body>
