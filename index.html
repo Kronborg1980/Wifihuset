@@ -23,7 +23,8 @@
             --primary: #6366f1;
             --secondary: #a855f7;
             --electric: #00f2ff;
-            --ai-glow: #10b981; /* Greenish for AI/Matrix vibe */
+            --matter-gold: #facc15; /* NEW: Gold for Matter */
+            --ai-glow: #10b981; 
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -56,13 +57,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
-        }
-        
-        .ai-text {
-            background: linear-gradient(90deg, #34d399, #00f2ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         /* --- HEADER --- */
@@ -138,7 +132,6 @@
         }
         .info-card:hover {
             background: rgba(255,255,255,0.05);
-            border-color: var(--primary);
             transform: translateY(-5px);
         }
         .info-card i.main-icon { 
@@ -168,10 +161,10 @@
             font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase;
         }
 
-        /* --- AI CHIP GRAPHIC (CSS ONLY) --- */
-        .ai-chip-container {
-            display: flex; justify-content: center; margin: 2rem 0;
-        }
+        /* --- CUSTOM GRAPHICS (CSS ONLY) --- */
+        
+        /* 1. AI Chip Graphic */
+        .ai-chip-container { display: flex; justify-content: center; margin: 2rem 0; }
         .ai-chip {
             width: 60px; height: 60px; border: 2px solid var(--ai-glow);
             border-radius: 10px; position: relative;
@@ -179,20 +172,45 @@
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
         .ai-chip i { font-size: 30px; color: var(--ai-glow); animation: pulse-ai 2s infinite; }
-        .trace {
-            position: absolute; background: var(--ai-glow); opacity: 0.5;
-        }
-        /* Simple traces */
+        .trace { position: absolute; background: var(--ai-glow); opacity: 0.5; }
         .t1 { width: 20px; height: 2px; top: 50%; left: -20px; }
         .t2 { width: 20px; height: 2px; top: 50%; right: -20px; }
         .t3 { width: 2px; height: 20px; top: -20px; left: 50%; }
         .t4 { width: 2px; height: 20px; bottom: -20px; left: 50%; }
 
-        @keyframes pulse-ai {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
+        /* 2. Thread Mesh Graphic */
+        .mesh-network { display: flex; justify-content: center; gap: 20px; margin: 2rem 0; position: relative; }
+        .node {
+            width: 15px; height: 15px; background: var(--electric); border-radius: 50%;
+            box-shadow: 0 0 15px var(--electric); animation: pulse 2s infinite;
         }
+        .node:nth-child(2) { animation-delay: 0.5s; background: var(--secondary); box-shadow: 0 0 15px var(--secondary); }
+        .node:nth-child(3) { animation-delay: 1s; background: var(--primary); box-shadow: 0 0 15px var(--primary); }
+
+        /* 3. Matter Sync Graphic (NEW!) */
+        .matter-graphic {
+            position: relative; width: 80px; height: 80px; margin: 1rem auto 2rem auto;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .matter-core {
+            font-size: 2rem; color: var(--matter-gold); z-index: 2;
+            animation: pulse-ai 3s infinite;
+        }
+        .matter-ring {
+            position: absolute; width: 100%; height: 100%;
+            border: 2px dashed rgba(250, 204, 21, 0.4);
+            border-radius: 50%;
+            animation: spin-slow 10s linear infinite;
+        }
+        .matter-orb {
+            position: absolute; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--matter-gold); top: 0; left: 50%; transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--matter-gold);
+        }
+
+        @keyframes pulse-ai { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* --- DEVICE GRID --- */
         .device-grid {
@@ -279,23 +297,17 @@
             <div class="info-card gsap-fade-up">
                 <i class="main-icon ph-duotone ph-brain" style="color: var(--ai-glow);"></i>
                 <h3>Lærer dine vaner</h3>
-                <p>Systemet lærer, hvornår du står op, og hvornår du kommer hjem. Det forvarmer huset præcis i tide, så du aldrig fryser – og aldrig spilder varme på et tomt hus.</p>
+                <p>Systemet lærer, hvornår du står op, og hvornår du kommer hjem. Det forvarmer huset præcis i tide.</p>
             </div>
-
             <div class="info-card gsap-fade-up">
                 <i class="main-icon ph-duotone ph-scan" style="color: var(--ai-glow);"></i>
                 <h3>AI Kamera-analyse</h3>
-                <p>Glem dumme bevægelsessensorer, der reagerer på grene i vinden. Vores AI-kameraer kender forskel på mennesker, kæledyr, biler og pakker.</p>
-                <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> "Der er en person i haven"</li>
-                    <li><i class="ph-bold ph-check"></i> "Katten er i stuen"</li>
-                </ul>
+                <p>Vores AI-kameraer kender forskel på mennesker, kæledyr, biler og pakker. Ingen falske alarmer.</p>
             </div>
-
             <div class="info-card gsap-fade-up">
                 <i class="main-icon ph-duotone ph-lightning" style="color: var(--ai-glow);"></i>
                 <h3>Energi Optimering</h3>
-                <p>AI overvåger elpriserne live. Elbilen og vaskemaskinen starter automatisk, når strømmen er billigst eller grønnest. Helt uden du skal løfte en finger.</p>
+                <p>AI overvåger elpriserne live. Elbilen og vaskemaskinen starter automatisk, når strømmen er billigst.</p>
             </div>
         </div>
     </div>
@@ -304,30 +316,26 @@
 <section id="apps" style="background: rgba(255,255,255,0.02);">
     <div class="container">
         <h2 class="section-title gsap-fade-up">Ét System til det hele</h2>
-        <p class="section-desc gsap-fade-up">
-            Vi binder al den avancerede teknik sammen i simple, brugervenlige apps, du allerede kender.
-        </p>
+        <p class="section-desc gsap-fade-up">Vi binder al den avancerede teknik sammen i de apps, du kender.</p>
 
         <div class="grid-3">
             <div class="app-card gsap-fade-up">
                 <span class="tag" style="background:white; color:black;">Apple HomeKit</span>
                 <div class="app-logo-area"><i class="ph-fill ph-apple-logo" style="color:white;"></i></div>
                 <h3>Apple Hjem</h3>
-                <p>Højeste sikkerhed. Alle dine data bliver i huset. Styr alt fra din iPhone, iPad eller Apple Watch med Siri.</p>
+                <p>Højeste sikkerhed. Styr alt fra din iPhone, iPad eller Apple Watch med Siri.</p>
             </div>
-
             <div class="app-card gsap-fade-up">
                 <span class="tag" style="background:#4285F4; color:white;">Google Home</span>
                 <div class="app-logo-area"><i class="ph-fill ph-google-logo" style="color:#4285F4;"></i></div>
                 <h3>Google Home</h3>
-                <p>Verdens bedste stemmestyring. Spørg Google om vejret, og få den til at vise overvågningskameraet på dit TV.</p>
+                <p>Verdens bedste stemmestyring. Spørg Google om alt i huset.</p>
             </div>
-
             <div class="app-card gsap-fade-up">
                 <span class="tag" style="background:#104494; color:white;">Samsung</span>
                 <div class="app-logo-area"><i class="ph-bold ph-asterisk-simple" style="color:#00f2ff;"></i></div>
                 <h3>SmartThings</h3>
-                <p>Har du Samsung TV eller hvidevarer? SmartThings binder køleskab, vaskemaskine og lys sammen i én app.</p>
+                <p>Har du Samsung TV eller hvidevarer? Bind det hele sammen her.</p>
             </div>
         </div>
     </div>
@@ -341,26 +349,31 @@
         </p>
 
         <div class="grid-2">
-            <div class="info-card gsap-fade-up">
-                <i class="main-icon ph-duotone ph-translate"></i>
+            
+            <div class="info-card gsap-fade-up" style="border-color: var(--matter-gold);">
+                
+                <div class="matter-graphic">
+                    <div class="matter-ring">
+                        <div class="matter-orb"></div>
+                    </div>
+                    <i class="matter-core ph-duotone ph-translate"></i>
+                </div>
+
                 <h3>Matter: Det fælles sprog</h3>
                 <p>Matter er en revolution. Det sikrer, at udstyr fra Apple, Google, IKEA og Philips kan tale sammen. Det betyder, at du aldrig er låst til ét mærke.</p>
             </div>
 
             <div class="info-card gsap-fade-up" style="border-color: var(--primary);">
                 
-                <div class="ai-chip-container">
-                    <div class="ai-chip">
-                        <i class="ph-fill ph-cpu"></i>
-                        <div class="trace t1"></div>
-                        <div class="trace t2"></div>
-                        <div class="trace t3"></div>
-                        <div class="trace t4"></div>
-                    </div>
+                <div class="mesh-network">
+                    <div class="node"></div>
+                    <div class="node"></div>
+                    <div class="node"></div>
+                    <div style="position:absolute; top:50%; left:10%; width:80%; height:2px; background:rgba(255,255,255,0.1); z-index:-1;"></div>
                 </div>
 
                 <h3>Thread: Det usynlige net</h3>
-                <p>Thread er et dedikeret netværk kun til dine enheder. Det belaster ikke dit WiFi (så Netflix hakker ikke). Det er et <strong>Mesh-netværk</strong>, der selv reparerer huller i forbindelsen, hvis en enhed falder ud.</p>
+                <p>Thread er et dedikeret netværk kun til dine enheder. Det belaster ikke dit WiFi. Det er et <strong>Mesh-netværk</strong>, der selv reparerer huller i forbindelsen, hvis en enhed falder ud.</p>
             </div>
         </div>
     </div>
@@ -369,8 +382,6 @@
 <section id="devices" style="background: rgba(255,255,255,0.02);">
     <div class="container">
         <h2 class="section-title gsap-fade-up">Hvad styrer vi med AI?</h2>
-        <p class="section-desc gsap-fade-up">Her er de mest populære intelligente opgraderinger:</p>
-
         <div class="device-grid">
             <div class="device-box gsap-fade-up"><i class="ph-light ph-lightbulb"></i><span>AI Lys</span></div>
             <div class="device-box gsap-fade-up"><i class="ph-light ph-thermometer-simple"></i><span>Klimastyring</span></div>
@@ -388,12 +399,11 @@
     <div class="container" style="text-align:center;">
         <h2 class="section-title gsap-fade-up">Gør dit hjem intelligent i dag</h2>
         <p style="font-size:1.2rem; max-width:600px; margin: 0 auto 2rem auto; color:#ccc;" class="gsap-fade-up">
-            Vi tilbyder en uforpligtende gennemgang af din bolig. Vi ser på energibesparelser, sikkerhed og AI-muligheder.
+            Vi tilbyder en uforpligtende gennemgang af din bolig.
         </p>
         <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade-up" style="padding:1.2rem 2.5rem; font-size:1.1rem; width: 100%; max-width: 380px;">
             📅 BOOK GRATIS AI-TJEK
         </a>
-        <p style="margin-top:2rem; font-size:0.9rem; color:#555;" class="gsap-fade-up">Vi svarer typisk indenfor 24 timer.</p>
     </div>
 </section>
 
