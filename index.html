@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFiHuset 🏠 Professionel Smart Home Rådgivning</title>
-    <meta name="description" content="Specialister i Matter, Thread & Zigbee. Vi omdanner din bolig til et intelligent, energibesparende hjem.">
+    <title>WiFiHuset 🏠 AI Smart Home Rådgivning</title>
+    <meta name="description" content="Vi integrerer AI i dit hjem. Matter, Thread & Zigbee løsninger der tænker selv.">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 
@@ -23,6 +23,7 @@
             --primary: #6366f1;
             --secondary: #a855f7;
             --electric: #00f2ff;
+            --ai-glow: #10b981; /* Greenish for AI/Matrix vibe */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -32,22 +33,22 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark); 
-            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #000 70%);
+            background-image: radial-gradient(circle at 50% 0%, #111827 0%, #000 70%);
             color: var(--text-main);
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* PARTICLES CANVAS */
         canvas#particles { 
             position: fixed; top:0; left:0; width: 100%; height: 100%;
-            z-index:0; opacity:0.3; pointer-events: none; 
+            z-index:0; opacity:0.2; pointer-events: none; 
         }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position:relative; z-index:2; }
 
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; color: white; }
-        p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1rem; }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; color: white; }
+        p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1.5rem; }
         
         .gradient-text {
             background: linear-gradient(90deg, #a855f7, #6366f1, #00f2ff);
@@ -55,6 +56,13 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
+        }
+        
+        .ai-text {
+            background: linear-gradient(90deg, #34d399, #00f2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* --- HEADER --- */
@@ -78,25 +86,26 @@
             transition: transform 0.3s, box-shadow 0.3s; 
             white-space: nowrap; display: inline-block;
             border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
         }
         .btn-cta:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4); 
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5); 
         }
 
         /* --- HERO SECTION --- */
         #hero {
             min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative;
-            padding-top: 80px; padding-bottom: 4rem;
+            padding-top: 100px; padding-bottom: 4rem;
         }
-        .hero-content { max-width: 800px; margin: 0 auto; text-align: center; }
+        .hero-content { max-width: 850px; margin: 0 auto; text-align: center; }
         #hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5.5rem); 
+            font-size: clamp(2.8rem, 8vw, 5.5rem); 
             line-height: 1.1; margin-bottom: 1.5rem; font-weight: 800;
         }
         #hero p.subheadline {
             font-size: clamp(1.1rem, 2vw, 1.4rem); 
-            color: #e2e8f0; margin-bottom: 2.5rem; max-width: 650px; margin-left: auto; margin-right: auto;
+            color: #e2e8f0; margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto;
         }
 
         /* --- SECTIONS GENERAL --- */
@@ -107,7 +116,7 @@
             text-align: center; 
         }
         .section-desc {
-            text-align: center; max-width: 700px; margin: 0 auto 4rem auto; font-size: 1.1rem;
+            text-align: center; max-width: 700px; margin: 0 auto 4rem auto; font-size: 1.15rem; line-height: 1.8;
         }
 
         /* --- GRID LAYOUTS --- */
@@ -115,96 +124,115 @@
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
-        
+        .grid-2 {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem; margin-top: 3rem;
+        }
+
         /* --- CARDS --- */
         .info-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px; padding: 2.5rem;
+            border-radius: 20px; padding: 2.5rem;
             transition: 0.3s; height: 100%;
-            text-align: center;
         }
         .info-card:hover {
             background: rgba(255,255,255,0.05);
             border-color: var(--primary);
             transform: translateY(-5px);
         }
-        .info-card i { font-size: 3rem; color: var(--electric); margin-bottom: 1.5rem; display: block; margin-left: auto; margin-right: auto; }
-        .info-card h3 { font-size: 1.4rem; margin-bottom: 1rem; }
-        .info-card p { font-size: 0.95rem; color: #cbd5e1; }
-
-        /* --- LIST STYLES --- */
-        ul.feature-list { list-style: none; margin-top: 1rem; text-align: left; display: inline-block; }
-        ul.feature-list li { 
-            display: flex; align-items: start; gap: 10px; margin-bottom: 0.8rem; color: #cbd5e1; font-size: 0.95rem; 
+        .info-card i.main-icon { 
+            font-size: 3rem; color: var(--electric); margin-bottom: 1.5rem; display: block; 
         }
-        ul.feature-list li i { font-size: 1.1rem; color: #34d399; margin: 0; display: inline; }
+        .info-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        
+        ul.feature-list { list-style: none; margin-top: 1rem; padding:0; }
+        ul.feature-list li { 
+            display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem; color: #cbd5e1; font-size: 1rem; 
+        }
+        ul.feature-list li i { font-size: 1.2rem; color: #34d399; }
 
-        /* --- DEVICE GRID (UPDATED) --- */
+        /* --- APPS SECTION --- */
+        .app-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem; border-radius: 24px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .app-logo-area {
+            height: 80px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+        }
+        .app-logo-area i { font-size: 4rem; }
+        .tag {
+            display: inline-block; padding: 4px 12px; border-radius: 20px; 
+            font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase;
+        }
+
+        /* --- AI CHIP GRAPHIC (CSS ONLY) --- */
+        .ai-chip-container {
+            display: flex; justify-content: center; margin: 2rem 0;
+        }
+        .ai-chip {
+            width: 60px; height: 60px; border: 2px solid var(--ai-glow);
+            border-radius: 10px; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        .ai-chip i { font-size: 30px; color: var(--ai-glow); animation: pulse-ai 2s infinite; }
+        .trace {
+            position: absolute; background: var(--ai-glow); opacity: 0.5;
+        }
+        /* Simple traces */
+        .t1 { width: 20px; height: 2px; top: 50%; left: -20px; }
+        .t2 { width: 20px; height: 2px; top: 50%; right: -20px; }
+        .t3 { width: 2px; height: 20px; top: -20px; left: 50%; }
+        .t4 { width: 2px; height: 20px; bottom: -20px; left: 50%; }
+
+        @keyframes pulse-ai {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- DEVICE GRID --- */
         .device-grid {
-            display: grid; 
-            /* Force 4 columns on larger screens for equal distribution */
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
         }
         .device-box {
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px; /* Slightly more rounded */
-            padding: 2rem 1.5rem; /* More padding for a premium feel */
+            border-radius: 16px; padding: 2rem 1rem;
             text-align: center; transition: 0.3s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
         }
         .device-box:hover { 
-            border-color: var(--secondary); 
-            background: rgba(168,85,247,0.15); 
-            transform: translateY(-5px);
+            border-color: var(--secondary); background: rgba(168,85,247,0.15); transform: translateY(-5px);
         }
-        /* NEW: Interesting Icons with Glow */
         .device-box i { 
-            font-size: 3rem; 
-            color: var(--electric); /* Base color */
-            margin-bottom: 1rem;
-            transition: 0.3s;
-            /* Add a cool neon glow effect */
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+            font-size: 3rem; color: var(--electric); margin-bottom: 1rem; transition: 0.3s;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
         }
         .device-box:hover i {
-            color: var(--secondary);
-            text-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
-            transform: scale(1.1);
+            color: var(--secondary); text-shadow: 0 0 25px rgba(168, 85, 247, 0.6); transform: scale(1.1);
         }
-        .device-box span { display: block; font-weight: 600; color: white; font-size: 1rem; }
+        .device-box span { font-weight: 600; color: white; }
 
         /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 768px) {
-            .container { padding: 0 1.5rem; width: 100%; }
+            .container { padding: 0 1.5rem; }
             header { padding: 1rem 0; }
             .nav-container { flex-direction: column; gap: 1.2rem; text-align: center; }
             nav { flex-wrap: wrap; justify-content: center; gap: 1rem; width: 100%; }
-            #hero { 
-                padding-top: 160px; 
-                align-items: center; text-align: center; display: flex; flex-direction: column;
-            }
-            .hero-content { text-align: center; width: 100%; padding: 0 10px; }
-            #hero h1 { font-size: 2.8rem; margin-bottom: 1rem; } 
-            #hero p.subheadline { font-size: 1.1rem; margin-bottom: 2rem; }
+            #hero { padding-top: 160px; text-align: center; flex-direction: column; }
+            #hero h1 { font-size: 2.8rem; } 
             .btn-cta { width: 100%; text-align: center; margin-bottom: 0.5rem; padding: 1rem; }
-            .hero-content div { justify-content: center; width: 100%; }
             
-            /* Grid adjustments for Mobile */
-            .device-grid { 
-                /* Force 2 columns on mobile for equal distribution */
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 15px; 
-            }
-            .device-box { padding: 1.5rem 1rem; } /* Slightly smaller padding on mobile */
-            .device-box i { font-size: 2.5rem; } /* Slightly smaller icons on mobile */
-            .grid-3 { gap: 1.5rem; }
+            .device-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 2rem; }
+            .app-logo-area i { font-size: 3rem; }
+            .section-desc { font-size: 1rem; }
         }
 
-        /* --- ANIMATION CLASSES --- */
         .gsap-fade-up { opacity: 0; transform: translateY(30px); }
     </style>
 </head>
@@ -216,7 +244,8 @@
     <div class="container nav-container">
         <a href="#" class="logo"><i class="ph-fill ph-house-line"></i> WiFiHuset</a>
         <nav>
-            <a href="#fordele" class="nav-link">Fordele</a>
+            <a href="#ai" class="nav-link">AI & Intelligens</a>
+            <a href="#apps" class="nav-link">App Styring</a>
             <a href="#teknologi" class="nav-link">Teknologi</a>
             <a href="#kontakt" class="btn-cta">Book Rådgivning</a>
         </nav>
@@ -226,116 +255,152 @@
 <section id="hero">
     <div class="container hero-content">
         <div class="gsap-hero-content">
-            <span style="color:var(--electric); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; font-size:0.8rem; display: block; margin-bottom: 0.5rem;">Fremtidens Bolig Er Her</span>
-            <h1 class="gradient-text">DIT HJEM<br>PÅ AUTOPILOT</h1>
+            <span style="color:var(--electric); font-weight:700; letter-spacing:0.15em; text-transform:uppercase; font-size:0.85rem; display: block; margin-bottom: 1rem;">Smart Home + Kunstig Intelligens</span>
+            <h1 class="gradient-text">DIT HJEM MED<br>AI-HJERNE 🧠</h1>
             <p class="subheadline">
-                Vi hjælper dig med at navigere i junglen af Smart Home løsninger. 
-                Få et hjem der sparer på varmen, tænder lyset når du vågner, og låser døren når du går.
+                Glem alt om manuelle kontakter. Vi installerer et system, der lærer dine vaner, optimerer varmen via AI, og passer på huset, mens du sover.
             </p>
             <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content: center;">
-                <a href="#kontakt" class="btn-cta">🚀 Start din rejse her</a>
-                <a href="#fordele" class="nav-link" style="padding:0.8rem 1rem; border:1px solid rgba(255,255,255,0.2); border-radius:50px; white-space: nowrap;">Læs mere ↓</a>
+                <a href="#kontakt" class="btn-cta">🚀 Få et AI-tjek af dit hus</a>
+                <a href="#ai" class="nav-link" style="padding:0.8rem 1rem; border:1px solid rgba(255,255,255,0.2); border-radius:50px; white-space: nowrap;">Hvordan virker AI? ↓</a>
             </div>
         </div>
     </div>
 </section>
 
-<section id="fordele">
+<section id="ai">
     <div class="container">
-        <h2 class="section-title gsap-fade-up">Hvorfor Opgradere?</h2>
-        <p class="section-desc gsap-fade-up">Et Smart Home er ikke bare en gadget. Det er en investering i komfort, sikkerhed og grøn energi.</p>
-        
+        <h2 class="section-title gsap-fade-up">AI: Huset der tænker selv</h2>
+        <p class="section-desc gsap-fade-up">
+            Et moderne Smart Home er ikke bare "fjernstyret". Det er intelligent. Ved hjælp af AI (Kunstig Intelligens) arbejder huset aktivt for at spare penge og øge komforten.
+        </p>
+
         <div class="grid-3">
             <div class="info-card gsap-fade-up">
-                <i class="ph ph-leaf"></i>
-                <h3>Spar Energi & Penge</h3>
-                <p>Hvorfor varme huset op, når du ikke er hjemme? Intelligent varmestyring sænker temperaturen, når du tager på arbejde.</p>
+                <i class="main-icon ph-duotone ph-brain" style="color: var(--ai-glow);"></i>
+                <h3>Lærer dine vaner</h3>
+                <p>Systemet lærer, hvornår du står op, og hvornår du kommer hjem. Det forvarmer huset præcis i tide, så du aldrig fryser – og aldrig spilder varme på et tomt hus.</p>
+            </div>
+
+            <div class="info-card gsap-fade-up">
+                <i class="main-icon ph-duotone ph-scan" style="color: var(--ai-glow);"></i>
+                <h3>AI Kamera-analyse</h3>
+                <p>Glem dumme bevægelsessensorer, der reagerer på grene i vinden. Vores AI-kameraer kender forskel på mennesker, kæledyr, biler og pakker.</p>
                 <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> Spar op til 20-30% varme</li>
-                    <li><i class="ph-bold ph-check"></i> Ingen spildstrøm</li>
+                    <li><i class="ph-bold ph-check"></i> "Der er en person i haven"</li>
+                    <li><i class="ph-bold ph-check"></i> "Katten er i stuen"</li>
                 </ul>
             </div>
 
             <div class="info-card gsap-fade-up">
-                <i class="ph ph-shield-check"></i>
-                <h3>Tryghed & Sikkerhed</h3>
-                <p>Få besked på din telefon, hvis en dør åbnes, eller røgalarmen går i gang. Simuler tilstedeværelse når du er på ferie.</p>
-                <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> Live video</li>
-                    <li><i class="ph-bold ph-check"></i> Automatiske låse</li>
-                </ul>
-            </div>
-
-            <div class="info-card gsap-fade-up">
-                <i class="ph ph-armchair"></i>
-                <h3>Komfort & Stemning</h3>
-                <p>Lyset tilpasser sig døgnets rytme. Koldt lys til arbejde, varmt lys til hygge. Alt sker helt automatisk.</p>
-                <ul class="feature-list">
-                    <li><i class="ph-bold ph-check"></i> Cirkadisk lys</li>
-                    <li><i class="ph-bold ph-check"></i> Stemmestyring</li>
-                </ul>
+                <i class="main-icon ph-duotone ph-lightning" style="color: var(--ai-glow);"></i>
+                <h3>Energi Optimering</h3>
+                <p>AI overvåger elpriserne live. Elbilen og vaskemaskinen starter automatisk, når strømmen er billigst eller grønnest. Helt uden du skal løfte en finger.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section id="kontrol" style="background: rgba(255,255,255,0.02);">
+<section id="apps" style="background: rgba(255,255,255,0.02);">
     <div class="container">
-        <h2 class="section-title gsap-fade-up">Et Samlet Økosystem</h2>
-        <p class="section-desc gsap-fade-up">Vi samler alle dine enheder i én app. Slut med at have 10 forskellige apps til 10 forskellige ting.</p>
+        <h2 class="section-title gsap-fade-up">Ét System til det hele</h2>
+        <p class="section-desc gsap-fade-up">
+            Vi binder al den avancerede teknik sammen i simple, brugervenlige apps, du allerede kender.
+        </p>
 
-        <div class="device-grid">
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-lightbulb"></i><span>Intelligent Lys</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-thermometer-simple"></i><span>Varmestyring</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-lock-key-open"></i><span>Smarte Låse</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-video-camera"></i><span>Overvågning</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-speaker-hifi"></i><span>Multiroom Lyd</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-sun-dim"></i><span>Solafskærmning</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-robot"></i><span>Robotter</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph-light ph-wifi-high"></i><span>Netværk</span></div>
+        <div class="grid-3">
+            <div class="app-card gsap-fade-up">
+                <span class="tag" style="background:white; color:black;">Apple HomeKit</span>
+                <div class="app-logo-area"><i class="ph-fill ph-apple-logo" style="color:white;"></i></div>
+                <h3>Apple Hjem</h3>
+                <p>Højeste sikkerhed. Alle dine data bliver i huset. Styr alt fra din iPhone, iPad eller Apple Watch med Siri.</p>
+            </div>
+
+            <div class="app-card gsap-fade-up">
+                <span class="tag" style="background:#4285F4; color:white;">Google Home</span>
+                <div class="app-logo-area"><i class="ph-fill ph-google-logo" style="color:#4285F4;"></i></div>
+                <h3>Google Home</h3>
+                <p>Verdens bedste stemmestyring. Spørg Google om vejret, og få den til at vise overvågningskameraet på dit TV.</p>
+            </div>
+
+            <div class="app-card gsap-fade-up">
+                <span class="tag" style="background:#104494; color:white;">Samsung</span>
+                <div class="app-logo-area"><i class="ph-bold ph-asterisk-simple" style="color:#00f2ff;"></i></div>
+                <h3>SmartThings</h3>
+                <p>Har du Samsung TV eller hvidevarer? SmartThings binder køleskab, vaskemaskine og lys sammen i én app.</p>
+            </div>
         </div>
     </div>
 </section>
 
 <section id="teknologi">
     <div class="container">
-        <h2 class="section-title gsap-fade-up">Teknologien</h2>
-        <p class="section-desc gsap-fade-up">Vi bygger dit system på åbne standarder, så du ikke bliver låst fast.</p>
+        <h2 class="section-title gsap-fade-up">Motorvejen for Data</h2>
+        <p class="section-desc gsap-fade-up">
+            For at AI kan virke, skal forbindelsen være lynhurtig. Vi bygger dit Smart Home på <strong>Matter</strong> og <strong>Thread</strong>.
+        </p>
 
-        <div class="grid-3">
+        <div class="grid-2">
             <div class="info-card gsap-fade-up">
-                <h3><i class="ph ph-globe-simple" style="color:#facc15"></i> Matter</h3>
-                <p>Den nye, universelle standard støttet af Apple, Google og Amazon. Sikrer at alt taler sammen.</p>
+                <i class="main-icon ph-duotone ph-translate"></i>
+                <h3>Matter: Det fælles sprog</h3>
+                <p>Matter er en revolution. Det sikrer, at udstyr fra Apple, Google, IKEA og Philips kan tale sammen. Det betyder, at du aldrig er låst til ét mærke.</p>
             </div>
 
-            <div class="info-card gsap-fade-up">
-                <h3><i class="ph ph-share-network" style="color:#00f2ff"></i> Thread</h3>
-                <p>Et lynhurtigt trådløst netværk, der bliver stærkere og mere stabilt, jo flere enheder du tilføjer.</p>
-            </div>
+            <div class="info-card gsap-fade-up" style="border-color: var(--primary);">
+                
+                <div class="ai-chip-container">
+                    <div class="ai-chip">
+                        <i class="ph-fill ph-cpu"></i>
+                        <div class="trace t1"></div>
+                        <div class="trace t2"></div>
+                        <div class="trace t3"></div>
+                        <div class="trace t4"></div>
+                    </div>
+                </div>
 
-            <div class="info-card gsap-fade-up">
-                <h3><i class="ph ph-plugs" style="color:#a855f7"></i> Zigbee</h3>
-                <p>Den gennemtestede veteran (Hue, IKEA). Utroligt stabilt med tusindvis af kompatible sensorer.</p>
+                <h3>Thread: Det usynlige net</h3>
+                <p>Thread er et dedikeret netværk kun til dine enheder. Det belaster ikke dit WiFi (så Netflix hakker ikke). Det er et <strong>Mesh-netværk</strong>, der selv reparerer huller i forbindelsen, hvis en enhed falder ud.</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<section id="devices" style="background: rgba(255,255,255,0.02);">
+    <div class="container">
+        <h2 class="section-title gsap-fade-up">Hvad styrer vi med AI?</h2>
+        <p class="section-desc gsap-fade-up">Her er de mest populære intelligente opgraderinger:</p>
+
+        <div class="device-grid">
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-lightbulb"></i><span>AI Lys</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-thermometer-simple"></i><span>Klimastyring</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-lock-key-open"></i><span>Auto-Lås</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-video-camera"></i><span>AI Kamera</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-speaker-hifi"></i><span>Multiroom</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-sun-dim"></i><span>Solafskærmning</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-robot"></i><span>Robotter</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-wifi-high"></i><span>Mesh WiFi</span></div>
         </div>
     </div>
 </section>
 
 <section id="kontakt" style="padding:8rem 0; background:linear-gradient(180deg, rgba(0,0,0,0), #1a0033);">
     <div class="container" style="text-align:center;">
-        <h2 class="section-title gsap-fade-up">Skal vi kigge på dit hus?</h2>
+        <h2 class="section-title gsap-fade-up">Gør dit hjem intelligent i dag</h2>
         <p style="font-size:1.2rem; max-width:600px; margin: 0 auto 2rem auto; color:#ccc;" class="gsap-fade-up">
-            Det kan være uoverskueligt at starte. Book en uforpligtende snak.
+            Vi tilbyder en uforpligtende gennemgang af din bolig. Vi ser på energibesparelser, sikkerhed og AI-muligheder.
         </p>
-        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade-up" style="padding:1.2rem 2rem; font-size:1.1rem; width: 100%; max-width: 350px;">
-            📅 BOOK GRATIS BESØG
+        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade-up" style="padding:1.2rem 2.5rem; font-size:1.1rem; width: 100%; max-width: 380px;">
+            📅 BOOK GRATIS AI-TJEK
         </a>
+        <p style="margin-top:2rem; font-size:0.9rem; color:#555;" class="gsap-fade-up">Vi svarer typisk indenfor 24 timer.</p>
     </div>
 </section>
 
-<footer style="padding:2rem 0; text-align:center; font-size:0.8rem; color:#555; border-top:1px solid #222;">
+<footer style="padding:3rem 0; text-align:center; font-size:0.9rem; color:#555; border-top:1px solid #222; background:#020202;">
     <div class="container">
-        <p>© 2025 WiFiHuset. Fremtidens Intelligente Bolig.</p>
+        <p style="color:#777; margin-bottom:0.5rem;">© 2025 WiFiHuset</p>
+        <p style="font-size:0.8rem;">Specialister i AI, Matter & Thread installationer.</p>
     </div>
 </footer>
 
@@ -352,13 +417,13 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 let particles = [];
-const particleCount = window.innerWidth < 768 ? 30 : 70; 
+const particleCount = window.innerWidth < 768 ? 30 : 60; 
 
 for(let i = 0; i < particleCount; i++) {
     particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
+        size: Math.random() * 2 + 0.5,
         speedX: Math.random() * 0.4 - 0.2,
         speedY: Math.random() * 0.4 - 0.2,
         color: ['#a855f7', '#6366f1', '#00f2ff'][Math.floor(Math.random()*3)]
@@ -386,8 +451,8 @@ window.addEventListener("load", () => {
     gsap.registerPlugin(ScrollTrigger);
 
     gsap.from(".gsap-hero-content", {
-        duration: 1.2,
-        y: 40,
+        duration: 1.5,
+        y: 50,
         opacity: 0,
         ease: "power3.out",
         delay: 0.2
@@ -398,11 +463,11 @@ window.addEventListener("load", () => {
             opacity: 1,
             y: 0,
             duration: 0.8,
-            stagger: 0.1,
+            stagger: 0.15,
             ease: "power2.out",
             overwrite: true
         }),
-        start: "top 90%", 
+        start: "top 85%", 
         once: true 
     });
 });
