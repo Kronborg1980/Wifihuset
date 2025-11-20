@@ -31,17 +31,26 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background: #000;
+            background-color: #000; /* Fallback color */
+            background: radial-gradient(circle at 50% 50%, #1a0033 0%, #000 80%);
             color: var(--text-light);
             overflow-x: hidden;
-            background: radial-gradient(circle at 50% 50%, #1a0033 0%, #000 70%);
+            min-height: 100vh;
         }
 
-        canvas { position: fixed; top:0; left:0; z-index:0; opacity:0.3; pointer-events: none; }
+        /* BACKGROUND PARTICLES */
+        canvas#particles { 
+            position: fixed; 
+            top:0; left:0; 
+            width: 100%; height: 100%;
+            z-index:0; 
+            opacity:0.4; 
+            pointer-events: none; 
+        }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position:relative; z-index:2; }
 
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.05em; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.03em; }
         
         .gradient-text {
             background: linear-gradient(90deg, #a855f7, #6366f1, #00f2ff);
@@ -50,39 +59,46 @@
             background-clip: text;
         }
 
-        /* HEADER */
+        /* --- HEADER --- */
         header {
-            position:fixed; width:100%; z-index:1000; padding:1.5rem 0;
-            background:rgba(0,0,0,0.8); backdrop-filter:blur(20px);
+            position:fixed; top: 0; left: 0; width:100%; z-index:1000; 
+            padding:1rem 0;
+            background:rgba(0,0,0,0.85); 
+            backdrop-filter:blur(15px);
             border-bottom:1px solid rgba(255,255,255,0.1);
         }
         .nav-container { display:flex; justify-content:space-between; align-items:center; }
-        .logo { font-size:1.8rem; font-weight:900; color:white; text-decoration:none; display:flex; align-items:center; gap:10px; }
+        .logo { font-size:1.5rem; font-weight:900; color:white; text-decoration:none; display:flex; align-items:center; gap:10px; }
         nav { display:flex; gap:2rem; align-items: center; }
-        .nav-link { color:#ccc; text-decoration:none; font-weight:600; transition: color 0.3s; font-size: 0.95rem; }
+        
+        .nav-link { color:#ccc; text-decoration:none; font-weight:600; transition: color 0.3s; font-size: 0.9rem; }
         .nav-link:hover { color: var(--electric); }
+        
         .btn-cta {
             background:linear-gradient(90deg,#a855f7,#6366f1);
-            padding:0.8rem 2rem; border-radius:50px;
+            padding:0.8rem 1.5rem; border-radius:50px;
             color:white; text-decoration:none; font-weight:700;
-            transition: transform 0.3s; white-space: nowrap;
+            transition: transform 0.3s; white-space: nowrap; display: inline-block;
         }
         .btn-cta:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(168,85,247,0.5); }
 
-        /* HERO */
+        /* --- HERO --- */
         #hero {
-            min-height: 100vh; /* Changed to min-height for mobile safety */
+            min-height: 100vh; 
             display: flex; align-items: center; text-align: center; position: relative;
-            padding-top: 80px; /* Space for header */
+            /* FIX FOR MOBILE: Increased padding so header doesn't cover text */
+            padding-top: 120px; 
+            padding-bottom: 4rem;
         }
         #hero h1 {
-            font-size: clamp(3rem, 9vw, 7.5rem); /* Adjusted clamp for mobile */
+            /* FIX FOR MOBILE: Adjusted min size from 3rem to 2.5rem to fit phones */
+            font-size: clamp(2.5rem, 8vw, 7rem); 
             line-height: 1.1; margin-bottom: 1.5rem;
         }
         
-        /* PROTOCOL CARDS */
+        /* --- PROTOCOL CARDS --- */
         .protocol-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Smaller minmax for phones */
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem; margin-top: 4rem;
         }
         .protocol-card {
@@ -98,16 +114,17 @@
             box-shadow: 0 20px 50px rgba(168,85,247,0.2);
         }
         .protocol-card h3 { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; margin-bottom: 1rem;}
+        .protocol-card i { color: var(--electric); font-size: 1.8rem; } /* Explicit Icon Color */
         .pros { color: #34d399; margin-top: 1rem; font-size: 0.9rem; line-height: 1.6; }
-        .cons { color: #f87171; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.6; }
+        
 
-        /* DEVICES GRID */
+        /* --- DEVICES GRID --- */
         .devices-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); /* Force 2 columns on mobile */
+            display: grid; grid-template-columns: repeat(2, 1fr); /* 2 cols on mobile */
             gap: 1rem; margin: 4rem 0;
         }
         @media (min-width: 768px) {
-             .devices-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+             .devices-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
         }
 
         .device-item {
@@ -122,20 +139,23 @@
         }
         .device-item i { font-size: 2.5rem; margin-bottom: 0.8rem; color: var(--electric); }
 
-        /* MOBILE FIXES */
+        /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 768px) {
-            .container { padding: 0 1.2rem; } /* Less padding on phones */
+            .container { padding: 0 1.5rem; }
+            
+            /* Header Layout Change */
             header { padding: 1rem 0; }
             .nav-container { flex-direction: column; gap: 1rem; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 1rem; width: 100%; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; }
+            
+            /* Make sure hero content isn't hidden behind the taller mobile header */
+            #hero { padding-top: 180px; align-items: flex-start; } 
+            
             .nav-link { font-size: 0.9rem; }
             .btn-cta { width: 100%; text-align: center; font-size: 1rem; padding: 1rem; }
             
-            #hero h1 { font-size: 3rem; }
+            #hero h1 { font-size: 2.8rem; } /* Safe size for mobile */
             #hero p { font-size: 1.1rem !important; }
-            
-            /* Improve grid on small screens */
-            .protocol-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -148,8 +168,8 @@
         <a href="#" class="logo"><i class="ph-fill ph-house-line"></i> WiFiHuset</a>
         <nav>
             <a href="#teknologi" class="nav-link">Teknologi</a>
-            <a href="#kontrol" class="nav-link">Hvad Kan Styres?</a>
-            <a href="#kontakt" class="btn-cta">Book Gratis Rådgivning</a>
+            <a href="#kontrol" class="nav-link">Styring</a>
+            <a href="#kontakt" class="btn-cta">Book Rådgivning</a>
         </nav>
     </div>
 </header>
@@ -160,10 +180,10 @@
             <h1 class="gradient-text">DIT HJEM<br>BLIVER<br>LEVENDIGT</h1>
             <p style="font-size:1.3rem; max-width:800px; margin:2rem auto; color:#cbd5e1; line-height:1.6;">
                 Forestil dig et hjem, der forudser dine ønsker, før du selv kender dem. <br>
-                <strong>Dette er ikke science fiction – det er dit nye liv. Nu.</strong>
+                <strong>Dette er ikke science fiction – det er dit nye liv.</strong>
             </p>
-            <a href="#kontakt" class="btn-cta" style="padding: 1.2rem 3rem; font-size:1.2rem;">
-                🚀 JA, JEG VIL HAVE FREMTIDEN NU!
+            <a href="#kontakt" class="btn-cta" style="padding: 1.2rem 2rem; font-size:1.1rem;">
+                🚀 JA, VIS MIG FREMTIDEN!
             </a>
         </div>
     </div>
@@ -171,21 +191,21 @@
 
 <section id="kontrol" style="padding:5rem 0; text-align:center;">
     <div class="container">
-        <h2 style="font-size:clamp(2rem, 5vw, 4rem);" class="gradient-text gsap-fade">Hvad Kan Du Faktisk Styre?</h2>
+        <h2 style="font-size:clamp(2rem, 5vw, 4rem);" class="gradient-text gsap-fade">Hvad Kan Du Styre?</h2>
         <p style="font-size:1.1rem; max-width:900px; margin:1.5rem auto; color:#94a3b8;" class="gsap-fade">
-            Alt dette (og meget mere) bliver en del af dit intelligente økosystem:
+            Alt dette bliver en del af dit intelligente økosystem:
         </p>
 
         <div class="devices-grid">
-            <div class="device-item gsap-card"><i class="ph ph-lightbulb"></i> Alt lys</div>
-            <div class="device-item gsap-card"><i class="ph ph-lock-key"></i> Døre & Låse</div>
-            <div class="device-item gsap-card"><i class="ph ph-video-camera"></i> Kameraer</div>
+            <div class="device-item gsap-card"><i class="ph ph-lightbulb"></i> Lys</div>
+            <div class="device-item gsap-card"><i class="ph ph-lock-key"></i> Døre</div>
+            <div class="device-item gsap-card"><i class="ph ph-video-camera"></i> Kamera</div>
             <div class="device-item gsap-card"><i class="ph ph-thermometer"></i> Varme</div>
             <div class="device-item gsap-card"><i class="ph ph-speaker-hifi"></i> Lyd</div>
             <div class="device-item gsap-card"><i class="ph ph-blinds"></i> Gardiner</div>
             <div class="device-item gsap-card"><i class="ph ph-drop"></i> Vand</div>
             <div class="device-item gsap-card"><i class="ph ph-lightning"></i> Strøm</div>
-            <div class="device-item gsap-card"><i class="ph ph-coffee"></i> Køkkenet</div>
+            <div class="device-item gsap-card"><i class="ph ph-coffee"></i> Køkken</div>
             <div class="device-item gsap-card"><i class="ph ph-bed"></i> Sengen</div>
             <div class="device-item gsap-card"><i class="ph ph-shower"></i> Badet</div>
             <div class="device-item gsap-card"><i class="ph ph-plant"></i> Haven</div>
@@ -193,7 +213,7 @@
     </div>
 </section>
 
-<section id="protokoller" style="padding:6rem 0; background:rgba(10,0,30,0.8);">
+<section id="teknologi" style="padding:6rem 0; background:rgba(10,0,30,0.8);">
     <div class="container">
         <h2 style="font-size:clamp(2rem, 5vw, 4rem); text-align:center; margin-bottom:3rem;" class="gradient-text gsap-fade">
             Teknologien Bag Magien
@@ -202,31 +222,27 @@
         <div class="protocol-grid">
             <div class="protocol-card gsap-up">
                 <h3><i class="ph ph-globe-simple"></i> Matter</h3>
-                <p><strong>Den nye konge!</strong> Universel standard fra Apple, Google, Amazon m.fl.</p>
+                <p><strong>Den nye konge!</strong> Universel standard fra Apple, Google m.fl.</p>
                 <p class="pros">✅ Virker med alt <br>✅ Lokal styring (lynhurtigt)</p>
-                <p><strong>Bedst til:</strong> Dig, der vil have én app til ALT.</p>
             </div>
 
             <div class="protocol-card gsap-up">
                 <h3><i class="ph ph-share-network"></i> Thread</h3>
                 <p>Det selvhelende mesh-netværk.</p>
-                <p class="pros">✅ Lavt strømforbrug <br>✅ Bliver stærkere jo flere enheder du har</p>
-                <p><strong>Bedst til:</strong> Det ultimative smarthome.</p>
+                <p class="pros">✅ Lavt strømforbrug <br>✅ Bliver stærkere jo flere enheder</p>
             </div>
 
             <div class="protocol-card gsap-up">
                 <h3><i class="ph ph-plugs"></i> Zigbee</h3>
-                <p>Den klassiske mester (Philips Hue, IKEA).</p>
-                <p class="pros">✅ Super stabilt <br>✅ Kæmpe udvalg af enheder</p>
-                <p><strong>Bedst til:</strong> Sensorer og belysning.</p>
+                <p>Den klassiske mester (Hue, IKEA).</p>
+                <p class="pros">✅ Super stabilt <br>✅ Kæmpe udvalg</p>
             </div>
         </div>
 
         <div style="text-align:center; margin-top:5rem;" class="gsap-fade">
-            <h3 style="font-size:1.8rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
-            <p style="font-size:1.4rem; color:#a855f7; font-weight:900;">
-                🚀 Matter + Thread <br>
-                <span style="font-size:1rem; color:#94a3b8; font-weight:400;">(Det bedste fra begge verdener)</span>
+            <h3 style="font-size:1.5rem; margin-bottom:1rem;">Vores anbefaling i 2025?</h3>
+            <p style="font-size:1.2rem; color:#a855f7; font-weight:900;">
+                🚀 Matter + Thread
             </p>
         </div>
     </div>
@@ -234,25 +250,32 @@
 
 <section id="kontakt" style="padding:8rem 0; text-align:center; background:linear-gradient(135deg,#1a0033,#0a0a2a);">
     <div class="container">
-        <h2 style="font-size:clamp(2rem, 6vw, 5rem);" class="gradient-text gsap-fade">Klar Til At Vågne Op I Fremtiden?</h2>
-        <p style="font-size:1.3rem; max-width:800px; margin:2rem auto; color:#ccc;" class="gsap-fade">
-            Book en 100% gratis og uforpligtende konsultation – vi kommer gerne forbi og viser dig magien live.
+        <h2 style="font-size:clamp(2rem, 6vw, 5rem);" class="gradient-text gsap-fade">Klar Til Fremtiden?</h2>
+        <p style="font-size:1.2rem; max-width:800px; margin:2rem auto; color:#ccc;" class="gsap-fade">
+            Book en 100% gratis og uforpligtende konsultation.
         </p>
-        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade" style="display:inline-block; margin-top:2rem; padding:1.5rem 4rem; font-size:1.3rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
+        <a href="mailto:kronborg@outlook.com" class="btn-cta gsap-fade" style="display:inline-block; margin-top:2rem; padding:1.5rem 3rem; font-size:1.2rem; background:linear-gradient(45deg,#00f2ff,#a855f7); color:black;">
             📅 BOOK GRATIS BESØG
         </a>
     </div>
 </section>
 
 <script>
-// 1. PARTICLE BACKGROUND
+// 1. PARTICLE BACKGROUND (Optimized for reliability)
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
 let particles = [];
-for(let i = 0; i < 50; i++) {
+const particleCount = window.innerWidth < 768 ? 30 : 60; // Less particles on mobile for performance
+
+for(let i = 0; i < particleCount; i++) {
     particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -278,7 +301,6 @@ function animateParticles() {
     requestAnimationFrame(animateParticles);
 }
 animateParticles();
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
 // 2. GSAP ANIMATIONS
 gsap.registerPlugin(ScrollTrigger);
@@ -307,7 +329,7 @@ gsap.utils.toArray(".gsap-fade").forEach(element => {
 gsap.from(".gsap-card", {
     scrollTrigger: {
         trigger: ".devices-grid",
-        start: "top 80%"
+        start: "top 85%"
     },
     y: 50,
     opacity: 0,
@@ -319,7 +341,7 @@ gsap.from(".gsap-card", {
 gsap.from(".gsap-up", {
     scrollTrigger: {
         trigger: ".protocol-grid",
-        start: "top 80%"
+        start: "top 85%"
     },
     y: 60,
     opacity: 0,
