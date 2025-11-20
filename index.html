@@ -61,7 +61,7 @@
         header {
             position:fixed; top: 0; left: 0; width:100%; z-index:1000; 
             padding:1rem 0;
-            background:rgba(5, 5, 5, 0.95); /* Lidt mørkere for læsbarhed på mobil */
+            background:rgba(5, 5, 5, 0.95);
             backdrop-filter:blur(12px);
             border-bottom:1px solid rgba(255,255,255,0.05);
         }
@@ -122,7 +122,7 @@
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 16px; padding: 2.5rem;
             transition: 0.3s; height: 100%;
-            text-align: center; /* Centered text in cards looks better on mobile */
+            text-align: center;
         }
         .info-card:hover {
             background: rgba(255,255,255,0.05);
@@ -140,66 +140,67 @@
         }
         ul.feature-list li i { font-size: 1.1rem; color: #34d399; margin: 0; display: inline; }
 
-        /* --- DEVICE GRID --- */
+        /* --- DEVICE GRID (UPDATED) --- */
         .device-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
+            display: grid; 
+            /* Force 4 columns on larger screens for equal distribution */
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
         }
         .device-box {
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px; padding: 1.5rem;
+            border-radius: 16px; /* Slightly more rounded */
+            padding: 2rem 1.5rem; /* More padding for a premium feel */
             text-align: center; transition: 0.3s;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
         }
-        .device-box:hover { border-color: var(--secondary); background: rgba(168,85,247,0.1); }
-        .device-box i { font-size: 2rem; color: var(--secondary); margin-bottom: 0.5rem; }
-        .device-box span { display: block; font-weight: 600; color: white; font-size: 0.9rem; }
+        .device-box:hover { 
+            border-color: var(--secondary); 
+            background: rgba(168,85,247,0.15); 
+            transform: translateY(-5px);
+        }
+        /* NEW: Interesting Icons with Glow */
+        .device-box i { 
+            font-size: 3rem; 
+            color: var(--electric); /* Base color */
+            margin-bottom: 1rem;
+            transition: 0.3s;
+            /* Add a cool neon glow effect */
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+        .device-box:hover i {
+            color: var(--secondary);
+            text-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            transform: scale(1.1);
+        }
+        .device-box span { display: block; font-weight: 600; color: white; font-size: 1rem; }
 
-        /* --- MOBILE OPTIMIZATIONS (FIXED) --- */
+        /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 768px) {
             .container { padding: 0 1.5rem; width: 100%; }
-            
             header { padding: 1rem 0; }
-            
-            /* Center the Menu */
             .nav-container { flex-direction: column; gap: 1.2rem; text-align: center; }
             nav { flex-wrap: wrap; justify-content: center; gap: 1rem; width: 100%; }
-            
-            /* HERO FIXES - FORCE CENTER */
             #hero { 
                 padding-top: 160px; 
-                align-items: center; /* Center Vertically */
-                text-align: center;  /* Center Text */
-                display: flex;
-                flex-direction: column;
+                align-items: center; text-align: center; display: flex; flex-direction: column;
             }
-            .hero-content { 
-                text-align: center; 
-                width: 100%;
-                padding: 0 10px;
-            }
-            
-            /* Headline Sizing */
+            .hero-content { text-align: center; width: 100%; padding: 0 10px; }
             #hero h1 { font-size: 2.8rem; margin-bottom: 1rem; } 
             #hero p.subheadline { font-size: 1.1rem; margin-bottom: 2rem; }
-
-            /* Buttons on Mobile */
-            .btn-cta { 
-                width: 100%; 
-                text-align: center; 
-                margin-bottom: 0.5rem; 
-                padding: 1rem; /* Bigger touch target */
-            }
+            .btn-cta { width: 100%; text-align: center; margin-bottom: 0.5rem; padding: 1rem; }
+            .hero-content div { justify-content: center; width: 100%; }
             
-            /* Center buttons wrapper */
-            .hero-content div {
-                justify-content: center;
-                width: 100%;
+            /* Grid adjustments for Mobile */
+            .device-grid { 
+                /* Force 2 columns on mobile for equal distribution */
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px; 
             }
-
-            /* Grid adjustments */
-            .device-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .device-box { padding: 1.5rem 1rem; } /* Slightly smaller padding on mobile */
+            .device-box i { font-size: 2.5rem; } /* Slightly smaller icons on mobile */
             .grid-3 { gap: 1.5rem; }
         }
 
@@ -284,14 +285,14 @@
         <p class="section-desc gsap-fade-up">Vi samler alle dine enheder i én app. Slut med at have 10 forskellige apps til 10 forskellige ting.</p>
 
         <div class="device-grid">
-            <div class="device-box gsap-fade-up"><i class="ph ph-lightbulb"></i><span>Intelligent Lys</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-thermometer"></i><span>Varmestyring</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-lock-key"></i><span>Smarte Låse</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-video-camera"></i><span>Overvågning</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-speaker-hifi"></i><span>Multiroom Lyd</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-sun-dim"></i><span>Solafskærmning</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-robot"></i><span>Robotter</span></div>
-            <div class="device-box gsap-fade-up"><i class="ph ph-wifi-high"></i><span>Netværk</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-lightbulb"></i><span>Intelligent Lys</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-thermometer-simple"></i><span>Varmestyring</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-lock-key-open"></i><span>Smarte Låse</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-video-camera"></i><span>Overvågning</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-speaker-hifi"></i><span>Multiroom Lyd</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-sun-dim"></i><span>Solafskærmning</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-robot"></i><span>Robotter</span></div>
+            <div class="device-box gsap-fade-up"><i class="ph-light ph-wifi-high"></i><span>Netværk</span></div>
         </div>
     </div>
 </section>
