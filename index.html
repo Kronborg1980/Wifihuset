@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFiHuset | Matter, Thread & Tech</title>
-    <meta name="description" content="Forstå teknologien i dit Smart Home. Vi forklarer Matter, Thread, Zigbee og WiFi.">
+    <title>WiFiHuset | Eksperter i IoT & Smart Home</title>
+    <meta name="description" content="WiFiHuset samler trådene i dit Smart Home. Alt om Matter, Thread, Zigbee og IoT løsninger.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -16,18 +16,18 @@
 
     <style>
         :root {
-            --bg-deep: #020204;
-            --glass-surface: rgba(255, 255, 255, 0.03);
+            --bg-deep: #050507;
+            --glass-surface: rgba(20, 20, 25, 0.6);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-highlight: rgba(255, 255, 255, 0.15);
             
-            /* Protocol Colors - LED Look */
-            --col-matter: #FACC15; /* Gold */
-            --col-thread: #06b6d4; /* Cyan */
-            --col-zigbee: #ef4444; /* Red/Orange */
-            --col-wifi: #3b82f6;   /* Blue */
+            /* Brand Colors */
+            --neon-blue: #00f2ff;
+            --neon-purple: #bd00ff;
+            --col-matter: #FACC15; 
+            --col-thread: #06b6d4; 
             
-            --neon-glow: 0 0 15px;
+            --font-main: 'Outfit', sans-serif;
+            --font-head: 'Space Grotesk', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,351 +35,211 @@
         body {
             background-color: var(--bg-deep);
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(6, 182, 212, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(239, 68, 68, 0.05), transparent 25%);
+                linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .02) 25%, rgba(255, 255, 255, .02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .02) 75%, rgba(255, 255, 255, .02) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .02) 25%, rgba(255, 255, 255, .02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .02) 75%, rgba(255, 255, 255, .02) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
             color: #e2e8f0;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-main);
+            line-height: 1.7;
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: white; }
+        h1, h2, h3, h4 { font-family: var(--font-head); color: white; }
+        p { color: #94a3b8; margin-bottom: 1rem; font-size: 1.05rem; }
+        strong { color: #fff; font-weight: 600; }
 
-        /* --- GLASSMORPHISM UTILS --- */
-        .glass-panel {
-            background: var(--glass-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
-        }
-        
-        .glass-panel:hover {
-            transform: translateY(-5px);
-            border-color: var(--glass-highlight);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-        /* --- HERO SECTION --- */
-        header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-text { text-align: center; z-index: 2; max-width: 900px; }
-        
-        h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: #94a3b8;
-            margin-bottom: 3rem;
-            font-weight: 300;
-        }
-
-        /* --- PROTOCOL SECTION (The Core Info) --- */
-        #protocols { padding: 8rem 0; }
-        
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 3rem; margin-bottom: 1rem; }
-        .section-header p { color: #94a3b8; max-width: 600px; margin: 0 auto; }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .tech-card {
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        /* LED GLOW BORDERS based on tech */
-        .tech-card.wifi:hover { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); border-color: var(--col-wifi); }
-        .tech-card.zigbee:hover { box-shadow: 0 0 30px rgba(239, 68, 68, 0.2); border-color: var(--col-zigbee); }
-        .tech-card.thread:hover { box-shadow: 0 0 30px rgba(6, 182, 212, 0.2); border-color: var(--col-thread); }
-
-        .icon-box {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .tech-badge {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 0.75rem;
+        /* --- GLOWING LED TEXT --- */
+        .wifi-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3.5rem, 9vw, 7.5rem);
             font-weight: 700;
             text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-        }
-
-        .tech-details {
-            margin-top: auto;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .tech-detail-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: #94a3b8;
+            letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
-        }
-        .tech-detail-item span:last-child { color: white; font-weight: 600; }
-
-        /* --- MATTER HIGHLIGHT --- */
-        .matter-section {
-            margin: 6rem 0;
-            background: linear-gradient(145deg, rgba(250, 204, 21, 0.05), rgba(0,0,0,0));
-            border: 1px solid rgba(250, 204, 21, 0.2);
-            padding: 4rem;
-            border-radius: 30px;
-            position: relative;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        
-        /* Animated Rings */
-        .rings {
-            position: absolute;
-            right: -100px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 400px;
-            height: 400px;
-            border: 1px solid rgba(250, 204, 21, 0.1);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        .rings::before {
-            content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-            width: 70%; height: 70%; border: 1px solid rgba(250, 204, 21, 0.2); border-radius: 50%;
-        }
-        .rings::after {
-            content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-            width: 40%; height: 40%; border: 1px solid rgba(250, 204, 21, 0.4); border-radius: 50%;
-            box-shadow: 0 0 30px rgba(250, 204, 21, 0.2);
-        }
-
-        /* --- AUTOMATION EXAMPLES --- */
-        #automations { padding: 6rem 0; }
-        
-        .auto-card {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--glass-surface) 0%, rgba(0,0,0,0) 100%);
-            border-left: 3px solid transparent;
-        }
-
-        .auto-card:hover {
-            background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0) 100%);
-            border-left-color: var(--col-thread);
-        }
-
-        .time-badge {
-            background: #fff; color: #000;
-            font-weight: 800; padding: 5px 10px; border-radius: 6px;
-            font-family: 'Space Grotesk';
-        }
-
-        /* --- FOOTER --- */
-        footer { padding: 4rem 0; border-top: 1px solid var(--glass-border); text-align: center; color: #666; }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .matter-section { grid-template-columns: 1fr; padding: 2rem; text-align: center; }
-            .rings { display: none; } /* Hide complex graphic on mobile */
-            h1 { font-size: 2.5rem; }
-        }
-
-        .gradient-text-matter {
-            background: linear-gradient(to right, #FACC15, #fbbf24);
+            line-height: 1.1;
+            
+            color: rgba(255,255,255,0.1); 
+            -webkit-text-stroke: 2px rgba(255,255,255,0.15);
+            
+            background: linear-gradient(
+                110deg, 
+                rgba(255,255,255,0) 45%, 
+                #00f2ff 50%, 
+                rgba(255,255,255,0) 55%
+            );
+            background-size: 250% 100%;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shine 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.2));
         }
 
+        @keyframes shine { 0% { background-position: 250% center; } 100% { background-position: -150% center; } }
+
+        /* --- GLASS PANELS --- */
+        .glass-card {
+            background: var(--glass-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        /* --- SECTIONS --- */
+        header { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
+        section { padding: 6rem 0; }
+        
+        .section-title { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; }
+        .section-sub { text-align: center; max-width: 700px; margin: 0 auto 4rem auto; font-size: 1.2rem; }
+
+        /* --- PROTOCOL GRID --- */
+        .protocol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .tech-tag { 
+            display: inline-block; padding: 4px 12px; border-radius: 50px; 
+            font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* --- IOT UNIVERSE (LISTS) --- */
+        .iot-layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+        }
+        .iot-list li {
+            list-style: none; margin-bottom: 1.5rem; padding-left: 1.5rem; position: relative;
+        }
+        .iot-list li::before {
+            content: '●'; color: var(--neon-blue); position: absolute; left: 0; top: 2px; font-size: 0.8rem;
+        }
+        
+        /* --- CTA BUTTON --- */
+        .btn-glow {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(90deg, #00f2ff, #0061ff);
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            margin-top: 2rem;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+        .btn-glow:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
+
+        @media(max-width: 768px) {
+            .iot-layout { grid-template-columns: 1fr; }
+            .wifi-title { font-size: 13vw; }
+        }
     </style>
 </head>
 <body>
 
-    <div style="position:fixed; top:20%; left:10%; width:300px; height:300px; background:var(--col-thread); filter:blur(150px); opacity:0.15; z-index:-1;"></div>
-    <div style="position:fixed; bottom:20%; right:10%; width:250px; height:250px; background:var(--col-zigbee); filter:blur(150px); opacity:0.1; z-index:-1;"></div>
-
     <header>
-        <div class="container hero-text">
-            <div style="display:inline-block; border:1px solid rgba(255,255,255,0.2); padding: 0.5rem 1.5rem; border-radius: 50px; margin-bottom: 2rem; backdrop-filter:blur(5px);">
-                <span style="color: #4ade80;">●</span> <span style="font-size:0.9rem; letter-spacing: 1px;">NEXT GEN SMART HOME</span>
+        <div class="container">
+            <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 2px; font-size: 0.9rem; text-transform: uppercase;">
+                Velkommen til
             </div>
-            <h1 class="gsap-fade">TEKNOLOGI DER<br>FORSTÅR DIG</h1>
-            <p class="subtitle gsap-fade">
-                Vi skræller buzzwords væk og bygger et hjem på rigtige netværk.
-                Matter, Thread og Zigbee. Ingen magi – bare fysik og kode der virker.
+            <h1 class="wifi-title">WiFiHuset</h1>
+            <p style="font-size: 1.3rem; max-width: 650px; margin: 1rem auto 2.5rem auto; color: #cbd5e1;">
+                Vi er arkitekterne bag dit intelligente hjem. Fra det solide netværk til den mindste sensor. Vi får teknologien til at tale samme sprog.
             </p>
-            <a href="#protocols" class="glass-panel" style="display:inline-block; padding: 1rem 2.5rem; color:white; text-decoration: none; font-weight: 600; border-radius: 50px;">
-                Dyk ned i teknikken ↓
-            </a>
+            <a href="#iot-viden" class="btn-glow">Udforsk Universet ↓</a>
         </div>
     </header>
 
     <section id="protocols">
         <div class="container">
-            <div class="section-header">
-                <h2>Rygraden i dit hus</h2>
-                <p>Et "Smart Home" er kun så smart som forbindelsen. Her er forskellen på de teknologier, vi installerer.</p>
-            </div>
+            <h2 class="section-title">Sproget i dit hjem</h2>
+            <p class="section-sub">For at forstå Smart Home, skal man forstå hvordan enhederne taler sammen. Her er ordbogen.</p>
 
-            <div class="tech-grid">
-                
-                <div class="glass-panel tech-card wifi gsap-card">
-                    <div class="tech-badge" style="color:var(--col-wifi); border:1px solid var(--col-wifi);">Legacy</div>
-                    <i class="ph-duotone ph-wifi-high icon-box" style="color: var(--col-wifi);"></i>
-                    <h3>WiFi</h3>
-                    <p style="font-size:0.95rem; margin-top:1rem; color:#cbd5e1;">
-                        WiFi er motorvejen. Det bruges til ting, der kræver meget data, men det sluger strøm.
-                    </p>
-                    <div class="tech-details">
-                        <div class="tech-detail-item"><span>Brug det til:</span><span>Kameraer, Streaming</span></div>
-                        <div class="tech-detail-item"><span>Hastighed:</span><span>Meget høj</span></div>
-                        <div class="tech-detail-item"><span>Batteri-venlig:</span><span style="color:#ef4444;">Nej</span></div>
-                    </div>
+            <div class="protocol-grid">
+                <div class="glass-card gsap-up">
+                    <span class="tech-tag" style="color:#3b82f6; border-color:#3b82f6;">Backbone</span>
+                    <h3>WiFi & Netværk</h3>
+                    <p><strong>Fundamentet i WiFiHuset.</strong> Uden stabilt internet virker intet. Vi bruger WiFi til de "tunge" ting: Dine kameraer, der skal sende live video, dine skærme og din streaming.</p>
+                    <p style="font-size:0.9rem;">Vi installerer professionelle Access Points (fx Ubiquiti), så der er dækning i hver en krog – også i haven.</p>
                 </div>
 
-                <div class="glass-panel tech-card zigbee gsap-card">
-                    <div class="tech-badge" style="color:var(--col-zigbee); border:1px solid var(--col-zigbee);">Reliable</div>
-                    <i class="ph-duotone ph-share-network icon-box" style="color: var(--col-zigbee);"></i>
-                    <h3>Zigbee</h3>
-                    <p style="font-size:0.95rem; margin-top:1rem; color:#cbd5e1;">
-                        Mesh-netværket alle kender (fx Philips Hue). Enhederne snakker sammen og forlænger signalet. Kræver en "Bridge".
-                    </p>
-                    <div class="tech-details">
-                        <div class="tech-detail-item"><span>Brug det til:</span><span>Lys, Sensorer</span></div>
-                        <div class="tech-detail-item"><span>Rækkevidde:</span><span>Mesh (Uendelig)</span></div>
-                        <div class="tech-detail-item"><span>Bridge nødvendig:</span><span style="color:#FACC15;">Ofte Ja</span></div>
-                    </div>
+                <div class="glass-card gsap-up" style="border-color: rgba(250, 204, 21, 0.3);">
+                    <span class="tech-tag" style="color:var(--col-matter); border-color:var(--col-matter);">Gamechanger</span>
+                    <h3>Matter <i class="ph-fill ph-star" style="color:var(--col-matter);"></i></h3>
+                    <p><strong>Den nye verdensstandard.</strong> Førhen var det et problem, hvis du havde en iPhone og din partner en Android. Det løser Matter.</p>
+                    <p style="font-size:0.9rem;">Matter er et fælles sprog, der sikrer, at enheder fra Apple, Google, Samsung og IKEA kan styres i én app. Det er slut med at være låst.</p>
                 </div>
 
-                <div class="glass-panel tech-card thread gsap-card">
-                    <div class="tech-badge" style="color:var(--col-thread); border:1px solid var(--col-thread);">Future</div>
-                    <i class="ph-duotone ph-lightning icon-box" style="color: var(--col-thread);"></i>
+                <div class="glass-card gsap-up">
+                    <span class="tech-tag" style="color:var(--col-thread); border-color:var(--col-thread);">Low Latency</span>
                     <h3>Thread</h3>
-                    <p style="font-size:0.95rem; margin-top:1rem; color:#cbd5e1;">
-                        Fremtiden. Et lynhurtigt, selvhelende Mesh-netværk. Kræver ingen dedikeret bridge, da dine smarthøjtalere styrer det.
-                    </p>
-                    <div class="tech-details">
-                        <div class="tech-detail-item"><span>Brug det til:</span><span>Alt Smart Udstyr</span></div>
-                        <div class="tech-detail-item"><span>Hastighed:</span><span>Øjeblikkelig</span></div>
-                        <div class="tech-detail-item"><span>Stabilitet:</span><span style="color:#4ade80;">Ekstrem</span></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="glass-panel matter-section gsap-fade" style="margin-top: 4rem;">
-                <div class="rings"></div>
-                <div style="position:relative; z-index:2;">
-                    <span style="color: var(--col-matter); font-weight:bold; letter-spacing:2px;">DEN NYE STANDARD</span>
-                    <h2 class="gradient-text-matter" style="font-size: 3.5rem; margin: 0.5rem 0;">MATTER</h2>
-                    <p style="font-size: 1.1rem; max-width: 450px; margin-bottom: 2rem;">
-                        Førhen kunne Apple udstyr ikke tale med Google udstyr. Det var rod.
-                        <br><br>
-                        <strong>Matter</strong> er det sprog, de nu alle taler. Når vi installerer Matter-enheder, er du aldrig låst. Du kan skifte fra iPhone til Android i morgen, og dit hus virker stadig.
-                    </p>
-                    <div style="display:flex; gap:1rem;">
-                        <i class="ph-fill ph-check-circle" style="color:var(--col-matter);"></i> Virker med Apple Home
-                        <i class="ph-fill ph-check-circle" style="color:var(--col-matter);"></i> Virker med Google
-                    </div>
-                </div>
-                <div style="position:relative; z-index:2; text-align:center;">
-                     <i class="ph-duotone ph-translate" style="font-size: 10rem; color: var(--col-matter); filter: drop-shadow(0 0 20px rgba(250,204,21,0.4));"></i>
+                    <p><strong>Det usynlige mesh.</strong> Thread er et dedikeret netværk kun til dine smart-enheder. Det belaster ikke dit WiFi.</p>
+                    <p style="font-size:0.9rem;">Det er lynhurtigt (ingen forsinkelse på lyset) og selvhelende: Hvis én pære mister forbindelsen, finder signalet en anden vej gennem huset.</p>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section id="automations" style="background: rgba(0,0,0,0.2);">
+    <section id="iot-viden" style="background: rgba(255,255,255,0.02);">
         <div class="container">
-            <div class="section-header">
-                <h2>Automatisering i Praksis</h2>
-                <p>Glem apps. Et rigtigt smart home passer sig selv.</p>
-            </div>
+            <h2 class="section-title">IoT: Internet of Things</h2>
+            <p class="section-sub">"Tingenes Internet" er alt det grej, vi kobler på. Hos WiFiHuset hjælper vi dig med at navigere i junglen af dimser.</p>
 
-            <div style="max-width: 800px; margin: 0 auto;">
+            <div class="iot-layout">
                 
-                <div class="glass-panel auto-card gsap-fade">
-                    <div style="min-width: 60px; text-align:center;">
-                        <i class="ph-duotone ph-sun-horizon" style="font-size: 2rem; color: #FACC15;"></i>
+                <div>
+                    <div class="glass-card gsap-up" style="margin-bottom: 2rem;">
+                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                            <i class="ph-duotone ph-shield-check" style="font-size:2.5rem; color:var(--neon-blue);"></i>
+                            <h3>Sikkerhed & Adgang</h3>
+                        </div>
+                        <ul class="iot-list">
+                            <li><strong>Smart Locks:</strong> Glem nøglen. Døren låser op via din telefon, når du nærmer dig (Geofencing). Vi integrerer Yale Doorman og Danalock.</li>
+                            <li><strong>Video Doorbells:</strong> Se hvem der ringer på, og tal med postbuddet, selvom du sidder på arbejde. Med AI kan kameraet kende forskel på en pakke, en hund og et menneske.</li>
+                            <li><strong>Sensorer:</strong> Vindues-sensorer slår alarm, hvis noget åbnes, når du ikke er hjemme – og slukker radiatoren, hvis du lufter ud.</li>
+                        </ul>
                     </div>
-                    <div>
-                        <h3>Morgen Rutinen</h3>
-                        <p style="color:#94a3b8; margin-bottom:0.5rem;">Huset vågner før dig.</p>
-                        <ul style="list-style:none; font-size:0.9rem; color:#ccc;">
-                            <li>— Gulvvarme hæves 2 grader kl. 06:00.</li>
-                            <li>— Gardiner ruller lydløst op, når du slukker alarmen.</li>
-                            <li>— Kaffemaskinen tænder via smart-plug.</li>
+
+                    <div class="glass-card gsap-up">
+                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                            <i class="ph-duotone ph-thermometer-simple" style="font-size:2.5rem; color:#f59e0b;"></i>
+                            <h3>Klima & Energi</h3>
+                        </div>
+                        <ul class="iot-list">
+                            <li><strong>Smart Varme:</strong> Termostater fra Tado eller Danfoss, der skruer ned for varmen i de rum, du ikke bruger, og varmer op, lige inden du kommer hjem.</li>
+                            <li><strong>Indeklima:</strong> Sensorer måler CO2 og fugtighed. Er luften tung? Så kan systemet automatisk starte ventilationen eller give dig besked om at åbne et vindue.</li>
+                            <li><strong>Energi-styring:</strong> Lad elbilen eller vaskemaskinen starte automatisk, når strømmen er billigst (typisk om natten). Det sparer tusinder om året.</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="glass-panel auto-card gsap-fade">
-                    <div style="min-width: 60px; text-align:center;">
-                        <i class="ph-duotone ph-shield-check" style="font-size: 2rem; color: #ef4444;"></i>
-                    </div>
-                    <div>
-                        <h3>"Jeg Forlader Huset"</h3>
-                        <p style="color:#94a3b8; margin-bottom:0.5rem;">Du låser bare døren. Resten sker automatisk.</p>
-                        <ul style="list-style:none; font-size:0.9rem; color:#ccc;">
-                            <li>— Alt lys slukkes (Zigbee).</li>
-                            <li>— Kameraer aktiveres (WiFi).</li>
-                            <li>— Varmen sænkes til spare-mode (Thread).</li>
-                            <li>— Robotstøvsugeren kører ud.</li>
+                <div>
+                    <div class="glass-card gsap-up" style="margin-bottom: 2rem;">
+                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                            <i class="ph-duotone ph-lightbulb-filament" style="font-size:2.5rem; color:var(--neon-purple);"></i>
+                            <h3>Lys & Stemning</h3>
+                        </div>
+                        <ul class="iot-list">
+                            <li><strong>Adaptiv belysning:</strong> Lyset følger din døgnrytme. Koldt, hvidt lys om morgenen for energi – varmt, dæmpet lys om aftenen for at gøre hjernen klar til søvn.</li>
+                            <li><strong>Scener:</strong> Tryk på én knap kaldet "Filmaften". Gardinerne ruller ned, lyset dæmpes til 10%, og TV'et tænder på Netflix.</li>
+                            <li><strong>Udendørs:</strong> WiFiHuset sikrer dækning i haven, så dine Philips Hue spots i bedene tænder automatisk ved solnedgang.</li>
                         </ul>
                     </div>
-                </div>
 
-                <div class="glass-panel auto-card gsap-fade">
-                    <div style="min-width: 60px; text-align:center;">
-                        <i class="ph-duotone ph-film-strip" style="font-size: 2rem; color: #a855f7;"></i>
-                    </div>
-                    <div>
-                        <h3>Filmaften</h3>
-                        <p style="color:#94a3b8; margin-bottom:0.5rem;">Aktiveres med én stemmekommando.</p>
-                        <ul style="list-style:none; font-size:0.9rem; color:#ccc;">
-                            <li>— TV tænder på din app.</li>
-                            <li>— Hovedlys slukker.</li>
-                            <li>— LED strips bag TV'et skifter til dæmpet lilla.</li>
+                    <div class="glass-card gsap-up">
+                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                            <i class="ph-duotone ph-robot" style="font-size:2.5rem; color:#10b981;"></i>
+                            <h3>Hvidevarer & Robotter</h3>
+                        </div>
+                        <ul class="iot-list">
+                            <li><strong>Robotstøvsugere:</strong> De nye modeller (fx Roborock) kan se forskel på ledninger og efterladenskaber. Vi sætter dem til at køre, når alarmen slås til (når du forlader huset).</li>
+                            <li><strong>Havevanding:</strong> Smart-vandingsanlæg tjekker vejrudsigten. Har det regnet i nat? Så springer vi vandingen over og sparer vand.</li>
+                            <li><strong>Køkkenet:</strong> Kaffemaskinen der starter via en tidsindstilling, eller ovnen du kan forvarme på vej hjem fra supermarkedet.</li>
                         </ul>
                     </div>
                 </div>
@@ -388,48 +248,49 @@
         </div>
     </section>
 
-    <footer>
+    <section id="why" style="position:relative; overflow:hidden;">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; background:var(--neon-blue); filter:blur(200px); opacity:0.1; z-index:0;"></div>
+        
+        <div class="container" style="text-align:center;">
+            <h2 class="section-title">Hvorfor vælge WiFiHuset?</h2>
+            <div style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #ccc;">
+                <p>
+                    Man kan købe smarte pærer i byggemarkedet, men det bliver sjældent et "Smart Home". Det bliver til 5 forskellige apps, der ikke taler sammen.
+                </p>
+                <p>
+                    <strong>WiFiHuset er din tekniske entreprenør.</strong> Vi bygger infrastrukturen. Vi sikrer, at dit WiFi kan bære de 50+ enheder, et moderne hjem har. Vi programmerer logikken, så huset passer sig selv, i stedet for at du skal passe huset.
+                </p>
+                <p style="margin-top:2rem; font-style:italic; color:var(--neon-blue);">
+                    — Vi leverer ikke bare gadgets. Vi leverer en hverdag, der flyder.
+                </p>
+            </div>
+            <a href="mailto:kontakt@wifihuset.dk" class="btn-glow" style="margin-top:3rem;">Book et rådgivningsmøde</a>
+        </div>
+    </section>
+
+    <footer style="border-top:1px solid var(--glass-border); padding:3rem 0; text-align:center; font-size:0.9rem; color:#666;">
         <div class="container">
-            <h2>WiFiHuset</h2>
-            <p style="margin:1rem 0;">Vi gør komplekst tech simpelt.</p>
-            <a href="mailto:kontakt@wifihuset.dk" class="glass-panel" style="display:inline-block; padding:0.8rem 2rem; color:white; text-decoration:none; font-weight:bold;">Book et møde</a>
+            <h2 style="font-size:1.5rem; color:white; margin-bottom:0.5rem;">WiFiHuset</h2>
+            <p>IoT Specialister & Netværkseksperter</p>
+            <div style="margin-top:1rem;">
+                <a href="#" style="color:#888; margin:0 10px; text-decoration:none;">Privatliv</a>
+                <a href="#" style="color:#888; margin:0 10px; text-decoration:none;">Support</a>
+            </div>
+            <p style="margin-top:2rem; font-size:0.8rem; opacity:0.5;">© 2025 WiFiHuset ApS</p>
         </div>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero animation
-        gsap.from(".hero-text > *", {
-            y: 50,
-            opacity: 0,
-            duration: 1.5,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
-
-        // Cards fade up
-        gsap.utils.toArray('.gsap-card').forEach((card, i) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%",
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: "power2.out"
-            });
-        });
-
-        // Matter section & Automations
-        gsap.utils.toArray('.gsap-fade').forEach(element => {
+        // Simple fade up animation for cards
+        gsap.utils.toArray('.gsap-up').forEach(element => {
             gsap.from(element, {
                 scrollTrigger: {
                     trigger: element,
-                    start: "top 80%",
+                    start: "top 85%",
                 },
-                y: 30,
+                y: 40,
                 opacity: 0,
                 duration: 1,
                 ease: "power2.out"
