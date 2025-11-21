@@ -24,6 +24,7 @@
             
             /* Brand Colors */
             --neon-blue: #00f2ff;
+            --neon-dark-blue: #0061ff;
             --neon-purple: #bd00ff;
             --col-matter: #FACC15; 
             --col-thread: #06b6d4; 
@@ -56,6 +57,47 @@
         strong { color: #fff; font-weight: 600; }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+
+        /* --- HERO FRAME (NEW LED EFFECT) --- */
+        .hero-frame {
+            position: relative;
+            padding: 4rem 3rem;
+            margin-bottom: 2rem;
+            border-radius: 30px;
+            text-align: center;
+            
+            /* Glass Background */
+            background: rgba(5, 5, 10, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            
+            /* The Static Border Base */
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            
+            /* The LED Glow Effect */
+            box-shadow: 
+                0 0 0 1px rgba(0, 242, 255, 0.05), /* Tiny inner line */
+                0 0 30px rgba(0, 242, 255, 0.15), /* Outer Glow */
+                inset 0 0 30px rgba(0, 242, 255, 0.05); /* Inner Glow */
+                
+            transition: box-shadow 0.5s ease;
+            animation: pulse-border 4s infinite alternate;
+        }
+
+        /* Creates a stronger pulse animation */
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 20px rgba(0, 242, 255, 0.1), inset 0 0 20px rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.1); }
+            100% { box-shadow: 0 0 50px rgba(0, 242, 255, 0.3), inset 0 0 50px rgba(0, 242, 255, 0.1); border-color: rgba(0, 242, 255, 0.4); }
+        }
+        
+        /* Decorative corners for extra tech feel */
+        .hero-frame::before, .hero-frame::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border: 2px solid var(--neon-blue); transition: 0.3s; opacity: 0.6;
+        }
+        .hero-frame::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-radius: 20px 0 0 0; }
+        .hero-frame::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-radius: 0 0 20px 0; }
+
 
         /* --- GLOWING LED TEXT --- */
         .wifi-title {
@@ -101,7 +143,7 @@
         }
 
         /* --- SECTIONS --- */
-        header { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
+        header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
         section { padding: 6rem 0; }
         
         .section-title { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; }
@@ -126,7 +168,7 @@
             content: '●'; color: var(--neon-blue); position: absolute; left: 0; top: 2px; font-size: 0.8rem;
         }
 
-        /* --- ECOSYSTEM STYLES (NEW) --- */
+        /* --- ECOSYSTEM STYLES --- */
         .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         
         .card-apple:hover { border-color: var(--eco-apple); box-shadow: 0 0 30px rgba(255,255,255,0.15); }
@@ -147,12 +189,14 @@
             margin-top: 2rem;
             transition: 0.3s;
             box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+            border: none; cursor: pointer;
         }
-        .btn-glow:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
+        .btn-glow:hover { box-shadow: 0 0 50px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
 
         @media(max-width: 768px) {
             .iot-layout { grid-template-columns: 1fr; }
             .wifi-title { font-size: 13vw; }
+            .hero-frame { padding: 2rem 1rem; }
         }
     </style>
 </head>
@@ -160,14 +204,21 @@
 
     <header>
         <div class="container">
-            <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 2px; font-size: 0.9rem; text-transform: uppercase;">
-                Velkommen til
+            
+            <div class="hero-frame gsap-fade">
+                <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; color:white;">
+                    Velkommen til
+                </div>
+                
+                <h1 class="wifi-title">WiFiHuset</h1>
+                
+                <p style="font-size: 1.2rem; max-width: 650px; margin: 1.5rem auto 2rem auto; color: #cbd5e1;">
+                    Vi er arkitekterne bag dit intelligente hjem. Fra det solide netværk til den mindste sensor. Vi får teknologien til at tale samme sprog.
+                </p>
+                
+                <a href="#protocols" class="btn-glow">Udforsk Universet ↓</a>
             </div>
-            <h1 class="wifi-title">WiFiHuset</h1>
-            <p style="font-size: 1.3rem; max-width: 650px; margin: 1rem auto 2.5rem auto; color: #cbd5e1;">
-                Vi er arkitekterne bag dit intelligente hjem. Fra det solide netværk til den mindste sensor. Vi får teknologien til at tale samme sprog.
-            </p>
-            <a href="#protocols" class="btn-glow">Udforsk Universet ↓</a>
+
         </div>
     </header>
 
@@ -346,7 +397,16 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Simple fade up animation for cards
+        // Hero Animation
+        gsap.from(".gsap-fade", {
+            y: 50,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // Fade Up Cards
         gsap.utils.toArray('.gsap-up').forEach(element => {
             gsap.from(element, {
                 scrollTrigger: {
