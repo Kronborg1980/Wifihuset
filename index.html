@@ -26,6 +26,11 @@
             --col-matter: #FACC15; 
             --col-thread: #06b6d4; 
             
+            /* Ecosystem Colors */
+            --eco-apple: #ffffff;
+            --eco-google: #4285F4;
+            --eco-samsung: #104494;
+
             --font-main: 'Outfit', sans-serif;
             --font-head: 'Space Grotesk', sans-serif;
         }
@@ -86,7 +91,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 2.5rem;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s;
         }
         .glass-card:hover {
             border-color: rgba(255,255,255,0.2);
@@ -118,6 +123,15 @@
         .iot-list li::before {
             content: '●'; color: var(--neon-blue); position: absolute; left: 0; top: 2px; font-size: 0.8rem;
         }
+
+        /* --- ECOSYSTEM STYLES (NEW) --- */
+        .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        
+        .card-apple:hover { border-color: var(--eco-apple); box-shadow: 0 0 30px rgba(255,255,255,0.15); }
+        .card-google:hover { border-color: var(--eco-google); box-shadow: 0 0 30px rgba(66, 133, 244, 0.25); }
+        .card-samsung:hover { border-color: #00c3ff; box-shadow: 0 0 30px rgba(16, 68, 148, 0.4); }
+
+        .eco-logo { font-size: 3rem; margin-bottom: 1.5rem; }
         
         /* --- CTA BUTTON --- */
         .btn-glow {
@@ -151,7 +165,7 @@
             <p style="font-size: 1.3rem; max-width: 650px; margin: 1rem auto 2.5rem auto; color: #cbd5e1;">
                 Vi er arkitekterne bag dit intelligente hjem. Fra det solide netværk til den mindste sensor. Vi får teknologien til at tale samme sprog.
             </p>
-            <a href="#iot-viden" class="btn-glow">Udforsk Universet ↓</a>
+            <a href="#protocols" class="btn-glow">Udforsk Universet ↓</a>
         </div>
     </header>
 
@@ -248,7 +262,54 @@
         </div>
     </section>
 
-    <section id="why" style="position:relative; overflow:hidden;">
+    <section id="ecosystems">
+        <div class="container">
+            <h2 class="section-title">Din Kommandocentral</h2>
+            <p class="section-sub">
+                Vi installerer ikke bare grej; vi samler det hele i én brugervenlig app. <br>
+                Uanset om du er til Apple, Android eller Samsung, får WiFiHuset det til at spille.
+            </p>
+
+            <div class="eco-grid">
+                
+                <div class="glass-card card-apple gsap-up">
+                    <i class="ph-fill ph-apple-logo eco-logo" style="color: white;"></i>
+                    <h3>Apple Hjem</h3>
+                    <p><strong>HomeKit.</strong> Det oplagte valg til iPhone-familien. Kendt for ekstrem høj sikkerhed og lækkert design.</p>
+                    <ul class="iot-list" style="margin-top:1rem;">
+                        <li style="margin-bottom:0.5rem;">Siri stemmestyring i alle rum.</li>
+                        <li style="margin-bottom:0.5rem;">Styr alt fra din iPhone eller Apple Watch.</li>
+                        <li>Lokal behandling af data (Privatliv).</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card card-google gsap-up">
+                    <i class="ph-fill ph-google-logo eco-logo" style="color: #4285F4;"></i>
+                    <h3>Google Home</h3>
+                    <p><strong>Google Assistent.</strong> Verdens klogeste stemmestyring. Perfekt hvis I vil stille spørgsmål til huset.</p>
+                    <ul class="iot-list" style="margin-top:1rem;">
+                        <li style="margin-bottom:0.5rem;">"Hey Google, godmorgen" rutiner.</li>
+                        <li style="margin-bottom:0.5rem;">Bedst til Chromecast og Android.</li>
+                        <li>Kæmpe udvalg af kompatible enheder.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card card-samsung gsap-up">
+                    <i class="ph-bold ph-asterisk-simple eco-logo" style="color: #00c3ff;"></i>
+                    <h3>Samsung SmartThings</h3>
+                    <p><strong>Automations-kongen.</strong> Har du Samsung TV eller vaskemaskine? Så er dette hjernen, der binder hvidevarer sammen med lyset.</p>
+                    <ul class="iot-list" style="margin-top:1rem;">
+                        <li style="margin-bottom:0.5rem;">Avanceret automatisering.</li>
+                        <li style="margin-bottom:0.5rem;">Besked på TV'et når vasken er færdig.</li>
+                        <li>Fungerer som stærk Matter-hub.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="why" style="position:relative; overflow:hidden; background: rgba(255,255,255,0.02);">
         <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; background:var(--neon-blue); filter:blur(200px); opacity:0.1; z-index:0;"></div>
         
         <div class="container" style="text-align:center;">
