@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFiHuset | Den Komplette Guide til IoT & Smart Home</title>
-    <meta name="description" content="WiFiHuset er eksperter i Smart Home. Vi dækker alt fra intelligente ovne og robotplæneklippere til avanceret lysstyring og energibesparelser.">
+    <title>WiFiHuset | Danmarks Største Guide til Smart Home & WiFi</title>
+    <meta name="description" content="Find de bedste anmeldelser af Smart Home udstyr, guides til det perfekte WiFi, eller få 3 uforpligtende tilbud på professionel opsætning.">
 
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f2ff'/%3E%3Cstop offset='100%25' stop-color='%230061ff'/%3E%3C/linearGradient%3E%3Cfilter id='b'%3E%3CfeGaussianBlur in='SourceGraphic' stdDeviation='2' result='blur'/%3E%3CfeColorMatrix in='blur' mode='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7' result='goo'/%3E%3CfeBlend in='SourceGraphic' in2='goo'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23050507'/%3E%3Cg filter='url(%23b)'%3E%3Cpath d='M32 14a22 22 0 0 1 15.6 6.4l-3.5 3.5a17 17 0 0 0-24.2 0l-3.5-3.5A22 22 0 0 1 32 14z' fill='url(%23a)'/%3E%3Cpath d='M32 24a12 12 0 0 1 8.5 3.5l-3.5 3.5a7 7 0 0 0-10 0l-3.5-3.5A12 12 0 0 1 32 24z' fill='url(%23a)'/%3E%3Cpath d='M32 34a2 2 0 1 1 0 4 2 2 0 0 1 0-4z' fill='url(%23a)'/%3E%3Cpath d='M14 40l18-14 18 14v18a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2V40z' fill='none' stroke='url(%23a)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E... (behold dit nuværende SVG ikon her) ... %3C/svg%3E" type="image/svg+xml">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,8 +28,6 @@
             --neon-purple: #bd00ff;
             --col-matter: #FACC15; 
             --col-thread: #06b6d4; 
-            
-            /* Ecosystem Colors */
             --eco-apple: #ffffff;
             --eco-google: #4285F4;
             --eco-samsung: #104494;
@@ -39,6 +37,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         
         body {
             background-color: var(--bg-deep);
@@ -55,472 +54,329 @@
         h1, h2, h3, h4 { font-family: var(--font-head); color: white; }
         p { color: #94a3b8; margin-bottom: 1rem; font-size: 1.05rem; }
         strong { color: #fff; font-weight: 600; }
+        a { text-decoration: none; color: var(--neon-blue); transition: 0.3s; }
+        a:hover { color: white; }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            background: rgba(5, 5, 7, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+        }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: #cbd5e1; font-weight: 500; }
+        .nav-links a:hover { color: var(--neon-blue); }
 
         /* --- HERO FRAME --- */
+        header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding-top: 5rem; }
         .hero-frame {
-            position: relative;
-            padding: 4rem 3rem;
-            margin-bottom: 2rem;
-            border-radius: 30px;
-            text-align: center;
-            background: rgba(5, 5, 10, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            box-shadow: 
-                0 0 0 1px rgba(0, 242, 255, 0.05),
-                0 0 30px rgba(0, 242, 255, 0.15), 
-                inset 0 0 30px rgba(0, 242, 255, 0.05); 
-            transition: box-shadow 0.5s ease;
+            position: relative; padding: 4rem 3rem; margin-bottom: 2rem; border-radius: 30px; text-align: center;
+            background: rgba(5, 5, 10, 0.4); backdrop-filter: blur(15px); border: 1px solid rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(0, 242, 255, 0.05), 0 0 30px rgba(0, 242, 255, 0.15), inset 0 0 30px rgba(0, 242, 255, 0.05); 
             animation: pulse-border 4s infinite alternate;
         }
-
         @keyframes pulse-border {
             0% { box-shadow: 0 0 20px rgba(0, 242, 255, 0.1), inset 0 0 20px rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.1); }
             100% { box-shadow: 0 0 50px rgba(0, 242, 255, 0.3), inset 0 0 50px rgba(0, 242, 255, 0.1); border-color: rgba(0, 242, 255, 0.4); }
         }
-        
-        .hero-frame::before, .hero-frame::after {
-            content: ''; position: absolute; width: 20px; height: 20px;
-            border: 2px solid var(--neon-blue); transition: 0.3s; opacity: 0.6;
-        }
-        .hero-frame::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-radius: 20px 0 0 0; }
-        .hero-frame::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-radius: 0 0 20px 0; }
-
-        /* --- GLOWING LED TEXT --- */
         .wifi-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(3.5rem, 9vw, 7.5rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
-            color: rgba(255,255,255,0.1); 
-            -webkit-text-stroke: 2px rgba(255,255,255,0.15);
+            font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem;
+            color: rgba(255,255,255,0.1); -webkit-text-stroke: 2px rgba(255,255,255,0.15);
             background: linear-gradient(110deg, rgba(255,255,255,0) 45%, #00f2ff 50%, rgba(255,255,255,0) 55%);
-            background-size: 250% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shine 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.2));
+            background-size: 250% 100%; -webkit-background-clip: text; animation: shine 6s infinite; filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.2));
         }
         @keyframes shine { 0% { background-position: 250% center; } 100% { background-position: -150% center; } }
 
-        /* --- GLASS PANELS --- */
-        .glass-card {
-            background: var(--glass-surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s;
-            height: 100%;
-        }
-        .glass-card:hover {
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
-        }
-
-        /* --- SECTIONS --- */
-        header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
-        section { padding: 6rem 0; }
-        
-        .section-title { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; }
-        .section-sub { text-align: center; max-width: 800px; margin: 0 auto 4rem auto; font-size: 1.2rem; }
-
-        /* --- PROTOCOL GRID --- */
-        .protocol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
-        .tech-tag { 
-            display: inline-block; padding: 4px 12px; border-radius: 50px; 
-            font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        /* --- IOT UNIVERSE (LISTS) --- */
-        .iot-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-        .full-width-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        
-        .iot-list li { list-style: none; margin-bottom: 1.5rem; padding-left: 1.5rem; position: relative; }
-        .iot-list li::before { content: '●'; color: var(--neon-blue); position: absolute; left: 0; top: 2px; font-size: 0.8rem; }
-
-        /* --- ECOSYSTEM STYLES --- */
-        .eco-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-        .card-apple:hover { border-color: var(--eco-apple); box-shadow: 0 0 30px rgba(255,255,255,0.15); }
-        .card-google:hover { border-color: var(--eco-google); box-shadow: 0 0 30px rgba(66, 133, 244, 0.25); }
-        .card-samsung:hover { border-color: #00c3ff; box-shadow: 0 0 30px rgba(16, 68, 148, 0.4); }
-        .eco-logo { font-size: 3rem; margin-bottom: 1.5rem; }
-        
-        /* --- TIMELINE --- */
-        .timeline-item { border-left: 2px solid var(--neon-blue); padding-left: 2rem; margin-bottom: 3rem; position: relative; }
-        .timeline-item::before { content: ''; width: 16px; height: 16px; background: var(--bg-deep); border: 2px solid var(--neon-blue); border-radius: 50%; position: absolute; left: -9px; top: 0; }
-        .time-stamp { font-family: var(--font-head); color: var(--neon-blue); font-weight: bold; margin-bottom: 0.5rem; display: block; }
-
-        /* --- CTA BUTTON --- */
+        /* --- BUTTONS --- */
         .btn-glow {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: linear-gradient(90deg, #00f2ff, #0061ff);
-            color: #000;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 50px;
-            margin-top: 2rem;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-            border: none; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 1rem 2rem; background: linear-gradient(90deg, #00f2ff, #0061ff); color: #000;
+            font-weight: 700; border-radius: 50px; transition: 0.3s; box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); border: none; cursor: pointer;
         }
-        .btn-glow:hover { box-shadow: 0 0 50px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
+        .btn-glow:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); transform: translateY(-2px); color: #000; }
+        
+        .btn-outline {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 1rem 2rem; background: transparent; color: white; font-weight: 600;
+            border-radius: 50px; border: 1px solid var(--neon-blue); transition: 0.3s; cursor: pointer;
+        }
+        .btn-outline:hover { background: rgba(0, 242, 255, 0.1); transform: translateY(-2px); }
+
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+
+        /* --- GLASS CARDS --- */
+        .glass-card {
+            background: var(--glass-surface); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 2rem; transition: transform 0.3s ease, border-color 0.3s ease; height: 100%; position: relative;
+        }
+        .glass-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
+
+        /* --- SECTIONS & GRIDS --- */
+        section { padding: 6rem 0; }
+        .section-title { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; }
+        .section-sub { text-align: center; max-width: 800px; margin: 0 auto 4rem auto; font-size: 1.1rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+
+        /* --- AFFILIATE PRODUCT CARDS --- */
+        .product-badge { position: absolute; top: -15px; left: 20px; background: linear-gradient(90deg, #FACC15, #f59e0b); color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); }
+        .product-image-placeholder { width: 100%; height: 200px; background: rgba(0,0,0,0.4); border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.1); }
+        .pros-cons { margin: 1.5rem 0; font-size: 0.95rem; }
+        .pros-cons li { list-style: none; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+        .pros-cons .pro i { color: #22c55e; margin-top: 4px; }
+        .pros-cons .con i { color: #f43f5e; margin-top: 4px; }
+
+        /* --- LEAD GEN FORM --- */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #e2e8f0; font-weight: 500; }
+        .form-control { width: 100%; padding: 1rem; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); border-radius: 10px; color: white; font-family: var(--font-main); font-size: 1rem; transition: 0.3s; }
+        .form-control:focus { outline: none; border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
+        select.form-control { appearance: none; }
 
         @media(max-width: 768px) {
-            .iot-layout { grid-template-columns: 1fr; }
-            .wifi-title { font-size: 13vw; }
-            .hero-frame { padding: 2rem 1rem; }
+            .nav-links { display: none; } /* Simpel mobil-håndtering for nu */
+            .hero-buttons { flex-direction: column; }
+            .btn-glow, .btn-outline { width: 100%; }
         }
     </style>
 </head>
 <body>
 
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="nav-logo">
+                <i class="ph-duotone ph-house-line" style="color: var(--neon-blue); font-size: 1.8rem;"></i>
+                WiFiHuset
+            </a>
+            <div class="nav-links">
+                <a href="#anmeldelser">Bedst i Test</a>
+                <a href="#guides">Viden & Guides</a>
+                <a href="#tilbud" style="color: var(--col-matter); font-weight: 700;">Få 3 Tilbud</a>
+            </div>
+        </div>
+    </nav>
+
     <header>
         <div class="container">
             <div class="hero-frame gsap-fade">
-                <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; color:white;">
-                    Velkommen til fremtiden
+                <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; color:var(--neon-blue); font-weight: 700;">
+                    Danmarks uafhængige Smart Home portal
                 </div>
-                <h1 class="wifi-title">WiFiHuset</h1>
-                <p style="font-size: 1.2rem; max-width: 650px; margin: 1.5rem auto 2rem auto; color: #cbd5e1;">
-                    Vi er arkitekterne bag dit intelligente hjem. Fra det solide netværk til den mindste sensor. Vi integrerer alt fra intelligente ovne og robotplæneklippere til adaptiv belysning.
+                <h1 class="wifi-title">Gør dit hjem<br>intelligent</h1>
+                <p style="font-size: 1.2rem; max-width: 700px; margin: 1.5rem auto 0 auto; color: #cbd5e1;">
+                    Find de nyeste anmeldelser, dybdegående guides til WiFi og IoT, eller spring over det tekniske bøvl og få professionel hjælp til opsætningen.
                 </p>
-                <a href="#protocols" class="btn-glow">Start Rejsen Her ↓</a>
+                <div class="hero-buttons">
+                    <a href="#anmeldelser" class="btn-glow"><i class="ph-bold ph-star"></i> Se Testvindere 2026</a>
+                    <a href="#tilbud" class="btn-outline"><i class="ph-bold ph-wrench"></i> Få tilbud på opsætning</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="protocols">
+    <section id="anmeldelser">
         <div class="container">
-            <h2 class="section-title">Sproget i dit hjem</h2>
-            <p class="section-sub">
-                For at forstå mulighederne i et moderne Smart Home, skal man forstå teknologien bag. Det handler ikke bare om at købe en pære; det handler om infrastrukturen. Her er de tre søjler, vi bygger på.
-            </p>
+            <h2 class="section-title">Anbefalet Udstyr (Testvindere)</h2>
+            <p class="section-sub">Vi tester og gennemtrawler markedet, så du undgår fejlkøb. Her er de produkter, der leverer den mest stabile og komplette Smart Home oplevelse lige nu.</p>
 
-            <div class="protocol-grid">
+            <div class="grid-3">
                 <div class="glass-card gsap-up">
-                    <span class="tech-tag" style="color:#3b82f6; border-color:#3b82f6;">Backbone</span>
+                    <div class="product-badge">Bedste Mesh WiFi</div>
+                    <div class="product-image-placeholder">
+                        <i class="ph-duotone ph-router" style="font-size: 4rem; color: var(--neon-blue);"></i>
+                    </div>
+                    <h3>Ubiquiti UniFi Express</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">Det absolut stærkeste valg til at dække hele huset uden udfald. Kræver lidt teknisk snilde, men slår alt andet.</p>
+                    
+                    <ul class="pros-cons">
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Ekstrem stabilitet og rækkevidde</li>
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Ingen månedlige abonnementer</li>
+                        <li class="con"><i class="ph-bold ph-x-circle"></i> Kræver lidt mere opsætning</li>
+                    </ul>
+                    
+                    <a href="#" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem;">
+                        Se pris hos Proshop <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card gsap-up">
+                    <div class="product-badge" style="background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">Bedste Robotplæneklipper</div>
+                    <div class="product-image-placeholder">
+                        <i class="ph-duotone ph-car-profile" style="font-size: 4rem; color: #22c55e;"></i>
+                    </div>
+                    <h3>Segway Navimow H1500E</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">Farvel til irriterende kanttråd. Denne robot bruger GPS og AI-kamera til at navigere pletfrit i haven.</p>
+                    
+                    <ul class="pros-cons">
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Trådløs installation (GPS/RTK)</li>
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Undviger automatisk legetøj</li>
+                        <li class="con"><i class="ph-bold ph-x-circle"></i> Kræver frit udsyn til himlen</li>
+                    </ul>
+                    
+                    <a href="#" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">
+                        Se pris hos Homeshop <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card gsap-up">
+                    <div class="product-badge" style="background: linear-gradient(90deg, #bd00ff, #9333ea); color: white;">Bedste Smart Lås</div>
+                    <div class="product-image-placeholder">
+                        <i class="ph-duotone ph-lock-key" style="font-size: 4rem; color: #bd00ff;"></i>
+                    </div>
+                    <h3>Yale Doorman L3S</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0;">Gør din hoveddør nøglefri. Låser automatisk op, når du nærmer dig, og integrerer perfekt med Google og Apple.</p>
+                    
+                    <ul class="pros-cons">
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Højeste sikkerhedsgodkendelse</li>
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Indbygget dørklokke & auto-unlock</li>
+                        <li class="con"><i class="ph-bold ph-x-circle"></i> Høj anskaffelsespris</li>
+                    </ul>
+                    
+                    <a href="#" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #bd00ff, #9333ea); color: white;">
+                        Se pris hos Elgiganten <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#" style="font-size: 1.1rem; font-weight: 600;">Gå til alle anmeldelser →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="tilbud" style="background: rgba(0, 242, 255, 0.02); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <div class="gsap-up">
+                    <h2 class="section-title" style="text-align: left;">Orker du ikke teknikken? Få det fikset.</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                        WiFi-huller, pærer der blinker, og apps der ikke snakker sammen. Det kan være en tidsrøver at sætte et ægte Smart Home op.
+                    </p>
+                    <ul class="pros-cons" style="font-size: 1.1rem;">
+                        <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Beskriv din opgave kort</li>
+                        <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Modtag op til 3 uforpligtende tilbud</li>
+                        <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Udført af certificerede lokale installatører</li>
+                        <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> 100% gratis og uforpligtende tjeneste</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card gsap-up" style="border-color: rgba(0, 242, 255, 0.3); box-shadow: 0 0 30px rgba(0,242,255,0.05);">
+                    <h3 style="margin-bottom: 1.5rem; text-align: center;">Indhent Tilbud</h3>
+                    <form action="#">
+                        <div class="form-group">
+                            <label>Hvad har du brug for hjælp til?</label>
+                            <select class="form-control">
+                                <option>Vælg kategori...</option>
+                                <option>Opsætning af netværk & WiFi</option>
+                                <option>Installation af Smart Lys (Hue mv.)</option>
+                                <option>Overvågning & Alarm</option>
+                                <option>Komplet Smart Home system</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Beskriv opgaven kort</label>
+                            <textarea class="form-control" rows="3" placeholder="F.eks. 'Jeg har et hus på 150kvm hvor nettet ikke rækker i haven...'"></textarea>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Postnummer</label>
+                                <input type="text" class="form-control" placeholder="F.eks. 9800">
+                            </div>
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <input type="email" class="form-control" placeholder="din@email.dk">
+                            </div>
+                        </div>
+                        <button type="button" class="btn-glow" style="width: 100%; margin-top: 1rem;">Få 3 Tilbud Nu</button>
+                    </form>
+                    <p style="text-align: center; font-size: 0.8rem; margin-top: 1rem; color: #64748b;">Dine data deles kun med godkendte partnere med henblik på at give tilbud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="guides">
+        <div class="container">
+            <h2 class="section-title">Dyk ned i vores guides</h2>
+            <p class="section-sub">Lær at bygge infrastrukturen i dit hjem. Vi skærer teknologien ud i pap.</p>
+
+            <div class="grid-3">
+                <div class="glass-card gsap-up" style="display: flex; flex-direction: column;">
+                    <i class="ph-duotone ph-router" style="font-size:3rem; color:var(--neon-blue); margin-bottom: 1rem;"></i>
                     <h3>WiFi & Netværk</h3>
-                    <p><strong>Fundamentet i WiFiHuset.</strong> Uden stabilt internet virker intet. Mange oplever "huller" i dækningen, når de begynder at tilføje enheder. Vi designer netværk med fokus på kapacitet og rækkevidde.</p>
-                    <p>Vi differentierer mellem 2.4GHz (til rækkevidde og IoT-enheder) og 5GHz/6GHz (til hastighed, 4K streaming og gaming). Vi installerer professionelle Access Points (fx Ubiquiti UniFi eller Cisco Meraki), der sikrer roaming, så du kan gå fra kælderen til loftet uden at miste forbindelsen på din FaceTime-samtale.</p>
+                    <p>Lær alt om forskellen på Mesh, Access Points, 5GHz og WiFi 7. Fundamentet for ethvert Smart Home.</p>
+                    <a href="#" style="margin-top: auto; font-weight: 600;">Læs Netværks-guiden →</a>
                 </div>
 
-                <div class="glass-card gsap-up" style="border-color: rgba(250, 204, 21, 0.3);">
-                    <span class="tech-tag" style="color:var(--col-matter); border-color:var(--col-matter);">Standard</span>
-                    <h3>Matter <i class="ph-fill ph-star" style="color:var(--col-matter);"></i></h3>
-                    <p><strong>Den nye verdensstandard.</strong> Historisk set har IoT-branchen været fragmenteret. Hvis du købte en pære, virkede den måske kun med Apple, men ikke Google. Matter ændrer alt dette.</p>
-                    <p>Matter er et universelt sprog, udviklet i fællesskab af giganter som Apple, Google, Amazon og Samsung. Det sikrer interoperabilitet på tværs af brands. Det betyder, at vi kan blande det bedste udstyr fra forskellige producenter uden at gå på kompromis med brugeroplevelsen. Din Nanoleaf-lampe taler nu flydende sammen med din Google Nest Hub.</p>
+                <div class="glass-card gsap-up" style="display: flex; flex-direction: column;">
+                    <i class="ph-duotone ph-lightning" style="font-size:3rem; color:#f59e0b; margin-bottom: 1rem;"></i>
+                    <h3>Energi & Varme</h3>
+                    <p>Sådan bruger du smarte termostater og strømstyring til at skære toppen af energiregningen automatisk.</p>
+                    <a href="#" style="margin-top: auto; font-weight: 600; color:#f59e0b;">Se Spareråd →</a>
                 </div>
 
-                <div class="glass-card gsap-up">
-                    <span class="tech-tag" style="color:var(--col-thread); border-color:var(--col-thread);">Mesh</span>
-                    <h3>Thread & Zigbee</h3>
-                    <p><strong>Det usynlige, selvhelende mesh.</strong> WiFi er strømkrævende. Derfor bruger vi protokoller som Thread og Zigbee til batteridrevne enheder som sensorer og låse.</p>
-                    <p>Thread skaber et dedikeret mesh-netværk udenom dit WiFi. Det er "low latency", hvilket betyder, at lyset tænder <em>øjeblikkeligt</em>, når du trykker på kontakten. Zigbee (kendt fra Philips Hue) fungerer på samme måde. Hvis én enhed fejler, finder signalet en ny rute gennem de andre enheder i huset, hvilket sikrer ekstrem stabilitet.</p>
+                <div class="glass-card gsap-up" style="display: flex; flex-direction: column;">
+                    <i class="ph-duotone ph-shield-check" style="font-size:3rem; color:#ef4444; margin-bottom: 1rem;"></i>
+                    <h3>Sikkerhed</h3>
+                    <p>Guides til digitale låse, videodørklokker og kameraer uden dyre vagtselskabs-abonnementer.</p>
+                    <a href="#" style="margin-top: auto; font-weight: 600; color:#ef4444;">Byg dit eget forsvar →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="iot-rooms" style="background: rgba(255,255,255,0.02);">
+    <footer style="border-top:1px solid var(--glass-border); padding:4rem 0; font-size:0.9rem; color:#94a3b8;">
         <div class="container">
-            <h2 class="section-title">Rundt i det Intelligente Hjem</h2>
-            <p class="section-sub">Mulighederne er uendelige. Her dykker vi ned i, hvad der faktisk kan lade sig gøre i de forskellige rum og zoner af din bolig, når WiFiHuset har været forbi.</p>
-
-            <div class="iot-layout">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
                 
                 <div>
-                    <div class="glass-card gsap-up" style="margin-bottom: 2rem;">
-                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                            <i class="ph-duotone ph-shield-check" style="font-size:2.5rem; color:var(--neon-blue);"></i>
-                            <h3>Sikkerhed & Overvågning</h3>
-                        </div>
-                        <p>Føl dig tryg døgnet rundt med et system, der aldrig sover. Det handler ikke kun om indbrud, men om tryghed i hverdagen.</p>
-                        <ul class="iot-list">
-                            <li><strong>Smart Locks (Yale/Danalock):</strong> Hoveddøren låser automatisk op, når din telefon nærmer sig (Geofencing). Du kan uddele midlertidige digitale nøgler til håndværkere eller rengøringshjælp, som automatisk udløber.</li>
-                            <li><strong>AI-kameraer:</strong> Ubiquiti eller Nest kameraer, der skelner mellem personer, dyr og køretøjer. Få besked: "Postbuddet er ved døren" i stedet for bare "Bevægelse registreret".</li>
-                            <li><strong>Perimeter-sikring:</strong> Udendørs sensorer i indkørslen tænder lyset og sender en notifikation, før gæsten overhovedet når døren.</li>
-                            <li><strong>Lækagesensorer:</strong> Små sensorer under vaskemaskinen og i teknikskabet. Ved den mindste dråbe vand lukkes hovedhanen automatisk for at forhindre vandskade.</li>
-                            <li><strong>Simuleret tilstedeværelse:</strong> Når du er på ferie, tænder og slukker huset lyset i et naturligt mønster, så det ligner, at nogen er hjemme.</li>
-                        </ul>
-                    </div>
-
-                    <div class="glass-card gsap-up" style="margin-bottom: 2rem;">
-                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                            <i class="ph-duotone ph-cooking-pot" style="font-size:2.5rem; color:#f43f5e;"></i>
-                            <h3>Det Intelligente Køkken</h3>
-                        </div>
-                        <p>Køkkenet er husets hjerte, og her kan IoT spare dig for tid og bekymringer. Vi integrerer hårde hvidevarer fra brands som Siemens, Bosch, Samsung og Miele.</p>
-                        <ul class="iot-list">
-                            <li><strong>Smart Køleskabe:</strong> Samsung Family Hub har indbyggede kameraer. Står du i supermarkedet og er i tvivl om mælk? Kig ind i køleskabet via din telefon. Skærmen på døren kan vise familiens kalender eller opskrifter.</li>
-                            <li><strong>Ovnen & Kaffen:</strong> Forvarm ovnen på vej hjem fra arbejde via stemmestyring. Indstil kaffemaskinen til at brygge din favorit latte, præcis når dit vækkeur ringer.</li>
-                            <li><strong>Opvaskemaskinen:</strong> Få besked på dit Smart TV eller ur, når opvasken er færdig. Maskinen bestiller selv nye opvasketabs via Amazon Dash eller lignende services, når du er ved at løbe tør.</li>
-                            <li><strong>Stemmekontrolleret vandhane:</strong> "Hey Google, hæld 3 deciliter vand op". Perfekt når du har dej på fingrene.</li>
-                        </ul>
-                    </div>
-
-                    <div class="glass-card gsap-up">
-                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                            <i class="ph-duotone ph-potted-plant" style="font-size:2.5rem; color:#22c55e;"></i>
-                            <h3>Haven & Uderummet</h3>
-                        </div>
-                        <p>Forlæng dit Smart Home helt ud til hækken. Vi sikrer WiFi-dækning i haven, så du kan streame Spotify på terrassen, mens robotterne arbejder.</p>
-                        <ul class="iot-list">
-                            <li><strong>Robotplæneklippere:</strong> Nye modeller fra Husqvarna og Segway bruger GPS (RTK) i stedet for kanttråd. De klipper i systematiske mønstre og kører selv i læ, hvis vejrudsigten lover skybrud.</li>
-                            <li><strong>Smart Vanding (Gardena/Rachio):</strong> Vandingsanlægget er koblet til lokale vejrdata. Har det regnet 10mm i nat? Så springer vi vandingen over. Det sparer enorme mængder vand.</li>
-                            <li><strong>Udendørs Atmosfære:</strong> Philips Hue eller WiZ udendørs spots og lightstrips, der tænder automatisk ved solnedgang eller bevægelse. Skab farvescener til havefesten med et enkelt tryk.</li>
-                            <li><strong>Pool & Spa:</strong> Overvåg pH-værdier og temperatur automatisk. Tænd for boblebadet fra kontoret, så det er varmt, når du kommer hjem.</li>
-                        </ul>
-                    </div>
+                    <h2 style="font-size:1.8rem; color:white; margin-bottom:1rem; font-family: var(--font-head);">WiFiHuset</h2>
+                    <p>Din uafhængige guide til det intelligente hjem. Vi gør fremtidens teknologi tilgængelig og forståelig for alle.</p>
+                </div>
+                
+                <div>
+                    <strong style="color:white; display:block; margin-bottom:1rem; font-size: 1.1rem;">Kategorier</strong>
+                    <ul style="list-style:none;">
+                        <li style="margin-bottom:0.5rem;"><a href="#">Bedst i Test 2026</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#">Netværk & WiFi Guides</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#">Smart Lys & Energi</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#">Robotter & Have</a></li>
+                    </ul>
                 </div>
 
                 <div>
-                    <div class="glass-card gsap-up" style="margin-bottom: 2rem;">
-                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                            <i class="ph-duotone ph-lightning" style="font-size:2.5rem; color:#f59e0b;"></i>
-                            <h3>Energioptimering & Klima</h3>
-                        </div>
-                        <p>I en tid med svingende energipriser er dette måske den vigtigste investering. Lad huset tænke over elregningen for dig.</p>
-                        <ul class="iot-list">
-                            <li><strong>Intelligent Opvarmning:</strong> Tado eller Danfoss Ally termostater lærer husets isoleringsevne at kende. De skruer ned, når sidste person forlader huset (via telefonens GPS) og op igen, før I kommer hjem. Systemet registrerer åbne vinduer og pauser varmen øjeblikkeligt.</li>
-                            <li><strong>Forbrugsbaseret styring:</strong> Vi integrerer dine enheder med 'Spotpris'-data. Vaskemaskine, tørretumbler og opvaskemaskine starter automatisk kl. 02.00 om natten, hvis strømmen er billigst der.</li>
-                            <li><strong>Elbil-opladning (Easee/Zaptec):</strong> Laderen taler sammen med husets hovedmåler. Hvis du tænder induktionskomfuret og ovnen samtidig, skruer laderen midlertidigt ned for bilen for at undgå, at sikringen springer (Load Balancing).</li>
-                            <li><strong>Solceller & Batteri:</strong> Automatiseret flow, hvor overskudsstrøm lagres på batterier eller bruges til at opvarme brugsvand, når solen skinner.</li>
-                            <li><strong>Indeklima:</strong> Netatmo eller Airthings måler CO2, radon og luftfugtighed. Bliver luften "tung", modtager du en notifikation, eller det mekaniske ventilationsanlæg skruer automatisk op.</li>
-                        </ul>
-                    </div>
-
-                    <div class="glass-card gsap-up" style="margin-bottom: 2rem;">
-                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                            <i class="ph-duotone ph-lightbulb-filament" style="font-size:2.5rem; color:var(--neon-purple);"></i>
-                            <h3>Lys & Gardiner</h3>
-                        </div>
-                        <p>Lys er ikke bare tænd/sluk. Det er biologi og stemning. Vi arbejder med Human Centric Lighting.</p>
-                        <ul class="iot-list">
-                            <li><strong>Circadian Lighting:</strong> Lyset ændrer farvetemperatur gennem dagen. Koldt, blåt lys om morgenen (som dagslys) booster din kortisol og energi. Varmt, rødligt lys om aftenen fremmer melatonin og søvn.</li>
-                            <li><strong>Automatiske Gardiner:</strong> Velux, Somfy eller IKEA rullegardiner. De ruller op med solopgangen for at vække dig naturligt. Om sommeren ruller de ned på sydsiden midt på dagen for at forhindre overophedning af huset (passiv køling).</li>
-                            <li><strong>Biograf-mode:</strong> Når du tænder Apple TV, dæmpes lyset i stuen langsomt til 10%, gardinerne lukker, og LED-strips bag TV'et aktiveres.</li>
-                            <li><strong>Natlys:</strong> Hvis du står op om natten, registrerer sensoren det. Lyset på badeværelset tænder på kun 5% lysstyrke i en varm glød, så du ikke bliver blændet og vågner helt op.</li>
-                        </ul>
-                    </div>
-
-                    <div class="glass-card gsap-up">
-                        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                            <i class="ph-duotone ph-speaker-hifi" style="font-size:2.5rem; color:#8b5cf6;"></i>
-                            <h3>Underholdning & Multiroom</h3>
-                        </div>
-                        <p>Få musik i alle rum og en biografoplevelse i stuen, alt sammen styret fra én app eller din stemme.</p>
-                        <ul class="iot-list">
-                            <li><strong>Multiroom Audio (Sonos/AirPlay 2):</strong> Spil den samme sang i hele huset til fest, eller lyt til nyheder i køkkenet, mens børnene hører lydbog på værelset. Systemet kan integreres, så musikken stopper, når dørklokken ringer.</li>
-                            <li><strong>Smart TV Integration:</strong> TV'et er mere end en skærm. Det er et dashboard. Se hvem der ringer på døren direkte på TV-skærmen (Picture-in-Picture). Få notifikationer om, at vaskemaskinen er færdig.</li>
-                            <li><strong>Stemmekommandoer:</strong> "Hey Google, sæt Stranger Things på i stuen". TV'et tænder, skifter til Netflix, finder serien og starter afspilningen, mens lyden automatisk flyttes til soundbaren.</li>
-                            <li><strong>Usynlig Teknik:</strong> Vi kan gemme teknikken væk i teknikskabe, så du kun ser skærmen og højttalerne, men stadig har fuld kontrol via en universalfjernbetjening (fx Control4 eller Savant) eller telefonen.</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="day-in-life">
-        <div class="container">
-            <h2 class="section-title">En Dag i et WiFiHuset Hjem</h2>
-            <p class="section-sub">Hvordan føles det egentlig at leve i fremtiden? Her er et eksempel på en hverdag, hvor teknologien arbejder for dig, ikke imod dig.</p>
-            
-            <div style="max-width: 800px; margin: 0 auto;">
-                <div class="timeline-item gsap-up">
-                    <span class="time-stamp">06:45 - Blid Opvågning</span>
-                    <p>Dine mørklægningsgardiner ruller langsomt op 15 minutter før dit vækkeur. Lyset i soveværelset fader op i en gylden solopgangsfarve. Badeværelset er allerede forvarmet til behagelige 23 grader via den smarte termostat, og håndklædetørreren er tændt.</p>
-                </div>
-                
-                <div class="timeline-item gsap-up">
-                    <span class="time-stamp">07:30 - Morgenrutinen</span>
-                    <p>Du går i køkkenet. "Godmorgen"-scenen aktiveres: Nyhederne spiller dæmpet på Sonos-højttaleren, kaffemaskinen har brygget frisk kaffe, og køkkenlyset er klart og energigivende. Skærmen på køleskabet viser dagens vejrudsigt og familiens kalender.</p>
-                </div>
-
-                <div class="timeline-item gsap-up">
-                    <span class="time-stamp">08:15 - Afgang</span>
-                    <p>Sidste person forlader huset. Du behøver ikke tjekke, om lyset er slukket. Når dørlåsen registrerer, at du går, aktiveres "Leaving Home"-rutinen: Alt lys slukkes, varmen sænkes til spare-tilstand, alarmen tilkobles, og robotstøvsugeren kører ud fra sin ladestation for at rengøre gulvene, mens I er væk.</p>
-                </div>
-
-                <div class="timeline-item gsap-up">
-                    <span class="time-stamp">14:00 - Huset Arbejder</span>
-                    <p>Solen står direkte ind på stuevinduerne. En lyssensor registrerer intensiteten, og markisen kører automatisk ud for at forhindre, at stuen bliver en sauna. Solcellerne producerer maksimal strøm, så vaskemaskinen og opvaskemaskinen starter automatisk for at udnytte den gratis energi.</p>
-                </div>
-
-                <div class="timeline-item gsap-up">
-                    <span class="time-stamp">17:30 - Ankomst</span>
-                    <p>På vej hjem ser systemet via din telefons GPS, at du nærmer dig. Varmen skrues op igen. Garagen åbner automatisk, når du svinger ind i indkørslen. Elbil-laderen er klar, men venter med at lade til kl. 00:00, hvor strømmen er billigst.</p>
-                </div>
-
-                <div class="timeline-item gsap-up">
-                    <span class="time-stamp">20:00 - Filmaften</span>
-                    <p>Familien samles i stuen. Med én kommando "Det er filmtid", dæmpes alt lys, gardinerne lukker, og TV'et tænder. Hvis det ringer på døren midt i filmen, pauses filmen automatisk, og kameraet ved døren vises i et lille vindue på TV-skærmen.</p>
-                </div>
-
-                <div class="timeline-item gsap-up" style="border-left-color: transparent;">
-                    <span class="time-stamp">23:00 - Godnat</span>
-                    <p>Du siger "Godnat" til huset. Alle døre låses, perimeter-alarmen i haven aktiveres, alt lys (undtagen natlys på gangen) slukkes, og temperaturen i soveværelset sænkes til den optimale sovetemperatur på 18 grader. Sov godt.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="ecosystems">
-        <div class="container">
-            <h2 class="section-title">Din Kommandocentral</h2>
-            <p class="section-sub">
-                Vi installerer ikke bare grej; vi samler det hele i én brugervenlig app. 
-                Uanset om du er til Apple, Android eller Samsung, får WiFiHuset det til at spille.
-            </p>
-
-            <div class="eco-grid">
-                <div class="glass-card card-apple gsap-up">
-                    <i class="ph-fill ph-apple-logo eco-logo" style="color: white;"></i>
-                    <h3>Apple Hjem (HomeKit)</h3>
-                    <p><strong>Privatliv først.</strong> Det oplagte valg til iPhone-familien. Apple HomeKit er kendt for sin ekstremt høje sikkerhed (end-to-end kryptering) og intuitive design.</p>
-                    <ul class="iot-list" style="margin-top:1rem;">
-                        <li><strong>Siri:</strong> Styr huset med stemmen via HomePod mini eller Apple Watch.</li>
-                        <li><strong>Home Key:</strong> Åbn døren ved blot at holde din iPhone eller Apple Watch hen til låsen (kræver kompatibel lås).</li>
-                        <li><strong>Secure Video:</strong> Kameraoptagelser analyseres lokalt i hjemmet på din HomePod/Apple TV, ikke i skyen, for maksimalt privatliv.</li>
+                    <strong style="color:white; display:block; margin-bottom:1rem; font-size: 1.1rem;">Information</strong>
+                    <ul style="list-style:none;">
+                        <li style="margin-bottom:0.5rem;"><a href="#">Om WiFiHuset</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#">Kontakt Os</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#">Persondatapolitik</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#">Betingelser for tilbudstjeneste</a></li>
                     </ul>
                 </div>
 
-                <div class="glass-card card-google gsap-up">
-                    <i class="ph-fill ph-google-logo eco-logo" style="color: #4285F4;"></i>
-                    <h3>Google Home</h3>
-                    <p><strong>Verdens klogeste assistent.</strong> Google Assistent er dybt integreret i Googles økosystem. Perfekt hvis du vil stille spørgsmål eller har mange Chromecast-enheder.</p>
-                    <ul class="iot-list" style="margin-top:1rem;">
-                        <li><strong>Vidensbank:</strong> Spørg "Hvor meget strøm bruger huset lige nu?" eller "Hvem står ved døren?".</li>
-                        <li><strong>Nest Hub:</strong> Brug skærmene i køkkenet til at se opskrifter og styre lyset visuelt.</li>
-                        <li><strong>Kompatibilitet:</strong> Google Home understøtter det bredeste udvalg af billigere IoT-enheder på markedet.</li>
-                    </ul>
-                </div>
-
-                <div class="glass-card card-samsung gsap-up">
-                    <i class="ph-bold ph-asterisk-simple eco-logo" style="color: #00c3ff;"></i>
-                    <h3>Samsung SmartThings</h3>
-                    <p><strong>Automations-kongen.</strong> SmartThings er kraftcenteret for dig, der vil nørde detaljerne. Det binder dine Samsung hvidevarer sammen med resten af huset.</p>
-                    <ul class="iot-list" style="margin-top:1rem;">
-                        <li><strong>Avanceret logik:</strong> Lav komplekse regler som "HVIS vinduet har været åbent i 5 minutter OG det regner, SÅ send en SMS".</li>
-                        <li><strong>Find min enhed:</strong> Brug SmartThings Find til at spore alt fra dine Galaxy Buds til din cykel (via SmartTags).</li>
-                        <li><strong>Hvidevarer:</strong> Den bedste integration til vaskemaskiner, tørretumblere og køleskabe.</li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </section>
 
-    <section id="faq" style="background: rgba(255,255,255,0.02);">
-        <div class="container">
-            <h2 class="section-title">Ofte Stillede Spørgsmål</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                
-                <div class="glass-card gsap-up">
-                    <h4 style="color:var(--neon-blue); margin-bottom:0.5rem;">Hvad sker der, hvis internettet ryger?</h4>
-                    <p>Et godt spørgsmål. I et WiFiHuset-setup prioriterer vi lokal styring. Selvom internettet (forbindelsen til udverdenen) ryger, vil dine lyskontakter, sensorer og rutiner stadig fungere, fordi de kører på dit lokale netværk (LAN) via protokoller som Thread og Zigbee. Du kan stadig tænde lyset og låse døren op. Det er kun stemmestyring (Siri/Google) og fjernadgang, der midlertidigt vil være nede.</p>
-                </div>
-
-                <div class="glass-card gsap-up">
-                    <h4 style="color:var(--neon-blue); margin-bottom:0.5rem;">Er det sikkert? Kan det hackes?</h4>
-                    <p>Sikkerhed er vores førsteprioritet. Vi adskiller dine IoT-enheder på et separat VLAN (Virtuelt Lokalnetværk). Det betyder, at selv hvis nogen skulle hacke din smarte pære, kan de ikke få adgang til din computer eller dine bankoplysninger på hovednetværket. Vi bruger kun udstyr med høj kryptering og hjælper med opsætning af 2-faktor-godkendelse på alle konti.</p>
-                </div>
-
-                <div class="glass-card gsap-up">
-                    <h4 style="color:var(--neon-blue); margin-bottom:0.5rem;">Kan jeg bruge mine gamle enheder?</h4>
-                    <p>Ofte, ja. Med den nye Matter-standard og diverse "bridges" (broer) kan vi integrere meget ældre udstyr. F.eks. kan gamle alarmsystemer ofte gøres smarte med et simpelt modul. Vi starter altid med en gennemgang af dit nuværende grej for at se, hvad der kan genbruges.</p>
-                </div>
-
-                <div class="glass-card gsap-up">
-                    <h4 style="color:var(--neon-blue); margin-bottom:0.5rem;">Hvad koster det i strøm?</h4>
-                    <p>Faktisk sparer et Smart Home typisk strøm. Selvom enhederne bruger en lille smule strøm på standby, opvejes dette mange gange af besparelserne ved intelligent varmestyring (op til 30% besparelse), automatisk slukning af lys og opladning af elbil/vask om natten. Investeringen tjenes ofte hjem over tid.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="why" style="position:relative; overflow:hidden;">
-        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; background:var(--neon-blue); filter:blur(200px); opacity:0.1; z-index:0;"></div>
-        
-        <div class="container" style="text-align:center;">
-            <h2 class="section-title">Hvorfor vælge WiFiHuset?</h2>
-            <div style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #ccc;">
-                <p>
-                    Markedet for Smart Home er en jungle. Man kan købe smarte pærer i byggemarkedet, men det bliver sjældent et rigtigt "Smart Home". Det bliver til 10 forskellige apps, der ikke taler sammen, og enheder der falder af netværket, når mikrobølgeovnen kører.
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; flex-direction: column; gap: 1rem; text-align: center;">
+                <p style="font-size: 0.8rem; margin: 0; opacity: 0.7;">
+                    <strong>Reklameinformation:</strong> Wifihuset.dk er finansieret af reklameindtægter. Når du klikker på links til webshops og foretager et køb, modtager vi i nogle tilfælde en kommission. Det koster ikke dig ekstra, men hjælper os med at drive siden. Vi indhenter også kommission ved formidling af tilbud på installationer.
                 </p>
-                <p>
-                    <strong>WiFiHuset er din tekniske entreprenør.</strong> Vi bygger infrastrukturen. Vi sikrer, at dit WiFi kan bære de 50-100+ enheder, et moderne hjem hurtigt får. Vi programmerer logikken, så huset passer sig selv, i stedet for at du skal passe huset. Vi leverer dokumentation, support og en løsning, der virker fra dag 1.
-                </p>
-                <p style="margin-top:2rem; font-style:italic; color:var(--neon-blue);">
-                    — Vi leverer ikke bare gadgets. Vi leverer en hverdag, der flyder.
-                </p>
+                <p style="margin: 0;">© 2026 WiFiHuset. Alle rettigheder forbeholdes.</p>
             </div>
-            <a href="tel:+4529252322" class="btn-glow" style="margin-top:3rem;">Ring og få rådgivning</a>
-        </div>
-    </section>
-
-    <footer style="border-top:1px solid var(--glass-border); padding:4rem 0; text-align:center; font-size:0.9rem; color:#666;">
-        <div class="container">
-            <h2 style="font-size:2rem; color:white; margin-bottom:0.5rem;">WiFiHuset</h2>
-            <p>Professionel Smart Home Integration & Netværksløsninger</p>
-            
-            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:3rem; margin: 2rem 0;">
-                <div style="text-align:left;">
-                    <strong style="display:block; color:white; margin-bottom:0.5rem;">Kontaktperson</strong>
-                    <p style="margin:0; color:#ccc;">Lasse Kronborg Breckmann Nielsen</p>
-                    <p style="margin:0;"><a href="tel:+4529252322" style="color:#888; text-decoration:none;">+45 29 25 23 22</a></p>
-                    <p style="margin:0;"><a href="mailto:kronborg@outlook.com" style="color:#888; text-decoration:none;">kronborg@outlook.com</a></p>
-                </div>
-                <div style="text-align:left;">
-                    <strong style="display:block; color:white; margin-bottom:0.5rem;">Adresse</strong>
-                    <p style="margin:0;">Rolighedsvej 14</p>
-                    <p style="margin:0;">9800 Hjørring</p>
-                </div>
-            </div>
-
-            <div style="margin-top:1rem;">
-                <a href="#" style="color:#888; margin:0 10px; text-decoration:none;">Handelsbetingelser</a>
-                <a href="#" style="color:#888; margin:0 10px; text-decoration:none;">Privatlivspolitik</a>
-                <a href="#" style="color:#888; margin:0 10px; text-decoration:none;">Cookie Indstillinger</a>
-            </div>
-            <p style="margin-top:2rem; font-size:0.8rem; opacity:0.5;">© 2025 WiFiHuset ApS. Alle rettigheder forbeholdes.</p>
         </div>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Animation
-        gsap.from(".gsap-fade", {
-            y: 50,
-            opacity: 0,
-            duration: 1.5,
-            ease: "power3.out",
-            delay: 0.2
-        });
+        gsap.from(".gsap-fade", { y: 50, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.2 });
 
-        // Fade Up Cards & Items
         gsap.utils.toArray('.gsap-up').forEach(element => {
             gsap.from(element, {
-                scrollTrigger: {
-                    trigger: element,
-                    start: "top 90%", 
-                },
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power2.out"
+                scrollTrigger: { trigger: element, start: "top 90%" },
+                y: 40, opacity: 0, duration: 0.8, ease: "power2.out"
             });
         });
     </script>
