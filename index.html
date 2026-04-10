@@ -2,7 +2,7 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WiFiHuset | Danmarks Største Guide til Smart Home & WiFi</title>
     <meta name="description" content="Find de bedste anmeldelser af Smart Home udstyr, guides til det perfekte WiFi, eller få 3 uforpligtende tilbud på professionel opsætning.">
 
@@ -27,11 +27,22 @@
             --neon-dark-blue: #0061ff;
             --neon-purple: #bd00ff;
             --col-matter: #FACC15; 
-            --col-thread: #06b6d4; 
+            
+            /* Font fallbacks (Sikrer pænt design selvom Google Fonts er blokeret) */
+            --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
+            --font-head: 'Space Grotesk', system-ui, -apple-system, sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        /* Tvinger layoutet til at blive inden for skærmen (Fikser den højretunge asymmetri) */
+        html, body { 
+            overflow-x: hidden; 
+            width: 100%; 
+            max-width: 100vw;
+            margin: 0; 
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        * { box-sizing: border-box; }
         
         body {
             background-color: var(--bg-deep);
@@ -42,7 +53,6 @@
             color: #e2e8f0;
             font-family: var(--font-main);
             line-height: 1.7;
-            overflow-x: hidden;
         }
 
         h1, h2, h3, h4 { font-family: var(--font-head); color: white; }
@@ -51,7 +61,7 @@
         a { text-decoration: none; color: var(--neon-blue); transition: 0.3s; }
         a:hover { color: white; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; width: 100%; }
 
         /* --- NAVIGATION --- */
         nav {
@@ -71,14 +81,14 @@
             position: relative; padding: 4rem 3rem; margin-bottom: 2rem; border-radius: 30px; text-align: center;
             background: rgba(5, 5, 10, 0.4); backdrop-filter: blur(15px); border: 1px solid rgba(0, 242, 255, 0.1);
             box-shadow: 0 0 0 1px rgba(0, 242, 255, 0.05), 0 0 30px rgba(0, 242, 255, 0.15), inset 0 0 30px rgba(0, 242, 255, 0.05); 
-            animation: pulse-border 4s infinite alternate;
+            animation: pulse-border 4s infinite alternate; width: 100%; max-width: 900px;
         }
         @keyframes pulse-border {
             0% { box-shadow: 0 0 20px rgba(0, 242, 255, 0.1), inset 0 0 20px rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.1); }
             100% { box-shadow: 0 0 50px rgba(0, 242, 255, 0.3), inset 0 0 50px rgba(0, 242, 255, 0.1); border-color: rgba(0, 242, 255, 0.4); }
         }
         .wifi-title {
-            font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem;
+            font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem;
             color: rgba(255,255,255,0.1); -webkit-text-stroke: 2px rgba(255,255,255,0.15);
             background: linear-gradient(110deg, rgba(255,255,255,0) 45%, #00f2ff 50%, rgba(255,255,255,0) 55%);
             background-size: 250% 100%; -webkit-background-clip: text; animation: shine 6s infinite; filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.2));
@@ -89,14 +99,14 @@
         .btn-glow {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             padding: 1rem 2rem; background: linear-gradient(90deg, #00f2ff, #0061ff); color: #000;
-            font-weight: 700; border-radius: 50px; transition: 0.3s; box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); border: none; cursor: pointer;
+            font-weight: 700; border-radius: 50px; transition: 0.3s; box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); border: none; cursor: pointer; text-align: center;
         }
         .btn-glow:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); transform: translateY(-2px); color: #000; }
         
         .btn-outline {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             padding: 1rem 2rem; background: transparent; color: white; font-weight: 600;
-            border-radius: 50px; border: 1px solid var(--neon-blue); transition: 0.3s; cursor: pointer;
+            border-radius: 50px; border: 1px solid var(--neon-blue); transition: 0.3s; cursor: pointer; text-align: center;
         }
         .btn-outline:hover { background: rgba(0, 242, 255, 0.1); transform: translateY(-2px); }
 
@@ -105,50 +115,56 @@
         /* --- GLASS CARDS --- */
         .glass-card {
             background: var(--glass-surface); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 2rem; transition: transform 0.3s ease, border-color 0.3s ease; height: 100%; position: relative;
+            border-radius: 20px; padding: 2.5rem 2rem; transition: transform 0.3s ease, border-color 0.3s ease; height: 100%; position: relative; width: 100%;
         }
         .glass-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
 
         /* --- SECTIONS & GRIDS --- */
-        section { padding: 6rem 0; }
-        .section-title { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; }
+        section { padding: 5rem 0; width: 100%; }
+        .section-title { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; line-height: 1.2; }
         .section-sub { text-align: center; max-width: 800px; margin: 0 auto 4rem auto; font-size: 1.1rem; }
         
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; }
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; }
 
         /* --- AFFILIATE PRODUCT CARDS --- */
         .product-badge { position: absolute; top: -15px; left: 20px; background: linear-gradient(90deg, #FACC15, #f59e0b); color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); }
-        .product-image-placeholder { width: 100%; height: 200px; background: rgba(0,0,0,0.4); border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.1); }
-        .pros-cons { margin: 1.5rem 0; font-size: 0.95rem; padding: 0; } /* Padding fjernet for at undgå skævhed */
-        .pros-cons li { list-style: none; margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem; }
-        .pros-cons .pro i { color: #22c55e; margin-top: 4px; }
-        .pros-cons .con i { color: #f43f5e; margin-top: 4px; }
+        .product-image-placeholder { width: 100%; height: 180px; background: rgba(0,0,0,0.4); border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.1); }
+        .pros-cons { margin: 1.5rem 0; font-size: 0.95rem; padding: 0; }
+        .pros-cons li { list-style: none; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 0.5rem; word-break: break-word; }
+        .pros-cons .pro i { color: #22c55e; margin-top: 4px; flex-shrink: 0; }
+        .pros-cons .con i { color: #f43f5e; margin-top: 4px; flex-shrink: 0; }
 
         /* --- LEAD GEN FORM --- */
-        .form-group { margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; width: 100%; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: #e2e8f0; font-weight: 500; }
         .form-control { width: 100%; padding: 1rem; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); border-radius: 10px; color: white; font-family: var(--font-main); font-size: 1rem; transition: 0.3s; }
         .form-control:focus { outline: none; border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
         select.form-control { appearance: none; }
 
-        /* --- MOBIL OPTIMERING --- */
+        /* --- MOBIL OPTIMERING (Hovedfokus her!) --- */
         @media(max-width: 850px) {
-            .container { padding: 0 1rem; } /* Mindre luft ude i siderne på mobil */
-            .glass-card { padding: 1.5rem; } /* Mindre indvendig boks-luft på mobil */
+            .container { padding: 0 1.2rem; } /* Lidt mindre luft i siderne */
             
+            /* Tvinger padding ned, så boksen ikke skubber skærmen */
+            .hero-frame { padding: 2.5rem 1rem; } 
+            .glass-card { padding: 2rem 1.2rem; } 
+
+            /* Tvinger ALLE grids til at fylde 1 kolonne, hvilket løser margin/overflow-fejlen */
+            .grid-3 { grid-template-columns: 1fr; gap: 2rem; }
+            .split-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .form-row { grid-template-columns: 1fr; }
+            
+            /* Centrerer badgen perfekt på mobil */
             .product-badge { 
                 left: 50%; 
                 transform: translateX(-50%); 
-                white-space: nowrap; 
-            } /* Centrerer badgen i toppen af affiliate-kort på mobil */
+            }
 
             .nav-links { display: none; }
-            .hero-buttons { flex-direction: column; }
-            .btn-glow, .btn-outline { width: 100%; }
-            .split-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .form-row { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn-glow, .btn-outline { width: 100%; justify-content: center; }
             h2.section-title { font-size: 2rem; }
         }
     </style>
@@ -170,13 +186,13 @@
     </nav>
 
     <header>
-        <div class="container">
+        <div class="container" style="display:flex; justify-content:center;">
             <div class="hero-frame gsap-fade">
                 <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; color:var(--neon-blue); font-weight: 700;">
                     Danmarks uafhængige Smart Home portal
                 </div>
                 <h1 class="wifi-title">Gør dit hjem<br>intelligent</h1>
-                <p style="font-size: 1.2rem; max-width: 700px; margin: 1.5rem auto 0 auto; color: #cbd5e1;">
+                <p style="font-size: 1.1rem; max-width: 700px; margin: 1.5rem auto 0 auto; color: #cbd5e1;">
                     Find de nyeste anmeldelser, dybdegående guides til WiFi og IoT, eller spring over det tekniske bøvl og få professionel hjælp til opsætningen.
                 </p>
                 <div class="hero-buttons">
@@ -189,7 +205,7 @@
 
     <section id="anmeldelser">
         <div class="container">
-            <h2 class="section-title">Anbefalet Udstyr (Testvindere)</h2>
+            <h2 class="section-title">Anbefalet Udstyr<br>(Testvindere)</h2>
             <p class="section-sub">Vi tester og gennemtrawler markedet, så du undgår fejlkøb. Her er de produkter, der leverer den mest stabile og komplette Smart Home oplevelse lige nu.</p>
 
             <div class="grid-3">
@@ -199,7 +215,7 @@
                         <i class="ph-duotone ph-router" style="font-size: 4rem; color: var(--neon-blue);"></i>
                     </div>
                     <h3>Ubiquiti UniFi Express</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 0;">Det absolut stærkeste valg til at dække hele huset uden udfald. Kræver lidt teknisk snilde, men slår alt andet.</p>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Det absolut stærkeste valg til at dække hele huset uden udfald. Kræver lidt teknisk snilde, men slår alt andet.</p>
                     
                     <ul class="pros-cons">
                         <li class="pro"><i class="ph-bold ph-check-circle"></i> Ekstrem stabilitet og rækkevidde</li>
@@ -218,7 +234,7 @@
                         <i class="ph-duotone ph-car-profile" style="font-size: 4rem; color: #22c55e;"></i>
                     </div>
                     <h3>Segway Navimow H1500E</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 0;">Farvel til irriterende kanttråd. Denne robot bruger GPS og AI-kamera til at navigere pletfrit i haven.</p>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Farvel til irriterende kanttråd. Denne robot bruger GPS og AI-kamera til at navigere pletfrit i haven.</p>
                     
                     <ul class="pros-cons">
                         <li class="pro"><i class="ph-bold ph-check-circle"></i> Trådløs installation (GPS/RTK)</li>
@@ -237,7 +253,7 @@
                         <i class="ph-duotone ph-lock-key" style="font-size: 4rem; color: #bd00ff;"></i>
                     </div>
                     <h3>Yale Doorman L3S</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 0;">Gør din hoveddør nøglefri. Låser automatisk op, når du nærmer dig, og integrerer perfekt med Google og Apple.</p>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Gør din hoveddør nøglefri. Låser automatisk op, når du nærmer dig, og integrerer perfekt med Google og Apple.</p>
                     
                     <ul class="pros-cons">
                         <li class="pro"><i class="ph-bold ph-check-circle"></i> Højeste sikkerhedsgodkendelse</li>
@@ -261,14 +277,14 @@
         <div class="container">
             <div class="split-grid">
                 <div class="gsap-up">
-                    <h2 class="section-title" style="text-align: left;">Orker du ikke teknikken? Få det fikset.</h2>
+                    <h2 class="section-title" style="text-align: left;">Orker du ikke teknikken?<br>Få det fikset.</h2>
                     <p style="font-size: 1.1rem; margin-bottom: 2rem;">
                         WiFi-huller, pærer der blinker, og apps der ikke snakker sammen. Det kan være en tidsrøver at sætte et ægte Smart Home op.
                     </p>
                     <ul class="pros-cons" style="font-size: 1.1rem;">
                         <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Beskriv din opgave kort</li>
                         <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Modtag op til 3 uforpligtende tilbud</li>
-                        <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Udført af certificerede lokale installatører</li>
+                        <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> Udført af certificerede installatører</li>
                         <li class="pro"><i class="ph-bold ph-check" style="color: var(--neon-blue);"></i> 100% gratis og uforpligtende tjeneste</li>
                     </ul>
                 </div>
@@ -288,7 +304,7 @@
                         </div>
                         <div class="form-group">
                             <label>Beskriv opgaven kort</label>
-                            <textarea class="form-control" rows="3" placeholder="F.eks. 'Jeg har et hus på 150kvm hvor nettet ikke rækker i haven...'"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="F.eks. 'Jeg har et hus på 150kvm hvor nettet ikke rækker...'"></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -349,7 +365,7 @@
                 
                 <div>
                     <strong style="color:white; display:block; margin-bottom:1rem; font-size: 1.1rem;">Kategorier</strong>
-                    <ul style="list-style:none;">
+                    <ul style="list-style:none; padding: 0;">
                         <li style="margin-bottom:0.5rem;"><a href="#">Bedst i Test 2026</a></li>
                         <li style="margin-bottom:0.5rem;"><a href="#">Netværk & WiFi Guides</a></li>
                         <li style="margin-bottom:0.5rem;"><a href="#">Smart Lys & Energi</a></li>
@@ -359,7 +375,7 @@
 
                 <div>
                     <strong style="color:white; display:block; margin-bottom:1rem; font-size: 1.1rem;">Information</strong>
-                    <ul style="list-style:none;">
+                    <ul style="list-style:none; padding: 0;">
                         <li style="margin-bottom:0.5rem;"><a href="#">Om WiFiHuset</a></li>
                         <li style="margin-bottom:0.5rem;"><a href="#">Kontakt Os</a></li>
                         <li style="margin-bottom:0.5rem;"><a href="#">Persondatapolitik</a></li>
