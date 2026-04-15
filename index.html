@@ -33,18 +33,18 @@
             --font-head: 'Space Grotesk', system-ui, -apple-system, sans-serif;
         }
 
-        /* Tvinger layoutet til at blive inden for skærmen (Fikser den højretunge asymmetri) */
-        html, body { 
+        /* --- MAGI FOR AT FÅ INTERNE LINKS TIL AT GLIDE BLØDT --- */
+        html { 
+            scroll-behavior: smooth; 
+            scroll-padding-top: 100px; 
+        }
+
+        body { 
             overflow-x: hidden; 
             width: 100%; 
             max-width: 100vw;
             margin: 0; 
             padding: 0;
-            scroll-behavior: smooth;
-        }
-        * { box-sizing: border-box; }
-        
-        body {
             background-color: var(--bg-deep);
             background-image: 
                 linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .02) 25%, rgba(255, 255, 255, .02) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .02) 75%, rgba(255, 255, 255, .02) 76%, transparent 77%, transparent),
@@ -54,6 +54,8 @@
             font-family: var(--font-main);
             line-height: 1.7;
         }
+
+        * { box-sizing: border-box; }
 
         h1, h2, h3, h4 { font-family: var(--font-head); color: white; }
         p { color: #94a3b8; margin-bottom: 1rem; font-size: 1.05rem; }
@@ -72,7 +74,7 @@
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
         .nav-logo { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem; }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { color: #cbd5e1; font-weight: 500; }
+        .nav-links a { color: #cbd5e1; font-weight: 500; cursor: pointer; }
         .nav-links a:hover { color: var(--neon-blue); }
 
         /* --- HERO FRAME --- */
@@ -205,6 +207,7 @@
             <p class="section-sub">Vi tester og gennemtrawler markedet, så du undgår fejlkøb. Her er de produkter, der leverer den mest stabile og komplette Smart Home oplevelse lige nu.</p>
 
             <div class="grid-3">
+                
                 <div class="glass-card gsap-up">
                     <div class="product-badge">Bedste Mesh WiFi</div>
                     <div class="product-image-placeholder">
@@ -219,7 +222,7 @@
                         <li class="con"><i class="ph-bold ph-x-circle"></i> Kræver lidt mere opsætning</li>
                     </ul>
                     
-                    <a href="#" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem;">
+                    <a href="https://www.proshop.dk/Netvaerksudstyr-Forlaenger-til-traadloes/Ubiquiti-UniFi-Express-7/3349266" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem;">
                         Se pris hos Proshop <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
@@ -238,7 +241,7 @@
                         <li class="con"><i class="ph-bold ph-x-circle"></i> Kræver frit udsyn til himlen</li>
                     </ul>
                     
-                    <a href="#" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">
+                    <a href="https://www.homeshop.dk/segway-navimow.html" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">
                         Se pris hos Homeshop <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
@@ -257,14 +260,14 @@
                         <li class="con"><i class="ph-bold ph-x-circle"></i> Høj anskaffelsespris</li>
                     </ul>
                     
-                    <a href="#" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #bd00ff, #9333ea); color: white;">
+                    <a href="https://www.elgiganten.dk/product/hjem-rengoring-kokkenudstyr/sikkerhed-overvagning/dorlas/yale-doorman-l3s-flex-digital-las-borstet-stal/808099" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #bd00ff, #9333ea); color: white;">
                         Se pris hos Elgiganten <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="#" style="font-size: 1.1rem; font-weight: 600;">Gå til alle anmeldelser →</a>
+                <a href="#guides" style="font-size: 1.1rem; font-weight: 600;">Gå til viden & guides →</a>
             </div>
         </div>
     </section>
@@ -362,10 +365,10 @@
                 <div>
                     <strong style="color:white; display:block; margin-bottom:1rem; font-size: 1.1rem;">Kategorier</strong>
                     <ul style="list-style:none; padding: 0;">
-                        <li style="margin-bottom:0.5rem;"><a href="#">Bedst i Test 2026</a></li>
-                        <li style="margin-bottom:0.5rem;"><a href="#">Netværk & WiFi Guides</a></li>
-                        <li style="margin-bottom:0.5rem;"><a href="#">Smart Lys & Energi</a></li>
-                        <li style="margin-bottom:0.5rem;"><a href="#">Robotter & Have</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#anmeldelser">Bedst i Test 2026</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#guides">Netværk & WiFi Guides</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#guides">Smart Lys & Energi</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#guides">Robotter & Have</a></li>
                     </ul>
                 </div>
 
