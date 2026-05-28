@@ -18,12 +18,12 @@
 
     <style>
         :root {
-            --bg-deep: #020203; /* Endnu mørkere, næsten ægte sort for OLED skærme */
-            --glass-surface: rgba(12, 12, 16, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.06);
+            --bg-deep: #02040a; /* Næsten sort med en mikroskopisk blå tone */
             
-            /* Den ene eksklusive accentfarve */
-            --accent-glow: #00e5ff;
+            /* Det nye samlede Azur/Blå tema */
+            --glow-dark: #001133;
+            --glow-mid: #0055ff;
+            --glow-light: #00e5ff;
             
             --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
             --font-head: 'Space Grotesk', system-ui, -apple-system, sans-serif;
@@ -38,7 +38,7 @@
             color: #94a3b8; font-family: var(--font-main); line-height: 1.7; position: relative;
         }
 
-        /* --- AMBIENT BACKGROUND (Nu meget mere subtil og monokrom) --- */
+        /* --- AMBIENT BACKGROUND --- */
         .ambient-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none; overflow: hidden;
@@ -47,8 +47,8 @@
             position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.15;
             animation: float 25s infinite ease-in-out alternate;
         }
-        .orb-1 { width: 600px; height: 600px; background: #0077ff; top: -100px; left: -200px; }
-        .orb-2 { width: 500px; height: 500px; background: #00e5ff; bottom: -100px; right: -100px; animation-delay: -5s; }
+        .orb-1 { width: 600px; height: 600px; background: var(--glow-mid); top: -100px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: var(--glow-light); bottom: -100px; right: -100px; animation-delay: -5s; }
 
         @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 30px) scale(1.05); } }
 
@@ -56,8 +56,8 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
             -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
@@ -73,33 +73,32 @@
         /* --- NAVIGATION --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-            background: rgba(2, 2, 3, 0.8); backdrop-filter: blur(24px); border-bottom: 1px solid var(--glass-border);
+            background: rgba(2, 4, 10, 0.85); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(0,229,255,0.1);
             padding: 1rem 0;
         }
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
         .nav-logo { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 0.5rem; letter-spacing: -0.5px; }
-        .nav-logo i { color: var(--accent-glow); }
+        .nav-logo i { color: var(--glow-light); }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
         .nav-links a { color: #cbd5e1; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a:hover { color: #ffffff; }
+        .nav-links a:hover { color: var(--glow-light); }
 
         /* --- HERO FRAME --- */
         header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding-top: 5rem; }
         
         .hero-frame {
             position: relative; padding: 5rem 3rem; margin-bottom: 2rem; border-radius: 24px; text-align: center;
-            background: rgba(10, 10, 12, 0.4); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
-            width: 100%; max-width: 900px;
+            background: rgba(10, 12, 18, 0.5); backdrop-filter: blur(20px); border: 1px solid rgba(0,229,255,0.1);
+            width: 100%; max-width: 900px; box-shadow: 0 10px 40px rgba(0, 85, 255, 0.1);
         }
 
-        /* Den nye ultra-rene, hvide overskrift med subtil glød */
         .wifi-title {
             font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.04em; line-height: 1; margin-bottom: 1.5rem;
             color: #ffffff;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.2), 0 0 150px rgba(0, 229, 255, 0.2);
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.1), 0 0 100px rgba(0, 229, 255, 0.2);
         }
 
-        /* --- KNAPPER (Clean, Apple-style) --- */
+        /* --- KNAPPER --- */
         .btn-primary {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             padding: 1.2rem 2.5rem; background: #ffffff; color: #000000;
@@ -107,18 +106,18 @@
             border-radius: 50px; transition: all 0.3s ease; border: none; cursor: pointer;
         }
         .btn-primary:hover { 
-            background: var(--accent-glow); 
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.4); 
+            background: var(--glow-light); 
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.5); 
             transform: translateY(-2px); 
         }
         
         .btn-outline {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-            padding: 1.2rem 2.5rem; background: rgba(255, 255, 255, 0.03); color: #ffffff; 
+            padding: 1.2rem 2.5rem; background: rgba(0, 229, 255, 0.03); color: #ffffff; 
             font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;
-            border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.3s ease; cursor: pointer;
+            border-radius: 50px; border: 1px solid rgba(0, 229, 255, 0.3); transition: all 0.3s ease; cursor: pointer;
         }
-        .btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255,255,255,0.4); transform: translateY(-2px); }
+        .btn-outline:hover { background: rgba(0, 229, 255, 0.1); border-color: var(--glow-light); transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
 
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 3rem; flex-wrap: wrap; }
 
@@ -128,43 +127,67 @@
         
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; width: 100%; }
 
-        /* --- PREMIUM TECH KORT MED ELEGANT LØBENDE LYS --- */
+        /* =========================================================================
+           HER ER MAGIEN: Løbende Glasmorphic Azur LED Kant 
+        ========================================================================= */
         .glass-card {
             position: relative;
-            background: linear-gradient(180deg, rgba(20,20,24,0.6) 0%, rgba(10,10,12,0.8) 100%); 
-            backdrop-filter: blur(30px); border-radius: 20px; padding: 3rem 2rem 2.5rem 2rem; 
-            transition: all 0.4s ease; display: flex; flex-direction: column; width: 100%;
-            z-index: 1; border: 1px solid rgba(255,255,255,0.03);
+            padding: 3rem 2rem 2.5rem 2rem; 
+            border-radius: 24px; z-index: 1;
+            display: flex; flex-direction: column; width: 100%;
+            transition: transform 0.4s ease;
         }
-        
-        /* Den super stilede lys-stråle der kører langs kanten */
+
+        /* 1. Det inderste glaskort (Dette ligger OVER LED-kanten) */
+        .glass-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(10, 12, 18, 0.85); /* Dyb, let gennemsigtig azur-mørk */
+            backdrop-filter: blur(20px);
+            border-radius: 24px; z-index: -1;
+        }
+
+        /* 2. Den animerede, levende LED kant (Ligger BAGVED det inderste glas) */
         .glass-card::before {
-            content: ''; position: absolute; top: -1px; left: -1px; right: -1px; bottom: -1px;
-            background: conic-gradient(from var(--angle), transparent 70%, rgba(255,255,255,0.8) 85%, var(--accent-glow) 100%);
-            border-radius: 21px; z-index: -1; padding: 1px;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            opacity: 0; transition: opacity 0.4s ease;
-            animation: spin 4s linear infinite;
+            content: ''; position: absolute;
+            inset: -2px; /* Giver kanten en tykkelse på 2px */
+            border-radius: 26px; /* Lidt større end selve kortet */
+            background: linear-gradient(90deg, var(--glow-dark) 0%, var(--glow-mid) 25%, var(--glow-light) 50%, var(--glow-mid) 75%, var(--glow-dark) 100%);
+            background-size: 200% auto;
+            z-index: -2;
+            animation: led-run 3s linear infinite;
+            opacity: 0.5; /* Altid svagt tændt */
+            transition: opacity 0.3s ease, filter 0.3s ease;
         }
-        @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-        @keyframes spin { to { --angle: 360deg; } }
 
-        .glass-card:hover { transform: translateY(-8px); background: linear-gradient(180deg, rgba(25,25,30,0.8) 0%, rgba(12,12,15,0.9) 100%); }
-        .glass-card:hover::before { opacity: 1; }
+        @keyframes led-run {
+            0% { background-position: 0% 0; }
+            100% { background-position: -200% 0; }
+        }
 
-        /* --- BADGES (Nu som eksklusivt frostet glas) --- */
+        /* Når man holder musen over: Kanten lyser op, og kortet svæver */
+        .glass-card:hover { transform: translateY(-8px); }
+        .glass-card:hover::before { 
+            opacity: 1; 
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4)); 
+        }
+
+        /* Alle elementer indeni kortet skal være over ::after (glasseffekten) */
+        .glass-card > * { position: relative; z-index: 2; }
+        /* ========================================================================= */
+
+
+        /* --- BADGES --- */
         .product-badge { 
             position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-            background: rgba(15, 15, 20, 0.8); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1); color: #ffffff; 
+            background: rgba(10, 12, 18, 0.9); backdrop-filter: blur(10px);
+            border: 1px solid var(--glow-mid); color: #ffffff; 
             padding: 5px 18px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; 
             text-transform: uppercase; letter-spacing: 1.5px; z-index: 10; white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: 0.3s;
         }
-        /* Subtil farveindikator på badge-teksten i stedet for hele baggrunden */
-        .glass-card:hover .product-badge { border-color: var(--accent-glow); color: var(--accent-glow); transition: 0.3s; }
+        .glass-card:hover .product-badge { border-color: var(--glow-light); color: var(--glow-light); box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); }
         
+        /* --- BILLEDER --- */
         .product-img-wrapper {
             width: 100%; height: 220px; border-radius: 12px; margin-bottom: 2.5rem; overflow: hidden; position: relative; 
             background: rgba(255,255,255,0.02); padding: 1.5rem; display: flex; align-items: center; justify-content: center;
@@ -174,10 +197,10 @@
         
         .glass-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #ffffff; }
 
-        /* --- FORDELE & ULEMPER (Minimalistisk) --- */
+        /* --- FORDELE & ULEMPER --- */
         .pros-cons { margin: 1rem 0 2.5rem 0; font-size: 0.95rem; padding: 0; }
         .pros-cons li { list-style: none; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 0.8rem; color: #94a3b8; }
-        .pros-cons .pro i { color: #ffffff; margin-top: 4px; font-size: 1rem; opacity: 0.6; }
+        .pros-cons .pro i { color: var(--glow-light); margin-top: 4px; font-size: 1rem; }
         .pros-cons .con i { color: #ffffff; margin-top: 4px; font-size: 1rem; opacity: 0.3; }
 
         .buy-btn-container { margin-top: auto; }
@@ -185,27 +208,28 @@
         /* Den lille knap i bunden af kortet */
         .btn-card {
             display: block; width: 100%; padding: 1rem; text-align: center;
-            background: rgba(255,255,255,0.03); color: #ffffff; border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0, 229, 255, 0.05); color: #ffffff; border: 1px solid rgba(0, 229, 255, 0.2);
             border-radius: 12px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
             transition: all 0.3s ease;
         }
-        .glass-card:hover .btn-card { background: #ffffff; color: #000000; }
+        .glass-card:hover .btn-card { background: #ffffff; color: #000000; border-color: #ffffff; }
 
         /* --- FORMULAR / LEAD GEN --- */
         .form-box {
-            background: rgba(12, 12, 16, 0.4); backdrop-filter: blur(30px);
-            border-radius: 20px; padding: 3rem; border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10, 12, 18, 0.6); backdrop-filter: blur(30px);
+            border-radius: 20px; padding: 3rem; border: 1px solid rgba(0, 229, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
         .form-group { margin-bottom: 1.5rem; width: 100%; }
         .form-group label { display: block; margin-bottom: 0.8rem; color: #94a3b8; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
         .form-control { 
-            width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.3); 
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; 
+            width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.4); 
+            border: 1px solid rgba(0, 229, 255, 0.1); border-radius: 8px; 
             color: white; font-family: var(--font-main); font-size: 1rem; transition: all 0.3s ease; 
         }
-        .form-control:focus { outline: none; border-color: rgba(255,255,255,0.3); background: rgba(0,0,0,0.5); }
+        .form-control:focus { outline: none; border-color: var(--glow-light); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(0, 229, 255, 0.1); }
         
-        select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 1.2rem top 50%; background-size: 0.65rem auto; }
+        select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300e5ff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 1.2rem top 50%; background-size: 0.65rem auto; }
 
         @media(max-width: 850px) {
             .hero-frame { padding: 4rem 1.5rem; border-radius: 20px; } 
@@ -244,7 +268,7 @@
     <header>
         <div class="container" style="display:flex; justify-content:center;">
             <div class="hero-frame gsap-fade">
-                <div style="margin-bottom:1rem; opacity:0.6; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; color:#fff; font-weight: 700;">
+                <div style="margin-bottom:1rem; opacity:0.8; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; color:var(--glow-light); font-weight: 700;">
                     Uafhængig Smart Home Portal
                 </div>
                 <h1 class="wifi-title">Gør dit hjem<br>intelligent</h1>
@@ -338,24 +362,24 @@
         </div>
     </section>
 
-    <section id="tilbud" style="border-top: 1px solid rgba(255,255,255,0.02); background: radial-gradient(circle at center top, rgba(255,255,255,0.02) 0%, transparent 70%);">
+    <section id="tilbud" style="border-top: 1px solid rgba(0,229,255,0.05); background: radial-gradient(circle at center top, rgba(0,229,255,0.03) 0%, transparent 70%);">
         <div class="container">
             <div class="split-grid">
                 <div class="gsap-up">
-                    <h2 class="section-title" style="text-align: left; font-size: 3rem;">Orker du ikke teknikken?<br><span style="color: #fff; opacity: 0.5;">Få det fikset.</span></h2>
+                    <h2 class="section-title" style="text-align: left; font-size: 3rem;">Orker du ikke teknikken?<br><span style="color: var(--glow-light); text-shadow: 0 0 20px rgba(0,229,255,0.2);">Få det fikset.</span></h2>
                     <p style="font-size: 1.1rem; margin-bottom: 2rem;">
                         WiFi-huller og pærer der blinker. Det kan være en massiv tidsrøver at sætte et ægte Smart Home op. Lad professionelle klare fundamentet.
                     </p>
                     <ul class="pros-cons" style="font-size: 1.1rem;">
-                        <li><i class="ph-regular ph-check" style="color: #fff;"></i> Beskriv din opgave kort</li>
-                        <li><i class="ph-regular ph-check" style="color: #fff;"></i> Modtag 3 uforpligtende tilbud</li>
-                        <li><i class="ph-regular ph-check" style="color: #fff;"></i> Udført af certificerede eksperter</li>
-                        <li><i class="ph-regular ph-check" style="color: #fff;"></i> 100% gratis tjeneste</li>
+                        <li><i class="ph-regular ph-check" style="color: var(--glow-light);"></i> Beskriv din opgave kort</li>
+                        <li><i class="ph-regular ph-check" style="color: var(--glow-light);"></i> Modtag 3 uforpligtende tilbud</li>
+                        <li><i class="ph-regular ph-check" style="color: var(--glow-light);"></i> Udført af certificerede eksperter</li>
+                        <li><i class="ph-regular ph-check" style="color: var(--glow-light);"></i> 100% gratis tjeneste</li>
                     </ul>
                 </div>
                 
                 <div class="form-box gsap-up">
-                    <h3 style="margin-bottom: 2rem; font-size: 1.6rem;">Beskriv din opgave</h3>
+                    <h3 style="margin-bottom: 2rem; font-size: 1.6rem; text-align: center;">Beskriv din opgave</h3>
                     <form action="#">
                         <div class="form-group">
                             <label>Kategori</label>
@@ -389,12 +413,12 @@
         </div>
     </section>
 
-    <footer style="border-top:1px solid rgba(255,255,255,0.03); padding:5rem 0 2rem 0; font-size:0.9rem; color:#64748b; background: var(--bg-deep);">
+    <footer style="border-top:1px solid rgba(0,229,255,0.05); padding:5rem 0 2rem 0; font-size:0.9rem; color:#64748b; background: var(--bg-deep);">
         <div class="container">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem; margin-bottom: 4rem;">
                 
                 <div style="grid-column: span 2;">
-                    <h2 style="font-size:1.8rem; color:white; margin-bottom:1rem; letter-spacing: -0.5px;"><i class="ph-duotone ph-house-line"></i> WiFiHuset</h2>
+                    <h2 style="font-size:1.8rem; color:white; margin-bottom:1rem; letter-spacing: -0.5px;"><i class="ph-duotone ph-house-line" style="color: var(--glow-light);"></i> WiFiHuset</h2>
                     <p style="max-width: 300px;">Din uafhængige guide til fremtidens intelligente hjem. Skåret ind til benet.</p>
                 </div>
                 
@@ -426,7 +450,7 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero animation (Subtle glide op)
+        // Hero animation
         gsap.from(".gsap-fade", { y: 30, opacity: 0, duration: 1.5, ease: "power3.out" });
 
         // Staggered kort animation
