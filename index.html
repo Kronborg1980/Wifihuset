@@ -18,65 +18,44 @@
 
     <style>
         :root {
-            --bg-deep: #030305;
-            --glass-surface: rgba(15, 15, 20, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-deep: #050507;
             
             /* Tech Colors */
             --neon-blue: #00f2ff;
             --neon-dark-blue: #0061ff;
             --neon-green: #22c55e;
             --neon-purple: #bd00ff;
-            --col-matter: #FACC15; 
             
             --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
             --font-head: 'Space Grotesk', system-ui, -apple-system, sans-serif;
         }
 
-        html { 
-            scroll-behavior: smooth; 
-            scroll-padding-top: 100px; 
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 
         body { 
-            overflow-x: hidden; 
-            width: 100%; 
-            max-width: 100vw;
-            margin: 0; 
-            padding: 0;
+            overflow-x: hidden; width: 100%; max-width: 100vw;
+            margin: 0; padding: 0;
             background-color: var(--bg-deep);
-            color: #e2e8f0;
-            font-family: var(--font-main);
-            line-height: 1.7;
-            position: relative;
+            color: #e2e8f0; font-family: var(--font-main); line-height: 1.7; position: relative;
         }
 
-        /* Ambient Glowing Orbs i baggrunden */
+        /* Baggrunds-effekter */
         .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none; overflow: hidden;
         }
         .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.4;
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.3;
             animation: float 20s infinite ease-in-out alternate;
         }
-        .orb-1 { width: 500px; height: 500px; background: rgba(0, 97, 255, 0.3); top: -200px; left: -100px; }
-        .orb-2 { width: 400px; height: 400px; background: rgba(189, 0, 255, 0.15); top: 40%; right: -150px; animation-delay: -5s; }
-        .orb-3 { width: 600px; height: 600px; background: rgba(34, 197, 94, 0.1); bottom: -300px; left: 20%; animation-delay: -10s; }
+        .orb-1 { width: 500px; height: 500px; background: rgba(0, 97, 255, 0.4); top: -200px; left: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: rgba(189, 0, 255, 0.2); top: 40%; right: -150px; animation-delay: -5s; }
+        .orb-3 { width: 600px; height: 600px; background: rgba(34, 197, 94, 0.15); bottom: -300px; left: 20%; animation-delay: -10s; }
 
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
-        }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
 
-        /* Det fede tech grid */
         .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -87,47 +66,57 @@
         }
 
         * { box-sizing: border-box; }
-
         h1, h2, h3, h4 { font-family: var(--font-head); color: white; margin-top: 0; }
         p { color: #94a3b8; margin-bottom: 1rem; font-size: 1.05rem; }
-        strong { color: #fff; font-weight: 600; }
         a { text-decoration: none; color: var(--neon-blue); transition: 0.3s; }
-        a:hover { color: white; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; width: 100%; }
 
         /* --- NAVIGATION --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-            background: rgba(3, 3, 5, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
-            padding: 1rem 0;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(5, 5, 7, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
         .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 0.5rem; letter-spacing: -0.5px; }
+        .nav-logo { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 0.5rem; }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-links a { color: #cbd5e1; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav-links a { color: #cbd5e1; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; }
         .nav-links a:hover { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0,242,255,0.5); }
 
         /* --- HERO FRAME --- */
         header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding-top: 5rem; }
+        
         .hero-frame {
             position: relative; padding: 4rem 3rem; margin-bottom: 2rem; border-radius: 30px; text-align: center;
-            background: linear-gradient(180deg, rgba(15, 15, 20, 0.8) 0%, rgba(5, 5, 10, 0.9) 100%);
-            backdrop-filter: blur(20px); border: 1px solid rgba(0, 242, 255, 0.2);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); 
-            animation: pulse-border 4s infinite alternate; width: 100%; max-width: 900px;
+            background: rgba(10, 10, 15, 0.6); backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            animation: pulse-hero-shadow 4s infinite alternate; width: 100%; max-width: 900px;
         }
-        @keyframes pulse-border {
-            0% { box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(0, 242, 255, 0.1), inset 0 0 20px rgba(0, 242, 255, 0.05); }
-            100% { box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(0, 242, 255, 0.2), inset 0 0 40px rgba(0, 242, 255, 0.1); }
+        /* Løbende LED border på Hero */
+        .hero-frame::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-blue));
+            background-size: 200% auto; z-index: -1; border-radius: 32px;
+            animation: shine 4s linear infinite; opacity: 0.5;
         }
+
+        @keyframes pulse-hero-shadow {
+            0% { box-shadow: 0 0 30px rgba(0, 242, 255, 0.1); }
+            100% { box-shadow: 0 0 50px rgba(0, 242, 255, 0.3); }
+        }
+
+        /* Det løbende shine på teksten! */
         .wifi-title {
             font-size: clamp(2.8rem, 7vw, 6.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem;
-            color: transparent; 
-            background: linear-gradient(to right, #fff, #cbd5e1, #00f2ff);
+            background: linear-gradient(110deg, #fff 20%, #00f2ff 50%, #fff 80%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
-            filter: drop-shadow(0 4px 15px rgba(0, 242, 255, 0.2));
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         /* --- BUTTONS --- */
@@ -135,7 +124,7 @@
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             padding: 1.1rem 2.2rem; background: linear-gradient(135deg, #00f2ff, #0061ff); color: #000;
             font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
-            border-radius: 50px; transition: all 0.3s ease; box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); border: none; cursor: pointer; text-align: center;
+            border-radius: 50px; transition: all 0.3s ease; box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); border: none; cursor: pointer;
         }
         .btn-glow:hover { box-shadow: 0 0 40px rgba(0, 242, 255, 0.7); transform: translateY(-3px); color: #000; }
         
@@ -143,110 +132,87 @@
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             padding: 1.1rem 2.2rem; background: rgba(0, 242, 255, 0.05); color: white; 
             font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;
-            border-radius: 50px; border: 1px solid var(--neon-blue); transition: all 0.3s ease; cursor: pointer; text-align: center;
+            border-radius: 50px; border: 1px solid var(--neon-blue); transition: all 0.3s ease; cursor: pointer;
         }
         .btn-outline:hover { background: rgba(0, 242, 255, 0.15); box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); transform: translateY(-3px); }
 
         .hero-buttons { display: flex; gap: 1.5rem; justify-content: center; margin-top: 2.5rem; flex-wrap: wrap; }
 
-        /* --- SECTIONS & GRIDS --- */
         section { padding: 6rem 0; width: 100%; position: relative; }
         .section-title { font-size: 3rem; margin-bottom: 1.5rem; text-align: center; line-height: 1.2; letter-spacing: -1px; }
         .section-sub { text-align: center; max-width: 800px; margin: 0 auto 5rem auto; font-size: 1.15rem; color: #cbd5e1; }
         
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; width: 100%; }
-        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
 
-        /* --- EXCLUSIVE TECH CARDS --- */
+        /* --- EXCLUSIVE TECH CARDS MED LØBENDE LED --- */
         .glass-card {
-            background: linear-gradient(145deg, rgba(20,20,25,0.9), rgba(10,10,12,0.95)); 
-            backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 3rem 2rem 2.5rem 2rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; width: 100%; display: flex; flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            background: linear-gradient(145deg, rgba(20,20,25,0.95), rgba(10,10,12,0.98)); 
+            backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem 2rem 2.5rem 2rem; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            display: flex; flex-direction: column; width: 100%;
+            z-index: 1; /* For at pseudo-elementet (kanten) kan ligge bagved */
         }
-        .glass-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        
+        /* Dette skaber den løbende LED kant! */
+        .glass-card::before {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background-size: 300% 300%; border-radius: 26px; z-index: -1;
+            animation: rgb-running-led 4s ease infinite; opacity: 0.6; transition: opacity 0.3s;
+        }
+        .glass-card:hover { transform: translateY(-10px); }
+        .glass-card:hover::before { opacity: 1; }
 
-        /* Farvekodede top-kanter */
-        .card-wifi { border-top: 4px solid var(--neon-blue); }
-        .card-robot { border-top: 4px solid var(--neon-green); }
-        .card-lock { border-top: 4px solid var(--neon-purple); }
+        @keyframes rgb-running-led {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-        .glass-card:hover.card-wifi { border-color: rgba(0,242,255,0.4); border-top-color: var(--neon-blue); box-shadow: 0 20px 40px rgba(0,242,255,0.1); }
-        .glass-card:hover.card-robot { border-color: rgba(34,197,94,0.4); border-top-color: var(--neon-green); box-shadow: 0 20px 40px rgba(34,197,94,0.1); }
-        .glass-card:hover.card-lock { border-color: rgba(189,0,255,0.4); border-top-color: var(--neon-purple); box-shadow: 0 20px 40px rgba(189,0,255,0.1); }
+        /* Specifikke farver til hver kategori */
+        .card-wifi::before { background-image: linear-gradient(60deg, #00f2ff, #0061ff, #00f2ff, #001f5c); }
+        .card-robot::before { background-image: linear-gradient(60deg, #22c55e, #16a34a, #22c55e, #064e3b); }
+        .card-lock::before { background-image: linear-gradient(60deg, #bd00ff, #7e22ce, #bd00ff, #3b0764); }
 
-        /* --- AFFILIATE PRODUCT BADGES & IMAGES --- */
+        /* --- BADGES & BILLEDER --- */
         .product-badge { 
             position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
             color: #fff; padding: 6px 20px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; 
-            text-transform: uppercase; letter-spacing: 1px; z-index: 10;
-            animation: pulse-badge 2s infinite; white-space: nowrap;
+            text-transform: uppercase; letter-spacing: 1px; z-index: 10; white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
-        @keyframes pulse-badge { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 70% { box-shadow: 0 0 0 10px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
-
-        .badge-wifi { background: linear-gradient(90deg, #00f2ff, #0061ff); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .badge-robot { background: linear-gradient(90deg, #22c55e, #16a34a); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .badge-lock { background: linear-gradient(90deg, #bd00ff, #7e22ce); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .badge-wifi { background: linear-gradient(90deg, #00f2ff, #0061ff); }
+        .badge-robot { background: linear-gradient(90deg, #22c55e, #16a34a); }
+        .badge-lock { background: linear-gradient(90deg, #bd00ff, #7e22ce); }
         
         .product-img-wrapper {
             width: 100%; height: 240px; border-radius: 16px; margin-bottom: 2rem; overflow: hidden; position: relative; 
-            background: #ffffff; /* Giver det rene tech-look */
-            padding: 1rem;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+            background: #ffffff; padding: 1rem; display: flex; align-items: center; justify-content: center;
         }
-        /* Mørk glød inden i kassen for at gøre det premium */
         .product-img-wrapper::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05); pointer-events: none; border-radius: 16px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1); pointer-events: none; border-radius: 16px;
         }
-
-        .product-img-wrapper img {
-            width: 100%; height: 100%; object-fit: contain; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        .product-img-wrapper img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.6s ease; }
         .glass-card:hover .product-img-wrapper img { transform: scale(1.1); }
         
         .glass-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; }
 
-        .pros-cons { margin: 1.5rem 0 2rem 0; font-size: 0.95rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); }
-        .pros-cons li { list-style: none; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 0.7rem; word-break: break-word; color: #cbd5e1; }
+        .pros-cons { margin: 1.5rem 0 2rem 0; font-size: 0.95rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 12px; }
+        .pros-cons li { list-style: none; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 0.7rem; color: #cbd5e1; }
         .pros-cons li:last-child { margin-bottom: 0; }
-        .pros-cons .pro i { color: #22c55e; margin-top: 3px; font-size: 1.2rem; flex-shrink: 0; }
-        .pros-cons .con i { color: #ef4444; margin-top: 3px; font-size: 1.2rem; flex-shrink: 0; }
+        .pros-cons .pro i { color: #22c55e; margin-top: 3px; font-size: 1.2rem; }
+        .pros-cons .con i { color: #ef4444; margin-top: 3px; font-size: 1.2rem; }
 
-        .buy-btn-container { margin-top: auto; } /* Pushes button to bottom */
+        .buy-btn-container { margin-top: auto; } 
 
-        /* --- LEAD GEN FORM --- */
-        .form-box {
-            background: linear-gradient(145deg, rgba(20,20,25,0.9), rgba(10,10,12,0.95));
-            border-radius: 24px; padding: 3rem; border: 1px solid rgba(0, 242, 255, 0.2);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 30px rgba(0, 242, 255, 0.05);
-        }
-        .form-group { margin-bottom: 1.5rem; width: 100%; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: #cbd5e1; font-weight: 600; font-size: 0.95rem; }
-        .form-control { 
-            width: 100%; padding: 1.2rem; background: rgba(0,0,0,0.6); 
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; 
-            color: white; font-family: var(--font-main); font-size: 1rem; transition: all 0.3s ease; 
-        }
-        .form-control:focus { outline: none; border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 242, 255, 0.15); background: rgba(0,0,0,0.8); }
-        select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300f2ff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 1.2rem top 50%; background-size: 0.65rem auto; }
-
-        /* --- MOBIL OPTIMERING --- */
         @media(max-width: 850px) {
-            .container { padding: 0 1.2rem; }
             .hero-frame { padding: 3rem 1.5rem; } 
-            .glass-card { padding: 3rem 1.5rem 2rem 1.5rem; } /* Plads til center badge i toppen */
-
-            .grid-3 { grid-template-columns: 1fr; gap: 3.5rem; } /* Mere mellemrum på mobil */
-            .split-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .form-row { display: flex; flex-direction: column; gap: 1rem; }
-            .form-box { padding: 2rem 1.2rem; }
-            
+            .glass-card { padding: 3rem 1.5rem 2rem 1.5rem; }
+            .grid-3 { grid-template-columns: 1fr; gap: 3.5rem; } 
             .nav-links { display: none; }
             .hero-buttons { flex-direction: column; width: 100%; gap: 1rem; }
-            .btn-glow, .btn-outline { width: 100%; justify-content: center; padding: 1.2rem; }
+            .btn-glow, .btn-outline { width: 100%; justify-content: center; }
             h2.section-title { font-size: 2.2rem; }
         }
     </style>
@@ -269,7 +235,7 @@
             <div class="nav-links">
                 <a href="#anmeldelser">Bedst i Test</a>
                 <a href="#guides">Guides</a>
-                <a href="#tilbud" style="color: #000; background: var(--neon-blue); padding: 8px 20px; border-radius: 50px; text-shadow: none;">Få 3 Tilbud</a>
+                <a href="#tilbud" style="color: #000; background: var(--neon-blue); padding: 8px 20px; border-radius: 50px;">Få 3 Tilbud</a>
             </div>
         </div>
     </nav>
@@ -302,7 +268,7 @@
                 <div class="glass-card card-wifi gsap-up">
                     <div class="product-badge badge-wifi">Bedste Mesh WiFi</div>
                     <div class="product-img-wrapper">
-                        <img src="https://images1.price-runner.com/m/1/4042838337/Ubiquiti-UniFi-Express.jpg" alt="Ubiquiti UniFi Express">
+                        <img src="https://wsrv.nl/?url=https://store.ui.com/cdn/shop/files/UX_Hero.png&w=500&output=webp" alt="Ubiquiti UniFi Express" onerror="this.src='https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&q=80'">
                     </div>
                     <h3>Ubiquiti UniFi Express</h3>
                     <p style="font-size: 0.95rem; margin-bottom: 0;">Det absolut stærkeste valg til at dække hele huset uden udfald. Kræver lidt teknisk snilde, men slår alt andet.</p>
@@ -326,7 +292,7 @@
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKsOu4deuFOU8WobGo7adLyB7ZdAM5dcaO6vZVPcv6UZAv_E5l77tw4Hov&s=10" alt="Anthbot M5 Lidar Robotplæneklipper" style="object-fit: cover; border-radius: 16px;">
                     </div>
                     <h3>Anthbot M5 Lidar</h3>
-                    <p style="font-size: 0.95rem; margin-bottom: 0;">Fremtidens innovation. Hvor almindelige GPS-robotter farer vild under store træer, bruger Anthbot avanceret 3D LiDAR – samme teknologi som selvkørende biler.</p>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Fremtidens innovation. Hvor almindelige GPS-robotter farer vild under store træer, bruger Anthbot avanceret 3D LiDAR.</p>
                     
                     <ul class="pros-cons">
                         <li><i class="ph-fill ph-check-circle pro"></i> 3D LiDAR navigation (virker under træer)</li>
@@ -335,7 +301,7 @@
                     </ul>
                     
                     <div class="buy-btn-container">
-                        <a href="https://www.bilka.dk/produkter/anthbot-m5-lidar-robotplaeneklipper/200351843/" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 1rem; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; box-shadow: 0 0 20px rgba(34,197,94,0.4);">
+                        <a href="https://www.bilka.dk/produkter/anthbot-m5-lidar-robotplaeneklipper/200351843/" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 1rem; background: linear-gradient(135deg, #22c55e, #16a34a); color: white;">
                             Se pris hos Bilka <i class="ph-bold ph-arrow-right"></i>
                         </a>
                     </div>
@@ -344,10 +310,10 @@
                 <div class="glass-card card-lock gsap-up">
                     <div class="product-badge badge-lock">Bedste Smart Lås</div>
                     <div class="product-img-wrapper">
-                        <img src="https://images1.price-runner.com/m/1/3277713437/Yale-Doorman-L3S-Flex.jpg" alt="Yale Doorman L3S">
+                         <img src="https://wsrv.nl/?url=https://yalesmart.com/cdn/shop/products/Yale-Doorman-L3S-Chrome.png&w=500&output=webp" alt="Yale Doorman L3S" onerror="this.src='https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80'">
                     </div>
                     <h3>Yale Doorman L3S</h3>
-                    <p style="font-size: 0.95rem; margin-bottom: 0;">Gør din hoveddør nøglefri. Låser automatisk op, når du nærmer dig, og integrerer perfekt med Google Home og Apple HomeKit.</p>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Gør din hoveddør nøglefri. Låser automatisk op, når du nærmer dig, og integrerer perfekt med Google og Apple.</p>
                     
                     <ul class="pros-cons">
                         <li><i class="ph-fill ph-check-circle pro"></i> Højeste sikkerhedsgodkendelse</li>
@@ -356,124 +322,27 @@
                     </ul>
                     
                     <div class="buy-btn-container">
-                        <a href="https://www.elgiganten.dk/product/hjem-rengoring-kokkenudstyr/sikkerhed-overvagning/dorlas/yale-doorman-l3s-flex-digital-las-borstet-stal/808099" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 1rem; background: linear-gradient(135deg, #bd00ff, #7e22ce); color: white; box-shadow: 0 0 20px rgba(189,0,255,0.4);">
+                        <a href="https://www.elgiganten.dk/product/hjem-rengoring-kokkenudstyr/sikkerhed-overvagning/dorlas/yale-doorman-l3s-flex-digital-las-borstet-stal/808099" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 1rem; background: linear-gradient(135deg, #bd00ff, #7e22ce); color: white;">
                             Se pris hos Elgiganten <i class="ph-bold ph-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            
-            <div style="text-align: center; margin-top: 4rem;">
-                <a href="#guides" style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Dyk ned i vores guides <i class="ph-bold ph-arrow-right"></i></a>
-            </div>
         </div>
     </section>
 
-    <section id="tilbud" style="background: linear-gradient(180deg, rgba(0, 242, 255, 0.02) 0%, transparent 100%); border-top: 1px solid var(--glass-border);">
-        <div class="container">
-            <div class="split-grid">
-                <div class="gsap-up">
-                    <h2 class="section-title" style="text-align: left;">Orker du ikke teknikken?<br><span style="color: var(--neon-blue);">Få det fikset.</span></h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #cbd5e1;">
-                        WiFi-huller, pærer der blinker, og apps der ikke snakker sammen. Det kan være en massiv tidsrøver at sætte et ægte Smart Home op.
-                    </p>
-                    <ul class="pros-cons" style="font-size: 1.1rem; background: transparent; border: none; padding: 0;">
-                        <li><i class="ph-duotone ph-check-circle" style="color: var(--neon-blue); font-size: 1.5rem;"></i> Beskriv din opgave kort</li>
-                        <li><i class="ph-duotone ph-check-circle" style="color: var(--neon-blue); font-size: 1.5rem;"></i> Modtag op til 3 uforpligtende tilbud</li>
-                        <li><i class="ph-duotone ph-check-circle" style="color: var(--neon-blue); font-size: 1.5rem;"></i> Udført af certificerede installatører</li>
-                        <li><i class="ph-duotone ph-check-circle" style="color: var(--neon-blue); font-size: 1.5rem;"></i> 100% gratis tjeneste</li>
-                    </ul>
-                </div>
-                
-                <div class="form-box gsap-up">
-                    <h3 style="margin-bottom: 2rem; text-align: center; font-size: 1.8rem;">Indhent Tilbud</h3>
-                    <form action="#">
-                        <div class="form-group">
-                            <label>Hvad har du brug for hjælp til?</label>
-                            <select class="form-control">
-                                <option>Vælg kategori...</option>
-                                <option>Opsætning af netværk & WiFi</option>
-                                <option>Installation af Smart Lys (Hue mv.)</option>
-                                <option>Overvågning & Alarm</option>
-                                <option>Komplet Smart Home system</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Beskriv opgaven kort</label>
-                            <textarea class="form-control" rows="3" placeholder="F.eks. 'Jeg har et hus på 150kvm hvor nettet ikke rækker ud i haven...'"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Postnummer</label>
-                                <input type="text" class="form-control" placeholder="F.eks. 9800">
-                            </div>
-                            <div class="form-group">
-                                <label>E-mail</label>
-                                <input type="email" class="form-control" placeholder="din@email.dk">
-                            </div>
-                        </div>
-                        <button type="button" class="btn-glow" style="width: 100%; margin-top: 1rem; padding: 1.2rem; font-size: 1rem;">Få 3 Tilbud Nu</button>
-                    </form>
-                    <p style="text-align: center; font-size: 0.85rem; margin-top: 1.5rem; color: #64748b;">Dine data deles kun med godkendte partnere med henblik på at give tilbud. Ingen spam.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer style="border-top:1px solid var(--glass-border); padding:5rem 0 2rem 0; font-size:0.95rem; color:#94a3b8; background: rgba(5,5,7,0.8); position: relative; z-index: 10;">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4rem; margin-bottom: 4rem;">
-                
-                <div>
-                    <h2 style="font-size:2rem; color:white; margin-bottom:1rem; font-family: var(--font-head); font-weight: 800; letter-spacing: -1px;"><i class="ph-duotone ph-house-line" style="color: var(--neon-blue);"></i> WiFiHuset</h2>
-                    <p>Din uafhængige guide til det intelligente hjem. Vi gør fremtidens teknologi tilgængelig, stabil og forståelig for alle.</p>
-                </div>
-                
-                <div>
-                    <strong style="color:white; display:block; margin-bottom:1.5rem; font-size: 1.2rem;">Kategorier</strong>
-                    <ul style="list-style:none; padding: 0;">
-                        <li style="margin-bottom:0.8rem;"><a href="#anmeldelser">Bedst i Test 2026</a></li>
-                        <li style="margin-bottom:0.8rem;"><a href="#guides">Netværk & WiFi Guides</a></li>
-                        <li style="margin-bottom:0.8rem;"><a href="#guides">Smart Lys & Energi</a></li>
-                        <li style="margin-bottom:0.8rem;"><a href="#guides">Robotter & Have</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <strong style="color:white; display:block; margin-bottom:1.5rem; font-size: 1.2rem;">Information</strong>
-                    <ul style="list-style:none; padding: 0;">
-                        <li style="margin-bottom:0.8rem;"><a href="#">Om WiFiHuset</a></li>
-                        <li style="margin-bottom:0.8rem;"><a href="#">Kontakt Os</a></li>
-                        <li style="margin-bottom:0.8rem;"><a href="#">Persondatapolitik</a></li>
-                        <li style="margin-bottom:0.8rem;"><a href="#">Betingelser for tilbudstjeneste</a></li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; display: flex; flex-direction: column; gap: 1rem; text-align: center;">
-                <p style="font-size: 0.85rem; margin: 0; opacity: 0.6; max-width: 800px; margin: 0 auto;">
-                    <strong>100 % Uafhængig:</strong> WiFiHuset er en uafhængig informationsportal drevet af passion for tech. Vi modtager ingen økonomisk støtte eller sponsorater fra de produkter, vi anbefaler.
-                </p>
-                <p style="margin-top: 1rem; color: #475569;">© 2026 WiFiHuset. Alle rettigheder forbeholdes.</p>
-            </div>
-        </div>
+    <footer style="border-top:1px solid rgba(255,255,255,0.05); padding:3rem 0; text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 5rem;">
+        <p>© 2026 WiFiHuset. Alle rettigheder forbeholdes. Portal drevet af passion for tech.</p>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero animation
         gsap.from(".gsap-fade", { y: 40, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.2 });
 
-        // Staggered kort animation
         gsap.utils.toArray('.gsap-up').forEach((element, i) => {
             gsap.from(element, {
-                scrollTrigger: { 
-                    trigger: element, 
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                },
+                scrollTrigger: { trigger: element, start: "top 85%" },
                 y: 50, opacity: 0, duration: 0.8, ease: "power2.out", delay: i * 0.1
             });
         });
