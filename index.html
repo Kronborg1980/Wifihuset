@@ -18,7 +18,7 @@
 
     <style>
         :root {
-            --bg-deep: #02040a; /* Næsten sort med en mikroskopisk blå tone */
+            --bg-deep: #02040a; 
             
             /* Det nye samlede Azur/Blå tema */
             --glow-dark: #001133;
@@ -86,16 +86,60 @@
         /* --- HERO FRAME --- */
         header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding-top: 5rem; }
         
+        /* Magien: Den løbende glasmorphic kant på HERO kassen */
         .hero-frame {
-            position: relative; padding: 5rem 3rem; margin-bottom: 2rem; border-radius: 24px; text-align: center;
-            background: rgba(10, 12, 18, 0.5); backdrop-filter: blur(20px); border: 1px solid rgba(0,229,255,0.1);
-            width: 100%; max-width: 900px; box-shadow: 0 10px 40px rgba(0, 85, 255, 0.1);
+            position: relative; padding: 5rem 3rem; margin-bottom: 2rem; 
+            border-radius: 24px; text-align: center; width: 100%; max-width: 900px;
+            z-index: 1; /* Nødvendig for at pseudo-elementerne (glas og kant) ligger korrekt */
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .hero-frame::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(10, 12, 18, 0.7); /* Dyb azur-mørk glaseffekt */
+            backdrop-filter: blur(20px);
+            border-radius: 24px; z-index: -1;
         }
 
+        .hero-frame::before {
+            content: ''; position: absolute;
+            inset: -2px; /* Kantens tykkelse */
+            border-radius: 26px; 
+            background: linear-gradient(90deg, var(--glow-dark) 0%, var(--glow-mid) 25%, var(--glow-light) 50%, var(--glow-mid) 75%, var(--glow-dark) 100%);
+            background-size: 200% auto;
+            z-index: -2;
+            animation: led-run 4s linear infinite;
+            opacity: 0.8; 
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.15); /* Giver boksen en fed, svag glød */
+        }
+        
+        .hero-frame > * { position: relative; z-index: 2; } /* Sikrer at teksten og knapperne er øverst */
+
+        /* Den glimrende Azur-blå overskrift */
         .wifi-title {
-            font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.04em; line-height: 1; margin-bottom: 1.5rem;
-            color: #ffffff;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.1), 0 0 100px rgba(0, 229, 255, 0.2);
+            font-size: clamp(2.8rem, 7vw, 6.5rem); font-weight: 800; text-transform: uppercase; 
+            letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.5rem;
+            
+            /* Det metalliske/tech glimt */
+            background: linear-gradient(
+                110deg, 
+                #ffffff 10%, 
+                var(--glow-light) 30%, 
+                var(--glow-mid) 50%, 
+                var(--glow-light) 70%, 
+                #ffffff 90%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-glimmer 5s linear infinite;
+            
+            /* Den udvendige glød (drop-shadow fungerer bedre med transparent tekst end text-shadow) */
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
+        }
+
+        @keyframes text-glimmer {
+            to { background-position: -200% center; }
         }
 
         /* --- KNAPPER --- */
@@ -119,7 +163,7 @@
         }
         .btn-outline:hover { background: rgba(0, 229, 255, 0.1); border-color: var(--glow-light); transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
 
-        .hero-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 3rem; flex-wrap: wrap; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 3rem; flex-wrap: wrap; width: 100%; }
 
         section { padding: 7rem 0; width: 100%; position: relative; }
         .section-title { font-size: 3.5rem; margin-bottom: 1rem; text-align: center; line-height: 1.1; letter-spacing: -0.03em; }
@@ -128,7 +172,7 @@
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; width: 100%; }
 
         /* =========================================================================
-           HER ER MAGIEN: Løbende Glasmorphic Azur LED Kant 
+           Løbende Glasmorphic Azur LED Kant (Produktkort)
         ========================================================================= */
         .glass-card {
             position: relative;
@@ -138,24 +182,21 @@
             transition: transform 0.4s ease;
         }
 
-        /* 1. Det inderste glaskort (Dette ligger OVER LED-kanten) */
         .glass-card::after {
             content: ''; position: absolute; inset: 0;
-            background: rgba(10, 12, 18, 0.85); /* Dyb, let gennemsigtig azur-mørk */
+            background: rgba(10, 12, 18, 0.85);
             backdrop-filter: blur(20px);
             border-radius: 24px; z-index: -1;
         }
 
-        /* 2. Den animerede, levende LED kant (Ligger BAGVED det inderste glas) */
         .glass-card::before {
             content: ''; position: absolute;
-            inset: -2px; /* Giver kanten en tykkelse på 2px */
-            border-radius: 26px; /* Lidt større end selve kortet */
+            inset: -2px; border-radius: 26px; 
             background: linear-gradient(90deg, var(--glow-dark) 0%, var(--glow-mid) 25%, var(--glow-light) 50%, var(--glow-mid) 75%, var(--glow-dark) 100%);
             background-size: 200% auto;
             z-index: -2;
             animation: led-run 3s linear infinite;
-            opacity: 0.5; /* Altid svagt tændt */
+            opacity: 0.5;
             transition: opacity 0.3s ease, filter 0.3s ease;
         }
 
@@ -164,14 +205,12 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Når man holder musen over: Kanten lyser op, og kortet svæver */
         .glass-card:hover { transform: translateY(-8px); }
         .glass-card:hover::before { 
             opacity: 1; 
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4)); 
         }
 
-        /* Alle elementer indeni kortet skal være over ::after (glasseffekten) */
         .glass-card > * { position: relative; z-index: 2; }
         /* ========================================================================= */
 
@@ -232,7 +271,7 @@
         select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300e5ff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 1.2rem top 50%; background-size: 0.65rem auto; }
 
         @media(max-width: 850px) {
-            .hero-frame { padding: 4rem 1.5rem; border-radius: 20px; } 
+            .hero-frame { padding: 4rem 1.5rem; } 
             .glass-card { padding: 3rem 1.5rem 2rem 1.5rem; }
             .grid-3 { grid-template-columns: 1fr; gap: 3.5rem; } 
             .split-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
@@ -240,7 +279,7 @@
             .hero-buttons { flex-direction: column; width: 100%; gap: 1rem; }
             .btn-primary, .btn-outline { width: 100%; justify-content: center; }
             h2.section-title { font-size: 2.5rem; }
-            .wifi-title { font-size: 2.8rem; }
+            .wifi-title { font-size: 2.6rem; }
         }
     </style>
 </head>
@@ -272,6 +311,7 @@
                     Uafhængig Smart Home Portal
                 </div>
                 <h1 class="wifi-title">Gør dit hjem<br>intelligent</h1>
+                
                 <p style="font-size: 1.15rem; max-width: 600px; margin: 0 auto; color: #94a3b8;">
                     Find markedets skarpeste anmeldelser og netværksguides, eller spring det tekniske over og få professionel hjælp til opsætningen.
                 </p>
@@ -335,7 +375,7 @@
                 <div class="glass-card gsap-up">
                     <div class="product-badge">Bedste Smart Lås</div>
                     <div class="product-img-wrapper">
-                         <img src="https://wsrv.nl/?url=https://yalesmart.com/cdn/shop/products/Yale-Doorman-L3S-Chrome.png&w=500&output=webp" alt="Yale Doorman L3S" onerror="this.src='https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80'">
+                        <img src="https://wsrv.nl/?url=https://yalesmart.com/cdn/shop/products/Yale-Doorman-L3S-Chrome.png&w=500&output=webp" alt="Yale Doorman L3S" onerror="this.src='https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80'">
                     </div>
                     <h3>Yale Doorman L3S</h3>
                     <p>Gør din hoveddør fuldstændig nøglefri. Låser automatisk op, når du nærmer dig via din smartphone.</p>
