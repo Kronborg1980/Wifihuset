@@ -28,12 +28,11 @@
             --neon-purple: #bd00ff;
             --col-matter: #FACC15; 
             
-            /* Font fallbacks (Sikrer pænt design selvom Google Fonts er blokeret) */
+            /* Font fallbacks */
             --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
             --font-head: 'Space Grotesk', system-ui, -apple-system, sans-serif;
         }
 
-        /* --- MAGI FOR AT FÅ INTERNE LINKS TIL AT GLIDE BLØDT --- */
         html { 
             scroll-behavior: smooth; 
             scroll-padding-top: 100px; 
@@ -131,8 +130,21 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; }
 
         /* --- AFFILIATE PRODUCT CARDS --- */
-        .product-badge { position: absolute; top: -15px; left: 20px; background: linear-gradient(90deg, #FACC15, #f59e0b); color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); }
-        .product-image-placeholder { width: 100%; height: 180px; background: rgba(0,0,0,0.4); border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.1); }
+        .product-badge { position: absolute; top: -15px; left: 20px; background: linear-gradient(90deg, #FACC15, #f59e0b); color: #000; padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; box-shadow: 0 5px 15px rgba(250, 204, 21, 0.3); z-index: 10;}
+        
+        .product-img-wrapper {
+            width: 100%; height: 220px; border-radius: 12px; margin-bottom: 1.5rem; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); 
+            background: #ffffff; /* Hvid baggrund så officielle produktbilleder ser pæne ud */
+            padding: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .product-img-wrapper img {
+            width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease;
+        }
+        .glass-card:hover .product-img-wrapper img {
+            transform: scale(1.08);
+        }
+        
         .pros-cons { margin: 1.5rem 0; font-size: 0.95rem; padding: 0; }
         .pros-cons li { list-style: none; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 0.5rem; word-break: break-word; }
         .pros-cons .pro i { color: #22c55e; margin-top: 4px; flex-shrink: 0; }
@@ -208,10 +220,12 @@
 
             <div class="grid-3">
                 
+                <!-- PRODUKT 1: ROUTER -->
                 <div class="glass-card gsap-up">
                     <div class="product-badge">Bedste Mesh WiFi</div>
-                    <div class="product-image-placeholder">
-                        <i class="ph-duotone ph-router" style="font-size: 4rem; color: var(--neon-blue);"></i>
+                    <div class="product-img-wrapper">
+                        <!-- Officielt UI billede (via Shopify/CDN struktur) -->
+                        <img src="https://store.ui.com/cdn/shop/files/UX_Hero.png" alt="Ubiquiti UniFi Express" onerror="this.src='https://tech.ui.com/images/ui-logo.png'">
                     </div>
                     <h3>Ubiquiti UniFi Express</h3>
                     <p style="font-size: 0.95rem; margin-bottom: 0;">Det absolut stærkeste valg til at dække hele huset uden udfald. Kræver lidt teknisk snilde, men slår alt andet.</p>
@@ -227,29 +241,33 @@
                     </a>
                 </div>
 
+                <!-- PRODUKT 2: ANTHBOT M5 LIDAR -->
                 <div class="glass-card gsap-up">
                     <div class="product-badge" style="background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">Bedste Robotplæneklipper</div>
-                    <div class="product-image-placeholder">
-                        <i class="ph-duotone ph-car-profile" style="font-size: 4rem; color: #22c55e;"></i>
+                    <div class="product-img-wrapper">
+                        <!-- Officielt produktbillede fra Anthbots servere -->
+                        <img src="https://anthbot.com/cdn/shop/files/M5-1.png" alt="Anthbot M5 Lidar Robotplæneklipper" onerror="this.src='https://anthbot.com/cdn/shop/files/M5.png'">
                     </div>
-                    <h3>Segway Navimow H1500E</h3>
-                    <p style="font-size: 0.95rem; margin-bottom: 0;">Farvel til irriterende kanttråd. Denne robot bruger GPS og AI-kamera til at navigere pletfrit i haven.</p>
+                    <h3>Anthbot M5 Lidar</h3>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Fremtidens innovation. Hvor almindelige GPS-robotter farer vild under store træer, bruger Anthbot avanceret 3D LiDAR – samme teknologi som selvkørende biler – til at kortlægge haven i 3D uden kanttråd. Aldrig har det været mere præcist.</p>
                     
                     <ul class="pros-cons">
-                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Trådløs installation (GPS/RTK)</li>
-                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Undviger automatisk legetøj</li>
-                        <li class="con"><i class="ph-bold ph-x-circle"></i> Kræver frit udsyn til himlen</li>
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> 3D LiDAR navigation (virker under træer)</li>
+                        <li class="pro"><i class="ph-bold ph-check-circle"></i> Undviger objekter i realtid</li>
+                        <li class="con"><i class="ph-bold ph-x-circle"></i> Designet er lidt højere pga. Lidar-tårnet</li>
                     </ul>
                     
-                    <a href="https://www.homeshop.dk/segway-navimow.html" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">
-                        Se pris hos Homeshop <i class="ph-bold ph-arrow-right"></i>
+                    <a href="https://www.bilka.dk/" target="_blank" rel="noopener noreferrer" class="btn-glow" style="width: 100%; font-size: 0.95rem; padding: 0.8rem; background: linear-gradient(90deg, #22c55e, #16a34a); color: white;">
+                        Se pris hos Bilka <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
 
+                <!-- PRODUKT 3: YALE DOORMAN -->
                 <div class="glass-card gsap-up">
                     <div class="product-badge" style="background: linear-gradient(90deg, #bd00ff, #9333ea); color: white;">Bedste Smart Lås</div>
-                    <div class="product-image-placeholder">
-                        <i class="ph-duotone ph-lock-key" style="font-size: 4rem; color: #bd00ff;"></i>
+                    <div class="product-img-wrapper">
+                        <!-- Billede direkte fra officielle kilder -->
+                        <img src="https://yalesmart.com/cdn/shop/products/Yale-Doorman-L3S-Chrome.png" alt="Yale Doorman L3S" onerror="this.src='https://www.yalehome.dk/sites/default/files/2021-03/Yale-Doorman-L3-S-Silver-Front.png'">
                     </div>
                     <h3>Yale Doorman L3S</h3>
                     <p style="font-size: 0.95rem; margin-bottom: 0;">Gør din hoveddør nøglefri. Låser automatisk op, når du nærmer dig, og integrerer perfekt med Google og Apple.</p>
