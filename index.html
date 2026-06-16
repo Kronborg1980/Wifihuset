@@ -130,10 +130,10 @@ section{padding:88px 0;position:relative;}
 .winner{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.3s;position:relative;}
 .winner:hover{transform:translateY(-6px);box-shadow:0 24px 50px -30px rgba(21,23,28,.5);border-color:var(--slate-2);}
 .winner .award{display:flex;align-items:center;gap:8px;padding:11px 18px;background:var(--gold-soft);border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;}
-.winner .award svg{width:15px;height:15px;flex:none;}
+.winner .award svg{width:15px;height:15px;flex:none;} /* CRITICAL FIX: Stops the star from blowing up */
 .winner .imgbox{aspect-ratio:1/.74;background:var(--surface-2);display:grid;place-items:center;padding:26px;overflow:hidden;}
 .winner .imgbox img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
-.winner .imgbox svg{width:100%;height:100%;} /* Ensure fallbacks fit seamlessly */
+.winner .imgbox svg{width:100%;height:100%;} /* Ensures the fallback SVG fits nicely */
 .winner .body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1;}
 .cat-tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);}
 .winner .body h3{font-size:1.4rem;margin:7px 0 4px;}
@@ -540,8 +540,7 @@ footer ul a:hover{color:#fff;}
 /* ---------------- DATA ---------------- */
 const prRunner = n => 'https://www.pricerunner.dk/search?q=' + encodeURIComponent(n);
 
-/* On-brand inline illustrations — embedded so they never break.
-   Swap any value for an <img ...> tag if you later host real product photos. */
+/* Fallback SVG illustrations */
 const art = {
   mower:`<svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Robotplæneklipper med LiDAR">
     <g stroke="#8AA67C" stroke-width="3" stroke-linecap="round"><path d="M26 160v-13"/><path d="M40 160v-18"/><path d="M54 160v-12"/><path d="M186 160v-13"/><path d="M200 160v-18"/><path d="M214 160v-12"/></g>
@@ -683,6 +682,17 @@ winners.forEach(w => {
   }
 });
 
+/* Safe Fallback Image Handler (prevents GitHub compile errors) */
+window.handleImageError = function(id) {
+  const w = winners.find(x => x.id === id);
+  if (w && w.fallbackSvg) {
+    const box = document.getElementById('imgbox_' + id);
+    if (box) {
+      box.innerHTML = w.fallbackSvg;
+    }
+  }
+};
+
 /* ---------------- RENDER ---------------- */
 function barsHTML(score, small){
   const filled = Math.round(score/2);
@@ -698,13 +708,13 @@ const ico = {
   arr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
 };
 
-// Winners: Updates to replace broken links with fallback SVGs 
+// Render Winners Array
 document.getElementById('winners').innerHTML = winners.map(w=>`
   <article class="winner rv">
     <div class="award">${ico.star}${w.award}</div>
     <div class="imgbox" id="imgbox_${w.id}">
       <img src="${w.img}" alt="${w.name}" loading="lazy" style="object-fit:${w.fit}" 
-           onerror="document.getElementById('imgbox_${w.id}').innerHTML = \`${w.fallbackSvg}\`">
+           onerror="handleImageError('${w.id}')">
     </div>
     <div class="body">
       <span class="cat-tag">${w.cat}</span>
