@@ -35,6 +35,8 @@ a{color:var(--signal);}
 .btn.warn:hover{background:#FFF3F2;border-color:#B42318;}
 .btn.acc{background:var(--signal);color:#fff;border-color:var(--signal);}
 .btn.acc:hover{background:var(--signal-deep);}
+.btn.go{background:#0E7A53;color:#fff;border-color:#0E7A53;}
+.btn.go:hover{background:#0A5F40;}
 
 .layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 58px);}
 .pubnote{background:#FFF8E6;border-bottom:1px solid #E9D9A8;color:#6B5410;padding:11px 20px;font-size:.85rem;line-height:1.45;}
@@ -91,18 +93,18 @@ textarea.in{resize:vertical;line-height:1.55;}
   <div class="brand"><span class="mk"><svg viewBox="0 0 64 64" fill="none"><g stroke="#1B4BFF" stroke-width="4" stroke-linecap="round"><path d="M18 36a20 20 0 0 1 28 0"/><path d="M24 42a12 12 0 0 1 16 0"/></g><circle cx="32" cy="48" r="3.6" fill="#1B4BFF"/></svg></span>Admin</div>
   <div class="sp"></div>
   <span class="status" id="status">Klar</span>
-  <button class="btn" id="preview">Forhåndsvis forside ↗</button>
+  <button class="btn" id="preview">Forhåndsvis ↗</button>
   <button class="btn" id="export">Eksportér JSON</button>
   <button class="btn" id="importBtn">Importér JSON</button>
-  <button class="btn acc" id="exportJs">Download config.js</button>
-  <button class="btn warn" id="reset">Nulstil alt</button>
-  <button class="btn primary" id="save">Gem nu</button>
+  <button class="btn" id="exportJs">Download config.js</button>
+  <button class="btn warn" id="reset">Nulstil</button>
+  <button class="btn primary" id="save">Gem lokalt</button>
+  <button class="btn go" id="publish">Udgiv live ⤴</button>
   <input type="file" id="importFile" accept="application/json" hidden>
 </div>
 
 <div class="pubnote">
-  <b>Vigtigt:</b> Autogem gemmer kun i <b>denne</b> browser/enhed. For at ændringerne (og dine billeder) vises på din telefon og for alle besøgende:
-  klik <b>Download config.js</b> og læg filen i dit GitHub-repo (erstat den gamle <code>config.js</code>), og commit.
+  <b>Sådan får du ændringer live:</b> Tryk <b>Udgiv live ⤴</b> — så sendes ændringerne direkte til din hjemmeside og vises på alle enheder (også telefonen) inden for ca. et minut. <b>Gem lokalt</b> gemmer kun i denne browser. Første gang skal du forbinde GitHub under fanen <b>Udgiv (GitHub)</b>.
 </div>
 
 <div class="layout">
@@ -246,6 +248,7 @@ const TABS=[
   {id:'offer',label:'Tilbudsformular',render:tOffer},
   {id:'faq',label:'FAQ',render:tFaq},
   {id:'footer',label:'Footer',render:tFooter},
+  {id:'publish',label:'⤴ Udgiv (GitHub)',render:tPublish},
 ];
 let active='brand';
 const tabsEl=document.getElementById('tabs'),panel=document.getElementById('panel');
@@ -387,6 +390,34 @@ function tFaq(p){
   p.appendChild(listEditor(CONFIG.faqs,(f)=>[fText('Spørgsmål',f,'q'),fText('Svar',f,'a',{area:true,rows:3})],()=>({q:'Nyt spørgsmål?',a:''}),{title:f=>f.q.slice(0,40),addLabel:'Tilføj spørgsmål'}));
 }
 
+/* ---- Publish (GitHub) ---- */
+function tPublish(p){
+  head(p,'Udgiv til din hjemmeside (GitHub)',
+    'Forbind admin med dit repo én gang. Derefter sender “Udgiv live ⤴” dine ændringer direkte ud — uden at downloade filer. Virker på alle enheder.',
+    'Sikkerhed: brug et <b>fine-grained</b> token, begrænset til <b>kun dette repo</b>, med <b>Contents: Read and write</b>. Det gemmes kun i din egen browser — aldrig i repoet — og kan tilbagekaldes på GitHub når som helst.');
+  const gh=loadGH();
+  if(!gh.owner||!gh.repo){ const d=detectRepo(); if(d.owner&&!gh.owner)gh.owner=d.owner; if(d.repo&&!gh.repo)gh.repo=d.repo; saveGH(gh); }
+  function bind(key,label,ph,type){ const i=el('input',{class:'in',type:type||'text',placeholder:ph||''}); i.value=gh[key]||''; i.addEventListener('input',()=>{gh[key]=i.value.trim();saveGH(gh);}); return el('label',{class:'f'},el('span',{class:'fl'},label),i); }
+  p.appendChild(el('div',{class:'row'},bind('owner','GitHub-brugernavn (owner)','fx Kronborg1980'),bind('repo','Repository-navn','fx wifihuset')));
+  p.appendChild(el('div',{class:'row'},bind('branch','Branch','main'),bind('path','Fil der opdateres','config.js')));
+  p.appendChild(bind('token','Fine-grained token','github_pat_…','password'));
+  const st=el('div',{class:'note',style:'margin:4px 0 14px'},'');
+  const test=el('button',{class:'btn',onclick:async()=>{st.textContent='Tester…';st.style.color='';const ok=await testConn();st.textContent=ok.msg;st.style.color=ok.ok?'#0E7A53':'#B42318';}},'Test forbindelse');
+  const pub=el('button',{class:'btn go',onclick:publish},'Udgiv live nu ⤴');
+  p.appendChild(el('div',{style:'display:flex;gap:10px;flex-wrap:wrap'},test,pub));
+  p.appendChild(st);
+  const steps=el('div',{class:'card',style:'margin-top:18px'});
+  steps.innerHTML='<div class="t" style="margin-bottom:10px">Sådan laver du et token (kun første gang)</div>'+
+    '<ol style="margin:0;padding-left:20px;color:var(--slate);font-size:.9rem;line-height:1.75">'+
+    '<li>GitHub → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b>.</li>'+
+    '<li><b>Generate new token</b>. Giv det et navn og en udløbsdato.</li>'+
+    '<li><b>Repository access</b> → <b>Only select repositories</b> → vælg dit WiFiHuset-repo.</li>'+
+    '<li><b>Permissions</b> → <b>Repository permissions</b> → <b>Contents</b> → vælg <b>Read and write</b>.</li>'+
+    '<li><b>Generate token</b>, kopiér det (starter med <code>github_pat_</code>) og indsæt det ovenfor.</li>'+
+    '</ol><div class="note" style="margin-top:10px">Genvej: <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener">github.com/settings/tokens?type=beta</a></div>';
+  p.appendChild(steps);
+}
+
 /* ---- Footer ---- */
 function tFooter(p){
   head(p,'Footer','Bundtekst, ansvarsfraskrivelse og link-kolonner.');
@@ -406,13 +437,57 @@ document.getElementById('save').addEventListener('click',saveNow);
 document.getElementById('preview').addEventListener('click',()=>{saveNow();window.open('index.html','_blank');});
 document.getElementById('export').addEventListener('click',()=>{
   download('wifihuset-config.json',JSON.stringify(CONFIG,null,2),'application/json');});
-document.getElementById('exportJs').addEventListener('click',()=>{
-  const js='/* WiFiHuset config — genereret fra admin '+new Date().toLocaleString('da-DK')+' */\n'+
+function buildConfigJs(){
+  return '/* WiFiHuset config — genereret fra admin '+new Date().toLocaleString('da-DK')+' */\n'+
     'window.ART = '+JSON.stringify(window.ART)+';\n'+
     'window.ART_KEYS = '+JSON.stringify(window.ART_KEYS)+';\n'+
     'window.STD_ICONS = '+JSON.stringify(window.STD_ICONS)+';\n'+
     'window.DEFAULT_CONFIG = '+JSON.stringify(CONFIG,null,2)+';\n';
-  download('config.js',js,'application/javascript');});
+}
+document.getElementById('exportJs').addEventListener('click',()=>download('config.js',buildConfigJs(),'application/javascript'));
+
+/* ----- GitHub publish ----- */
+const GH_KEY='wifihuset_gh';
+function loadGH(){ try{return JSON.parse(localStorage.getItem(GH_KEY))||{};}catch(e){return{};} }
+function saveGH(gh){ try{localStorage.setItem(GH_KEY,JSON.stringify(gh));}catch(e){} }
+function detectRepo(){ try{const h=location.hostname,parts=location.pathname.split('/').filter(Boolean);
+  if(h.endsWith('github.io')){const owner=h.split('.')[0];const repo=parts[0]||(owner+'.github.io');return{owner,repo};}}catch(e){} return {}; }
+function ghHeaders(gh){ return {'Authorization':'Bearer '+gh.token,'Accept':'application/vnd.github+json'}; }
+function b64utf8(str){ const bytes=new TextEncoder().encode(str); let bin=''; const c=0x8000;
+  for(let i=0;i<bytes.length;i+=c){ bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+c)); } return btoa(bin); }
+async function testConn(){
+  const gh=loadGH(); if(!gh.owner||!gh.repo||!gh.token) return {ok:false,msg:'Udfyld owner, repo og token først.'};
+  try{ const r=await fetch('https://api.github.com/repos/'+gh.owner+'/'+gh.repo,{headers:ghHeaders(gh)});
+    if(r.ok) return {ok:true,msg:'Forbindelse OK ✓ — klar til at udgive.'};
+    if(r.status===404) return {ok:false,msg:'Repo ikke fundet (tjek owner/repo) eller token mangler adgang.'};
+    if(r.status===401) return {ok:false,msg:'Token afvist (401). Tjek at token er gyldigt og ikke udløbet.'};
+    return {ok:false,msg:'Fejl '+r.status+'.'};
+  }catch(e){ return {ok:false,msg:'Netværksfejl: '+e.message}; }
+}
+async function publish(){
+  const gh=loadGH();
+  if(!gh.owner||!gh.repo||!gh.token){ active='publish'; drawTabs(); drawPanel(); alert('Forbind GitHub først (fanen “Udgiv (GitHub)”).'); return; }
+  const branch=gh.branch||'main', path=gh.path||'config.js';
+  const api='https://api.github.com/repos/'+gh.owner+'/'+gh.repo+'/contents/'+path;
+  setStatus('Udgiver…');
+  try{
+    let sha;
+    const g=await fetch(api+'?ref='+encodeURIComponent(branch),{headers:ghHeaders(gh)});
+    if(g.status===200){ sha=(await g.json()).sha; }
+    else if(g.status!==404){ throw new Error('Læsning fejlede ('+g.status+').'); }
+    const body={message:'Opdater '+path+' via WiFiHuset-admin',content:b64utf8(buildConfigJs()),branch};
+    if(sha) body.sha=sha;
+    const r=await fetch(api,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},ghHeaders(gh)),body:JSON.stringify(body)});
+    if(!r.ok){ let t=''; try{t=(await r.json()).message||'';}catch(e){} throw new Error('('+r.status+') '+t); }
+    saveNow();
+    setStatus('Udgivet ✓ — live om ~1 min',true);
+    alert('Udgivet! Siden opdateres typisk inden for et minut.\nHard-refresh / pull-to-refresh på telefonen for at se det med det samme.');
+  }catch(e){
+    setStatus('Udgivelse fejlede',false);
+    alert('Kunne ikke udgive:\n'+e.message+'\n\nTjek:\n• Token har Contents: Read and write på netop dette repo\n• owner / repo / branch er korrekte');
+  }
+}
+document.getElementById('publish').addEventListener('click',publish);
 document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
 document.getElementById('importFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
   const r=new FileReader();r.onload=ev=>{try{const obj=JSON.parse(ev.target.result);CONFIG=deepMerge(clone(window.DEFAULT_CONFIG),obj);saveNow();applyTheme();drawPanel();setStatus('Importeret ✓',true);}catch(err){alert('Kunne ikke læse filen: '+err.message);}};r.readAsText(f);e.target.value='';});
