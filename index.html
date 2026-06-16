@@ -132,32 +132,39 @@ section{padding:88px 0;position:relative;}
 .winner .award{display:flex;align-items:center;gap:8px;padding:11px 18px;background:var(--gold-soft);border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;}
 .winner .award svg{width:15px;height:15px;flex:none;}
 
-/* PERFECTED IMAGE STYLING: Fading edges + drop shadow */
+/* PERFECTED IMAGE STYLING: Fading Vignette + Realistic Drop Shadow */
 .winner .imgbox {
   aspect-ratio: 1 / .85;
-  background: radial-gradient(circle at center, var(--surface) 0%, #E8E8E2 100%);
-  box-shadow: inset 0 0 35px rgba(0,0,0,0.03);
+  background: radial-gradient(circle at center, var(--surface) 0%, var(--surface-2) 100%);
   display: grid;
   place-items: center;
-  padding: 26px;
+  padding: 30px;
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.02); /* Soft inner depth */
+}
+/* The soft fade overlay - done as a pseudo element so it never breaks text */
+.winner .imgbox::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 95% 90% at 50% 50%, transparent 45%, var(--surface-2) 100%);
+  pointer-events: none;
+  z-index: 5;
 }
 .winner .imgbox img {
   width: 100%;
   height: 100%;
-  mix-blend-mode: multiply; /* Removes standard white backgrounds */
-  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.12)); /* Casts shadow based on actual shape */
-  
-  /* Creates a smooth fading vignette around the image so it isn't a hard square */
-  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 90%);
-  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 90%);
-  
+  object-fit: contain;
+  mix-blend-mode: multiply; /* Blends white background naturally */
+  filter: drop-shadow(0 14px 18px rgba(21, 23, 28, 0.12)); /* Casts shadow exactly shaped like product */
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
+  position: relative;
+  z-index: 2;
 }
 .winner:hover .imgbox img {
   transform: scale(1.08) translateY(-4px);
-  filter: drop-shadow(0 22px 25px rgba(0, 0, 0, 0.18));
+  filter: drop-shadow(0 22px 28px rgba(21, 23, 28, 0.18));
 }
 
 .winner .body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1;}
@@ -565,19 +572,14 @@ footer ul a:hover{color:#fff;}
 <script>
 const prRunner = n => 'https://www.pricerunner.dk/search?q=' + encodeURIComponent(n);
 
-/* 
-  BUGFIX: The browser in image_3b907a.png blocked the raw Amazon/TP-Link URLs (likely due to strict CORS or hotlink policies). 
-  To fix this completely, I am routing the exact images through "wsrv.nl" (Images weserv), which is a high-speed, open-source 
-  image proxy cache. This bypasses hotlinking blocks and guarantees the images will load seamlessly.
-*/
+/* NYE STABILE LINKS FRA DANSKE FORHANDLERE SOM SJÆLDENT BLOKERER */
 const winners = [
   {
     name:'Anthbot M5 LiDAR',
     cat:'Robotplæneklipper',
     award:'Årets testvinder · Have',
     score:9.3,
-    img:'https://wsrv.nl/?url=https://m.media-amazon.com/images/I/61M-1kQ3a6L._AC_SL1500_.jpg&w=400&output=webp',
-    fit:'contain',
+    img:'https://m.media-amazon.com/images/I/61M-1kQ3a6L._AC_SX679_.jpg',
     verdict:'Trådfri klipper med ægte 360° LiDAR — samme navigation som selvkørende biler. Suverænt valg under træer og i skygge, hvor RTK-modeller svigter.',
     pros:['LiDAR navigerer fejlfrit uden kanttråd','Op til 20 zoner og ~500 m²','Skarp pris for teknologien'],
     cons:['LiDAR-tårnet ændrer robottens profil','4G-abonnement efter 12 mdr.'],
@@ -588,8 +590,7 @@ const winners = [
     cat:'Mesh-WiFi',
     award:'Testvinder · Nemmeste mesh',
     score:9.1,
-    img:'https://wsrv.nl/?url=https://static.tp-link.com/upload/image-line/Deco-XE75-Pro-1.0_normal_20230410101434b.png&w=400&output=webp',
-    fit:'contain',
+    img:'https://www.proshop.dk/Images/915x900/3067716_cc7b134988aa.png',
     verdict:'Det mesh, vi anbefaler de fleste. Tri-band WiFi 6E, sat op på under fem minutter i Deco-appen — uden teknisk forståelse.',
     pros:['Lynnem opsætning via app','Tri-band WiFi 6E, ét sømløst net','Indbygget sikkerhed & børnesikring'],
     cons:['Avancerede indstillinger er begrænsede','Fuld sikkerhedspakke kræver abonnement'],
@@ -600,8 +601,7 @@ const winners = [
     cat:'Smart lås',
     award:'Testvinder · Sikkerhed',
     score:9.0,
-    img:'https://wsrv.nl/?url=https://yalehome.dk/cdn/shop/files/L3S_Brushed_Steel.png&w=400&output=webp',
-    fit:'contain',
+    img:'https://www.proshop.dk/Images/915x900/2932314_f448c5e62fba.jpg',
     verdict:'Danskernes mest betroede dørlås. Høj låseklasse, eftermonteres uden at ændre dørens yderside — perfekt til både ejer- og lejebolig.',
     pros:['Høj sikkerhedsgodkendelse','Beholder yderside & fysisk nøgle','Stabil app & auto-lås'],
     cons:['Premium prisklasse','Fulde smart-funktioner kræver modul'],
@@ -663,10 +663,17 @@ const ico = {
   arr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
 };
 
+/* 
+  ONERROR FALLBACK: 
+  Hvis browseren blokerer linket, fjerner scriptet mix-blend-mode (som gjorde teksten usynlig) 
+  og lægger automatisk et pænt rent fallback-billede ind, så navnet altid kan læses!
+*/
 document.getElementById('winners').innerHTML = winners.map(w=>`
   <article class="winner rv">
     <div class="award">${ico.star}${w.award}</div>
-    <div class="imgbox"><img src="${w.img}" alt="${w.name}" style="object-fit:${w.fit}"></div>
+    <div class="imgbox">
+      <img src="${w.img}" alt="${w.name}" onerror="this.onerror=null; this.src='https://placehold.co/600x500/F4F4EF/565C66?text=Billede+på+vej'; this.style.mixBlendMode='normal'; this.style.filter='none';">
+    </div>
     <div class="body">
       <span class="cat-tag">${w.cat}</span>
       <h3>${w.name}</h3>
