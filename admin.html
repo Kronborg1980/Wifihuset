@@ -37,6 +37,8 @@ a{color:var(--signal);}
 .btn.acc:hover{background:var(--signal-deep);}
 
 .layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 58px);}
+.pubnote{background:#FFF8E6;border-bottom:1px solid #E9D9A8;color:#6B5410;padding:11px 20px;font-size:.85rem;line-height:1.45;}
+.pubnote b{color:#4A3A0B;}
 .side{border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:58px;align-self:start;height:calc(100vh - 58px);overflow:auto;}
 .tab{display:block;width:100%;text-align:left;padding:10px 14px;border:0;background:none;border-radius:8px;cursor:pointer;font-family:var(--fb);font-size:.92rem;color:var(--slate);font-weight:500;margin-bottom:2px;}
 .tab:hover{background:var(--surface-2);color:var(--ink);}
@@ -96,6 +98,11 @@ textarea.in{resize:vertical;line-height:1.55;}
   <button class="btn warn" id="reset">Nulstil alt</button>
   <button class="btn primary" id="save">Gem nu</button>
   <input type="file" id="importFile" accept="application/json" hidden>
+</div>
+
+<div class="pubnote">
+  <b>Vigtigt:</b> Autogem gemmer kun i <b>denne</b> browser/enhed. For at ændringerne (og dine billeder) vises på din telefon og for alle besøgende:
+  klik <b>Download config.js</b> og læg filen i dit GitHub-repo (erstat den gamle <code>config.js</code>), og commit.
 </div>
 
 <div class="layout">
@@ -207,16 +214,21 @@ function listEditor(arr,renderItem,makeNew,opts={}){
 /* winner image field */
 function imageField(w,redraw){
   const prev=el('div',{class:'preview'});
-  function paint(){ prev.innerHTML = w.img ? `<img src="${w.img}">` : (window.ART[w.artKey]||window.ART.generic); }
+  function paint(){ prev.innerHTML = w.img ? `<img src="${w.img}" onerror="this.parentElement.innerHTML=(window.ART['${w.artKey}']||window.ART.generic)">` : (window.ART[w.artKey]||window.ART.generic); }
   paint();
+  const url=el('input',{class:'in',type:'text',placeholder:'fx images/anthbot.jpg eller https://…'});
+  url.value=(w.img && !w.img.startsWith('data:'))?w.img:'';
+  url.addEventListener('input',()=>{w.img=url.value.trim();paint();queueSave();});
   const file=el('input',{type:'file',accept:'image/*'});
   file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
-    if(f.size>1400000){alert('Billedet er ret stort ('+Math.round(f.size/1024)+' KB). Browserens lager er ca. 5 MB i alt — komprimér gerne under ~1 MB.');}
-    const r=new FileReader();r.onload=ev=>{w.img=ev.target.result;paint();queueSave();};r.readAsDataURL(f);});
-  const clear=el('button',{class:'btn',onclick:()=>{w.img='';paint();queueSave();}},'Fjern foto → brug illustration');
+    if(f.size>900000){alert('Billedet er '+Math.round(f.size/1024)+' KB. Tip: brug hellere en billed-URL (læg filen i en /images-mappe i dit repo) — så holder config.js sig lille og virker hurtigt på alle enheder.');}
+    const r=new FileReader();r.onload=ev=>{w.img=ev.target.result;url.value='';paint();queueSave();};r.readAsDataURL(f);});
+  const clear=el('button',{class:'btn',onclick:()=>{w.img='';url.value='';paint();queueSave();}},'Ryd → brug illustration');
   const right=el('div',{style:'flex:1'},
-    el('div',{class:'fl',style:'margin-bottom:6px'},'Produktfoto (valgfrit)'),
-    file, el('div',{class:'note'},'Uden foto bruges den valgte illustration herunder.'),
+    el('div',{class:'fl',style:'margin-bottom:6px'},'Produktbillede (valgfrit)'),
+    url,
+    el('div',{class:'note',style:'margin:6px 0 10px'},'Anbefalet: læg billedet i repoet (fx /images/navn.jpg) og skriv stien her — virker på alle enheder. Upload-knappen indlejrer billedet direkte, men vises kun i denne browser, indtil du downloader config.js og lægger den i repoet.'),
+    file,
     el('div',{style:'margin-top:8px'},clear));
   return el('div',{class:'f imgwrap'},prev,right);
 }
