@@ -451,8 +451,16 @@ footer ul a:hover{color:#fff;}
   </div>
 </footer>
 
-<script src="config.js"></script>
 <script>
+/* ---------- bootstrap: always load freshest config.js when online ---------- */
+(function(){
+  var online = /^https?:/.test(location.protocol);
+  var s=document.createElement('script');
+  s.src='config.js'+(online?('?v='+Date.now()):'');
+  s.onload=__startSite; s.onerror=__startSite;
+  document.head.appendChild(s);
+})();
+function __startSite(){
 /* ---------- load + merge config ---------- */
 const LS_KEY = 'wifihuset_config_v1';
 function deepMerge(base, src){
@@ -491,6 +499,7 @@ applyTheme(C.theme);
 function themedArt(svg){
   return svg.replace(/#15171C/g,C.theme.ink).replace(/#1B4BFF/g,C.theme.signal).replace(/#FBFBF8/g,C.theme.surface);
 }
+window.themedArt = themedArt;
 
 /* ---------- bind scalar text ---------- */
 function getPath(o,p){ return p.split('.').reduce((a,k)=>a==null?a:a[k],o); }
@@ -618,6 +627,7 @@ if(!reduce && window.gsap){
   gsap.utils.toArray('.rv').forEach(el=>{ if(el.closest('.hero')||el.classList.contains('mesh-card'))return;
     gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%'}}); });
 }else{ document.querySelectorAll('.rv').forEach(el=>{el.style.opacity=1;el.style.transform='none';}); }
+} /* end __startSite */
 </script>
 </body>
 </html>
