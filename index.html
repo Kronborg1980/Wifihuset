@@ -131,42 +131,8 @@ section{padding:88px 0;position:relative;}
 .winner:hover{transform:translateY(-6px);box-shadow:0 24px 50px -30px rgba(21,23,28,.5);border-color:var(--slate-2);}
 .winner .award{display:flex;align-items:center;gap:8px;padding:11px 18px;background:var(--gold-soft);border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;}
 .winner .award svg{width:15px;height:15px;flex:none;}
-
-/* PERFECTED IMAGE STYLING: Fading Vignette + Realistic Drop Shadow */
-.winner .imgbox {
-  aspect-ratio: 1 / .85;
-  background: radial-gradient(circle at center, var(--surface) 0%, var(--surface-2) 100%);
-  display: grid;
-  place-items: center;
-  padding: 30px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.02); /* Soft inner depth */
-}
-/* The soft fade overlay - done as a pseudo element so it never breaks text */
-.winner .imgbox::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 95% 90% at 50% 50%, transparent 45%, var(--surface-2) 100%);
-  pointer-events: none;
-  z-index: 5;
-}
-.winner .imgbox img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply; /* Blends white background naturally */
-  filter: drop-shadow(0 14px 18px rgba(21, 23, 28, 0.12)); /* Casts shadow exactly shaped like product */
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
-  position: relative;
-  z-index: 2;
-}
-.winner:hover .imgbox img {
-  transform: scale(1.08) translateY(-4px);
-  filter: drop-shadow(0 22px 28px rgba(21, 23, 28, 0.18));
-}
-
+.winner .imgbox{aspect-ratio:1/.74;background:var(--surface-2);display:grid;place-items:center;padding:26px;}
+.winner .imgbox img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
 .winner .body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1;}
 .cat-tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2);}
 .winner .body h3{font-size:1.4rem;margin:7px 0 4px;}
@@ -351,6 +317,7 @@ footer ul a:hover{color:#fff;}
       <span class="label">Mesh-dækning · live</span>
       <div class="reading"><b>9.4</b><span>Signal score</span></div>
       <svg class="mesh-svg" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <!-- edges -->
         <g>
           <line class="edge" x1="200" y1="190" x2="92" y2="96"/>
           <line class="edge" x1="200" y1="190" x2="312" y2="104"/>
@@ -362,13 +329,16 @@ footer ul a:hover{color:#fff;}
           <line class="edge-live" x1="200" y1="190" x2="300" y2="278"/>
           <line class="edge-live" x1="312" y1="104" x2="200" y2="190"/>
         </g>
+        <!-- coverage rings around router -->
         <circle class="ring" cx="200" cy="190" r="60"/>
         <circle class="ring r2" cx="200" cy="190" r="60"/>
         <circle class="ring r3" cx="200" cy="190" r="60"/>
+        <!-- nodes -->
         <circle class="node dot-pulse" cx="92" cy="96" r="7"/>
         <circle class="node dot-pulse" cx="312" cy="104" r="7" style="animation-delay:.5s"/>
         <circle class="node dot-pulse" cx="104" cy="280" r="7" style="animation-delay:1s"/>
         <circle class="node dot-pulse" cx="300" cy="278" r="7" style="animation-delay:1.5s"/>
+        <!-- router -->
         <circle class="node-r" cx="200" cy="190" r="13"/>
         <circle cx="200" cy="190" r="13" fill="none" stroke="#fff" stroke-width="1.5" opacity=".5"/>
       </svg>
@@ -376,6 +346,7 @@ footer ul a:hover{color:#fff;}
   </div>
 </header>
 
+<!-- METHOD -->
 <section class="method" id="metode">
   <div class="wrap">
     <div class="sec-head">
@@ -392,6 +363,7 @@ footer ul a:hover{color:#fff;}
   </div>
 </section>
 
+<!-- WINNERS -->
 <section id="testvindere">
   <div class="wrap">
     <div class="sec-head">
@@ -405,6 +377,7 @@ footer ul a:hover{color:#fff;}
 
 <hr class="divline">
 
+<!-- CATALOG -->
 <section id="anbefalinger">
   <div class="wrap">
     <div class="sec-head">
@@ -417,6 +390,7 @@ footer ul a:hover{color:#fff;}
   </div>
 </section>
 
+<!-- STANDARDS -->
 <section class="standards" id="standarder">
   <div class="wrap">
     <div class="sec-head">
@@ -472,6 +446,7 @@ footer ul a:hover{color:#fff;}
   </div>
 </section>
 
+<!-- OFFER -->
 <section class="offer" id="tilbud">
   <div class="wrap offer-grid">
     <div class="rv">
@@ -514,6 +489,7 @@ footer ul a:hover{color:#fff;}
   </div>
 </section>
 
+<!-- FAQ -->
 <section id="faq">
   <div class="wrap">
     <div class="sec-head" style="margin-left:auto;margin-right:auto;text-align:center;">
@@ -570,16 +546,50 @@ footer ul a:hover{color:#fff;}
 </footer>
 
 <script>
+/* ---------------- DATA ---------------- */
 const prRunner = n => 'https://www.pricerunner.dk/search?q=' + encodeURIComponent(n);
 
-/* NYE STABILE LINKS FRA DANSKE FORHANDLERE SOM SJÆLDENT BLOKERER */
+/* On-brand inline illustrations — embedded so they never break.
+   Swap any value for an <img ...> tag if you later host real product photos. */
+const art = {
+  mower:`<svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Robotplæneklipper med LiDAR">
+    <g stroke="#8AA67C" stroke-width="3" stroke-linecap="round"><path d="M26 160v-13"/><path d="M40 160v-18"/><path d="M54 160v-12"/><path d="M186 160v-13"/><path d="M200 160v-18"/><path d="M214 160v-12"/></g>
+    <line x1="14" y1="160" x2="226" y2="160" stroke="#D9D8D0" stroke-width="3" stroke-linecap="round"/>
+    <g stroke="#1B4BFF" stroke-width="2.6" stroke-linecap="round"><path d="M150 62a40 40 0 0 1 27 19" opacity=".9"/><path d="M157 48a58 58 0 0 1 41 29" opacity=".55"/><path d="M164 34a76 76 0 0 1 54 39" opacity=".28"/></g>
+    <rect x="48" y="84" width="144" height="56" rx="24" fill="#FBFBF8" stroke="#15171C" stroke-width="3.4"/>
+    <circle cx="64" cy="112" r="6" fill="#1B4BFF"/>
+    <circle cx="80" cy="142" r="17" fill="#FBFBF8" stroke="#15171C" stroke-width="3.4"/>
+    <circle cx="160" cy="142" r="17" fill="#FBFBF8" stroke="#15171C" stroke-width="3.4"/>
+    <circle cx="80" cy="142" r="5" fill="#15171C"/><circle cx="160" cy="142" r="5" fill="#15171C"/>
+    <rect x="104" y="56" width="34" height="34" rx="12" fill="#15171C"/>
+    <circle cx="121" cy="73" r="6" fill="#1B4BFF"/>
+  </svg>`,
+  mesh:`<svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mesh WiFi-system">
+    <g stroke="#C9C8C0" stroke-width="2.4" stroke-dasharray="2 7" stroke-linecap="round"><path d="M120 100L60 58"/><path d="M120 100L184 124"/></g>
+    <rect x="48" y="40" width="24" height="36" rx="11" fill="#FBFBF8" stroke="#15171C" stroke-width="3"/><circle cx="60" cy="53" r="3.5" fill="#1B4BFF"/>
+    <rect x="172" y="108" width="24" height="36" rx="11" fill="#FBFBF8" stroke="#15171C" stroke-width="3"/><circle cx="184" cy="121" r="3.5" fill="#1B4BFF"/>
+    <g stroke="#1B4BFF" stroke-width="3" stroke-linecap="round"><path d="M104 60a22 22 0 0 1 32 0" opacity=".95"/><path d="M96 50a34 34 0 0 1 48 0" opacity=".6"/><path d="M88 40a46 46 0 0 1 64 0" opacity=".3"/></g>
+    <rect x="104" y="70" width="32" height="66" rx="16" fill="#FBFBF8" stroke="#15171C" stroke-width="3.4"/>
+    <circle cx="120" cy="86" r="4.5" fill="#1B4BFF"/>
+  </svg>`,
+  lock:`<svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Smart dørlås">
+    <line x1="198" y1="22" x2="198" y2="158" stroke="#D9D8D0" stroke-width="3" stroke-linecap="round"/>
+    <rect x="76" y="32" width="78" height="116" rx="18" fill="#FBFBF8" stroke="#15171C" stroke-width="3.4"/>
+    <circle cx="115" cy="66" r="17" fill="none" stroke="#1B4BFF" stroke-width="3"/>
+    <circle cx="115" cy="62" r="4.2" fill="#15171C"/><path d="M115 64l-3.4 13h6.8z" fill="#15171C"/>
+    <g fill="#15171C"><circle cx="99" cy="102" r="4"/><circle cx="115" cy="102" r="4"/><circle cx="131" cy="102" r="4"/><circle cx="99" cy="121" r="4"/><circle cx="115" cy="121" r="4"/><circle cx="131" cy="121" r="4"/></g>
+    <rect x="170" y="84" width="11" height="42" rx="5.5" fill="#15171C"/>
+  </svg>`
+};
+
 const winners = [
   {
     name:'Anthbot M5 LiDAR',
     cat:'Robotplæneklipper',
     award:'Årets testvinder · Have',
     score:9.3,
-    img:'https://m.media-amazon.com/images/I/61M-1kQ3a6L._AC_SX679_.jpg',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKsOu4deuFOU8WobGo7adLyB7ZdAM5dcaO6vZVPcv6UZAv_E5l77tw4Hov&s=10',
+    fit:'cover',
     verdict:'Trådfri klipper med ægte 360° LiDAR — samme navigation som selvkørende biler. Suverænt valg under træer og i skygge, hvor RTK-modeller svigter.',
     pros:['LiDAR navigerer fejlfrit uden kanttråd','Op til 20 zoner og ~500 m²','Skarp pris for teknologien'],
     cons:['LiDAR-tårnet ændrer robottens profil','4G-abonnement efter 12 mdr.'],
@@ -590,7 +600,8 @@ const winners = [
     cat:'Mesh-WiFi',
     award:'Testvinder · Nemmeste mesh',
     score:9.1,
-    img:'https://www.proshop.dk/Images/915x900/3067716_cc7b134988aa.png',
+    img:'https://wsrv.nl/?url=https://static.tp-link.com/upload/image-line/Deco-XE75-Pro-1.0_normal_20230410101434b.png&w=500&output=webp',
+    fit:'contain',
     verdict:'Det mesh, vi anbefaler de fleste. Tri-band WiFi 6E, sat op på under fem minutter i Deco-appen — uden teknisk forståelse.',
     pros:['Lynnem opsætning via app','Tri-band WiFi 6E, ét sømløst net','Indbygget sikkerhed & børnesikring'],
     cons:['Avancerede indstillinger er begrænsede','Fuld sikkerhedspakke kræver abonnement'],
@@ -601,7 +612,8 @@ const winners = [
     cat:'Smart lås',
     award:'Testvinder · Sikkerhed',
     score:9.0,
-    img:'https://www.proshop.dk/Images/915x900/2932314_f448c5e62fba.jpg',
+    img:'https://wsrv.nl/?url=https://yalehome.dk/cdn/shop/files/L3S_Brushed_Steel.png&w=500&output=webp',
+    fit:'contain',
     verdict:'Danskernes mest betroede dørlås. Høj låseklasse, eftermonteres uden at ændre dørens yderside — perfekt til både ejer- og lejebolig.',
     pros:['Høj sikkerhedsgodkendelse','Beholder yderside & fysisk nøgle','Stabil app & auto-lås'],
     cons:['Premium prisklasse','Fulde smart-funktioner kræver modul'],
@@ -610,21 +622,26 @@ const winners = [
 ];
 
 const products = [
+  // Netværk
   {name:'TP-Link Deco XE75 Pro',cat:'Netværk',proto:'WiFi 6E',score:9.1,verdict:'Vores mesh-testvinder. Bedste balance mellem pris, hastighed og brugervenlighed.'},
   {name:'Google Nest WiFi Pro',cat:'Netværk',proto:'WiFi 6E · Matter-hub',score:8.8,verdict:'Den absolut nemmeste opsætning. Fungerer samtidig som Thread Border Router.'},
   {name:'ASUS ZenWiFi BT10',cat:'Netværk',proto:'WiFi 7',score:8.7,verdict:'Til store huse og tunge brugere. Flere indstillinger, lidt mere teknik.'},
   {name:'TP-Link Tapo RE700X',cat:'Netværk',proto:'WiFi 6',score:8.0,verdict:'Billig WiFi-forstærker til ét dødt hjørne — når et helt mesh er overkill.'},
+  // Have & Robot
   {name:'Anthbot M5 LiDAR',cat:'Have & Robot',proto:'LiDAR · 4G',score:9.3,verdict:'Testvinder. Trådfri robotklipper med LiDAR — uovertruffen i skygge og under træer.'},
   {name:'Segway Navimow i-serie',cat:'Have & Robot',proto:'RTK-GPS',score:8.6,verdict:'Stærkt RTK-alternativ til åbne, overskuelige haver uden mange forhindringer.'},
   {name:'Roborock Qrevo-serie',cat:'Have & Robot',proto:'WiFi · Matter',score:9.0,verdict:'Robotstøvsuger i topklasse med vask, selvtømning og præcis LiDAR-kortlægning.'},
   {name:'Ecovacs Deebot',cat:'Have & Robot',proto:'WiFi',score:8.3,verdict:'Solid støvsuger-allrounder til en mere venlig pris end topmodellerne.'},
+  // Sikkerhed
   {name:'Yale Doorman L3S Flex',cat:'Sikkerhed',proto:'Eftermontering',score:9.0,verdict:'Testvinder. Høj sikkerhed, eftermonteres og beholder din fysiske nøgle.'},
   {name:'Aqara Smart Lock U200',cat:'Sikkerhed',proto:'Matter over Thread',score:8.9,verdict:'Bedste value-lås. Apple Home Key + fingeraftryk til en skarp pris.'},
   {name:'Nuki Smart Lock Ultra',cat:'Sikkerhed',proto:'WiFi · Matter',score:8.4,verdict:'Hurtig og nem montering. Mangler dog fingeraftrykslæser.'},
   {name:'Reolink Argus-serie',cat:'Sikkerhed',proto:'WiFi',score:8.5,verdict:'Trådløst overvågningskamera med lokal optagelse og ingen tvungne abonnementer.'},
   {name:'Aqara Video Doorbell G4',cat:'Sikkerhed',proto:'WiFi · HomeKit',score:8.2,verdict:'Dørklokke med ansigtsgenkendelse og lokal lagring. Stærk på privatliv.'},
+  // Lys
   {name:'Philips Hue (med Bridge)',cat:'Lys',proto:'Zigbee · Matter',score:9.2,verdict:'Referencen for smart lys. Rock-solid via Bridge, stort tilbehørs-univers.'},
   {name:'IKEA DIRIGERA + pærer',cat:'Lys',proto:'Zigbee · Matter',score:8.4,verdict:'Markant billigere indgang til smart lys. Hub fungerer nu som Matter-bro.'},
+  // Klima & Energi
   {name:'tado° Smart Termostat X',cat:'Klima & Energi',proto:'Matter over Thread',score:8.7,verdict:'Sænker varmeregningen med zonestyring og geofencing. Nem at eftermontere.'},
   {name:'Shelly Plug S Gen3',cat:'Klima & Energi',proto:'Matter over WiFi',score:8.6,verdict:'Smart-stik med præcis strømmåling. Ingen ekstra hub nødvendig.'},
   {name:'Aqara Hub M3',cat:'Hub & Sensorer',proto:'Thread Border Router',score:8.8,verdict:'Stærk central: Zigbee-hub + Thread Border Router + Matter-bro i én.'},
@@ -632,12 +649,24 @@ const products = [
 ];
 
 const standards = [
-  {n:'Zigbee',k:'Lavenergi mesh · 2,4 GHz',ico:'<path d="M3 17h4l4-10 4 10h6"/>',p:'Lavenergi-protokol hvor enhederne danner et selvhelende net og videresender hinandens signal. Pærer, sensorer og kontakter holder år på ét batteri.',need:'Kræver en <b>Zigbee-hub</b> (fx Philips Hue Bridge, Aqara, IKEA DIRIGERA).'},
-  {n:'Z-Wave',k:'Lavenergi mesh · 868 MHz',ico:'<path d="M4 12h16"/><path d="M4 7h16"/><path d="M4 17h16"/>',p:'Ligner Zigbee, men kører på 868 MHz i Europa. Færre forstyrrelser fra WiFi og bedre rækkevidde gennem tykke mure — populært til alarm og sensorer.',need:'Kræver en <b>Z-Wave-hub</b>. Færre samtidige enheder end Zigbee.'},
-  {n:'Thread',k:'Lavenergi mesh (IP) · 2,4 GHz',ico:'<circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>',p:'Moderne lavenergi-mesh der taler IP. Selvhelende uden central flaskehals, meget responsivt, og fundamentet under mange Matter-enheder.',need:'Kræver en <b>Thread Border Router</b> (HomePod mini, Apple TV, Nest Hub, Echo, Aqara).'},
-  {n:'Matter',k:'Fælles sprog · ikke en radio',ico:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 8v8M8 10v4M16 10v4"/>',p:'Et fælles sprog skabt af branchen (Apple, Google, Amazon, Samsung m.fl.). Sikrer at enheder fra forskellige mærker spiller sammen på tværs af systemer.',need:'Kører oven på <b>WiFi, Thread eller Ethernet</b>. Bluetooth bruges kun til opsætning.'},
-  {n:'Matter over WiFi',k:'Matter via dit WiFi',ico:'<path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4"/>',p:'Matter-enheder der bruger dit almindelige WiFi. Ideelt til ting med fast strøm: smart-stik, kontakter og apparater, hvor batteri ikke er en bekymring.',need:'Kræver kun <b>din router</b> — ingen ekstra hub.'},
-  {n:'Matter over Thread',k:'Matter via Thread',ico:'<circle cx="12" cy="12" r="2.4"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6.5 6.5l2 2M15.5 15.5l2 2M17.5 6.5l-2 2M8.5 15.5l-2 2"/>',p:'Matter-enheder der bruger Thread. Bedst til batteridrevne enheder som låse, sensorer og knapper — lang batteritid og lynhurtig respons.',need:'Kræver en <b>Thread Border Router</b> i hjemmet.'}
+  {n:'Zigbee',k:'Lavenergi mesh · 2,4 GHz',ico:'<path d="M3 17h4l4-10 4 10h6"/>',
+   p:'Lavenergi-protokol hvor enhederne danner et selvhelende net og videresender hinandens signal. Pærer, sensorer og kontakter holder år på ét batteri.',
+   need:'Kræver en <b>Zigbee-hub</b> (fx Philips Hue Bridge, Aqara, IKEA DIRIGERA).'},
+  {n:'Z-Wave',k:'Lavenergi mesh · 868 MHz',ico:'<path d="M4 12h16"/><path d="M4 7h16"/><path d="M4 17h16"/>',
+   p:'Ligner Zigbee, men kører på 868 MHz i Europa. Færre forstyrrelser fra WiFi og bedre rækkevidde gennem tykke mure — populært til alarm og sensorer.',
+   need:'Kræver en <b>Z-Wave-hub</b>. Færre samtidige enheder end Zigbee.'},
+  {n:'Thread',k:'Lavenergi mesh (IP) · 2,4 GHz',ico:'<circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>',
+   p:'Moderne lavenergi-mesh der taler IP. Selvhelende uden central flaskehals, meget responsivt, og fundamentet under mange Matter-enheder.',
+   need:'Kræver en <b>Thread Border Router</b> (HomePod mini, Apple TV, Nest Hub, Echo, Aqara).'},
+  {n:'Matter',k:'Fælles sprog · ikke en radio',ico:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 8v8M8 10v4M16 10v4"/>',
+   p:'Et fælles sprog skabt af branchen (Apple, Google, Amazon, Samsung m.fl.). Sikrer at enheder fra forskellige mærker spiller sammen på tværs af systemer.',
+   need:'Kører oven på <b>WiFi, Thread eller Ethernet</b>. Bluetooth bruges kun til opsætning.'},
+  {n:'Matter over WiFi',k:'Matter via dit WiFi',ico:'<path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4"/>',
+   p:'Matter-enheder der bruger dit almindelige WiFi. Ideelt til ting med fast strøm: smart-stik, kontakter og apparater, hvor batteri ikke er en bekymring.',
+   need:'Kræver kun <b>din router</b> — ingen ekstra hub.'},
+  {n:'Matter over Thread',k:'Matter via Thread',ico:'<circle cx="12" cy="12" r="2.4"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6.5 6.5l2 2M15.5 15.5l2 2M17.5 6.5l-2 2M8.5 15.5l-2 2"/>',
+   p:'Matter-enheder der bruger Thread. Bedst til batteridrevne enheder som låse, sensorer og knapper — lang batteritid og lynhurtig respons.',
+   need:'Kræver en <b>Thread Border Router</b> i hjemmet.'}
 ];
 
 const faqs = [
@@ -649,7 +678,8 @@ const faqs = [
   {q:'Hvor ofte opdaterer I anbefalingerne?',a:'Vurderingerne gennemgås løbende, og priserne hentes live via prissammenligning, så du altid ser det aktuelle niveau hos danske forhandlere. Datoen for seneste opdatering står i toppen af siden.'}
 ];
 
-function barsHTML(score){
+/* ---------------- RENDER ---------------- */
+function barsHTML(score, small){
   const filled = Math.round(score/2);
   let h='<div class="bars">';
   for(let i=1;i<=5;i++) h+=`<span class="bar${i<=filled?' on':''}"></span>`;
@@ -663,17 +693,11 @@ const ico = {
   arr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
 };
 
-/* 
-  ONERROR FALLBACK: 
-  Hvis browseren blokerer linket, fjerner scriptet mix-blend-mode (som gjorde teksten usynlig) 
-  og lægger automatisk et pænt rent fallback-billede ind, så navnet altid kan læses!
-*/
+// winners
 document.getElementById('winners').innerHTML = winners.map(w=>`
   <article class="winner rv">
     <div class="award">${ico.star}${w.award}</div>
-    <div class="imgbox">
-      <img src="${w.img}" alt="${w.name}" onerror="this.onerror=null; this.src='https://placehold.co/600x500/F4F4EF/565C66?text=Billede+på+vej'; this.style.mixBlendMode='normal'; this.style.filter='none';">
-    </div>
+    <div class="imgbox"><img src="${w.img}" alt="${w.name}" loading="lazy" style="object-fit:${w.fit}" onerror="this.style.display='none'"></div>
     <div class="body">
       <span class="cat-tag">${w.cat}</span>
       <h3>${w.name}</h3>
@@ -690,6 +714,7 @@ document.getElementById('winners').innerHTML = winners.map(w=>`
     </div>
   </article>`).join('');
 
+// filters + catalog
 const cats = ['Alle',...[...new Set(products.map(p=>p.cat))]];
 const filtersEl = document.getElementById('filters');
 filtersEl.innerHTML = cats.map((c,i)=>`<button class="filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('');
@@ -719,6 +744,7 @@ filtersEl.addEventListener('click',e=>{
   renderCatalog(b.dataset.cat);
 });
 
+// standards
 document.getElementById('stdcards').innerHTML = standards.map(s=>`
   <div class="std rv">
     <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${s.ico}</svg></div>
@@ -728,9 +754,11 @@ document.getElementById('stdcards').innerHTML = standards.map(s=>`
     <div class="needs">${s.need}</div>
   </div>`).join('');
 
+// faq
 document.getElementById('faq-list').innerHTML = faqs.map(f=>`
   <details class="faq"><summary>${f.q}<span class="pl"></span></summary><div class="ans">${f.a}</div></details>`).join('');
 
+/* ---------------- NAV + MOTION ---------------- */
 const burger=document.getElementById('burger'), navlinks=document.getElementById('navlinks');
 burger.addEventListener('click',()=>navlinks.classList.toggle('open'));
 navlinks.addEventListener('click',e=>{if(e.target.tagName==='A')navlinks.classList.remove('open');});
