@@ -4,67 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WiFiHuset - Billed Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --surface: #FBFBF8; --ink: #15171C; --slate: #565C66; 
+    --line: #D9D8D0; --signal: #1B4BFF;
+  }
   body {
     font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #F4F4EF;
-    color: #15171C;
-    padding: 40px;
-    max-width: 800px;
+    background-color: var(--surface);
+    color: var(--ink);
+    padding: 60px 30px;
+    max-width: 900px;
     margin: 0 auto;
+    line-height: 1.6;
   }
-  h1 { margin-bottom: 10px; }
-  p { color: #565C66; margin-bottom: 30px; }
+  h1 { font-family: 'Bricolage Grotesque', sans-serif; margin: 0 0 10px; font-size: 2.2rem; }
+  p { color: var(--slate); margin-bottom: 40px; font-size: 1.1rem; }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
   }
   .card {
     background: #fff;
     padding: 24px;
-    border-radius: 12px;
-    border: 1px solid #D9D8D0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 30px -15px rgba(21, 23, 28, 0.1);
   }
-  .card h3 { margin-top: 0; font-size: 1.1rem; }
+  .card h3 { margin: 0 0 15px; font-size: 1.15rem; font-weight: 600; }
   .preview {
     width: 100%;
-    height: 120px;
+    height: 140px;
     background: #F4F4EF;
     border-radius: 8px;
-    margin: 15px 0;
+    margin-bottom: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #7A828C;
   }
   .preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
-  input[type="file"] { margin-bottom: 10px; width: 100%; }
-  .btn {
-    background: #1B4BFF; color: #fff; border: none;
-    padding: 10px 16px; border-radius: 6px; cursor: pointer;
-    font-weight: 600; font-size: 0.9rem; margin-top: 20px;
+  input[type="file"] {
+    width: 100%; font-family: inherit; font-size: 0.9rem;
+    cursor: pointer;
   }
-  .btn:hover { background: #0E2FB8; }
-  .btn-danger { background: transparent; color: red; border: 1px solid red; }
-  .btn-danger:hover { background: #FFF0F0; }
+  .btn-danger {
+    background: transparent; color: red;
+    border: 1px solid rgba(255,0,0,0.3);
+    padding: 12px 20px; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.95rem; margin-top: 50px;
+    transition: 0.2s;
+  }
+  .btn-danger:hover { background: #FFF0F0; border-color: red; }
+  .status { font-size: 0.85rem; color: green; font-weight: 600; min-height: 20px; margin-top: 10px; }
 </style>
 </head>
 <body>
 
-  <h1>Håndter Testvinder-Billeder</h1>
-  <p>Upload billeder her. De gemmes i din browsers LocalStorage, så hovedsiden (index.html) kan vise dem i stedet for at bruge de ødelagte eksterne links.</p>
+  <h1>Billed-Admin (Lokalt)</h1>
+  <p>Upload billeder til de tre testvindere. Billederne gemmes sikkert i din browsers LocalStorage. <b>Når du har uploadet et billede, skal du blot genindlæse din index.html for at se ændringen.</b></p>
 
   <div class="grid" id="admin-grid">
     </div>
 
-  <button class="btn btn-danger" onclick="clearAll()">Nulstil Alle Billeder</button>
+  <button class="btn-danger" onclick="clearAll()">Nulstil og slet alle uploads</button>
 
 <script>
+  // MUST match the IDs in index.html exactly
   const targets = [
     { id: 'w1', name: 'Anthbot M5 LiDAR' },
     { id: 'w2', name: 'TP-Link Deco XE75 Pro' },
@@ -75,7 +85,7 @@
 
   targets.forEach(t => {
     const savedImg = localStorage.getItem('custom_img_' + t.id);
-    const imgHtml = savedImg ? `<img src="${savedImg}">` : 'Intet billede gemt';
+    const imgHtml = savedImg ? `<img src="${savedImg}">` : 'Intet billede uploadet';
 
     grid.innerHTML += `
       <div class="card">
@@ -84,6 +94,7 @@
           ${imgHtml}
         </div>
         <input type="file" accept="image/*" onchange="handleUpload(event, '${t.id}')">
+        <div class="status" id="status_${t.id}"></div>
       </div>
     `;
   });
@@ -95,18 +106,23 @@
     const reader = new FileReader();
     reader.onload = function(e) {
       const base64Img = e.target.result;
-      localStorage.setItem('custom_img_' + id, base64Img);
-      document.getElementById('preview_' + id).innerHTML = `<img src="${base64Img}">`;
       
-      // Optional: Give UI feedback
-      event.target.style.color = "green";
-      setTimeout(() => { event.target.style.color = ""; }, 2000);
+      try {
+        localStorage.setItem('custom_img_' + id, base64Img);
+        document.getElementById('preview_' + id).innerHTML = `<img src="${base64Img}">`;
+        
+        const statusEl = document.getElementById('status_' + id);
+        statusEl.innerText = "✓ Gemt! Genindlæs forsiden.";
+        setTimeout(() => { statusEl.innerText = ""; }, 3000);
+      } catch (error) {
+        alert("Billedet er for stort! Prøv at komprimere det, før du uploader det (LocalStorage har en grænse på ca. 5MB).");
+      }
     };
     reader.readAsDataURL(file);
   }
 
   function clearAll() {
-    if(confirm("Er du sikker? Dette vil fjerne alle gemte billeder.")) {
+    if(confirm("Er du sikker? Dette vil slette alle uploadede billeder, og forsiden vil gå tilbage til SVG-ikonerne.")) {
       targets.forEach(t => localStorage.removeItem('custom_img_' + t.id));
       location.reload();
     }
