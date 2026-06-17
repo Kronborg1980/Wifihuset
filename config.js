@@ -8,17 +8,7 @@
    Disse nøgler MÅ godt være offentlige — sikkerhed styres af login + regler.
    Står de tomme, kører siden bare på standard-indholdet herunder.            */
 window.FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-};
-
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAOvmeOvR1VldLmbZf_2YXPOjKiZj8KPT8",
+  apiKey: "AIzaSyAOvmeOvR1V1dLmbZf_2YXPOjKiZj8KPT8",
   authDomain: "wifihuset-d7bb9.firebaseapp.com",
   projectId: "wifihuset-d7bb9",
   storageBucket: "wifihuset-d7bb9.firebasestorage.app",
