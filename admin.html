@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WiFiHuset — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+:root{--paper:#EDEDE7;--surface:#FBFBF8;--surface-2:#F4F4EF;--ink:#15171C;--slate:#565C66;--slate-2:#7A828C;--line:#D9D8D0;--line-soft:#E6E5DE;--signal:#1B4BFF;--signal-deep:#0E2FB8;--signal-soft:rgba(27,75,255,.08);--gold:#A9791A;--fd:'Bricolage Grotesque',sans-serif;--fb:'IBM Plex Sans',sans-serif;--fm:'IBM Plex Mono',monospace;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--fb);font-size:15px;line-height:1.5;}
+h1,h2,h3{font-family:var(--fd);margin:0;letter-spacing:-.02em;}
+a{color:var(--signal);}
+code{font-family:var(--fm);background:var(--surface-2);padding:1px 5px;border-radius:4px;font-size:.86em;}
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,237,231,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-weight:800;font-size:1.15rem;}
+.brand .mk{width:28px;height:28px;border-radius:7px;background:var(--ink);display:grid;place-items:center;}
+.brand .mk svg{width:17px;height:17px;}
+.bar .sp{flex:1;}
+.acct{font-family:var(--fm);font-size:.76rem;color:var(--slate-2);}
+.status{font-family:var(--fm);font-size:.78rem;color:var(--slate-2);min-width:110px;text-align:right;}
+.status.ok{color:#0E7A53;}.status.bad{color:#B42318;}
+.btn{font-family:var(--fb);font-weight:600;font-size:.85rem;padding:9px 15px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:.18s;white-space:nowrap;}
+.btn:hover{border-color:var(--ink);}
+.btn.warn{color:#B42318;border-color:rgba(180,35,24,.3);}
+.btn.warn:hover{background:#FFF3F2;border-color:#B42318;}
+.btn.go{background:#0E7A53;color:#fff;border-color:#0E7A53;}
+.btn.go:hover{background:#0A5F40;}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink);}
+.btn.primary:hover{background:var(--signal);}
+.pubnote{background:#FFF8E6;border-bottom:1px solid #E9D9A8;color:#6B5410;padding:11px 20px;font-size:.85rem;line-height:1.45;}
+.pubnote b{color:#4A3A0B;}
+.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 58px);}
+.side{border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:58px;align-self:start;height:calc(100vh - 58px);overflow:auto;}
+.tab{display:block;width:100%;text-align:left;padding:10px 14px;border:0;background:none;border-radius:8px;cursor:pointer;font-family:var(--fb);font-size:.92rem;color:var(--slate);font-weight:500;margin-bottom:2px;}
+.tab:hover{background:var(--surface-2);color:var(--ink);}
+.tab.active{background:var(--ink);color:#fff;}
+.panel{padding:30px 36px 80px;max-width:920px;}
+.panel h2{font-size:1.6rem;margin-bottom:6px;}
+.lead{color:var(--slate);margin-bottom:26px;font-size:.95rem;}
+.hint{background:var(--signal-soft);border:1px solid rgba(27,75,255,.18);border-radius:10px;padding:13px 16px;font-size:.85rem;color:var(--slate);margin-bottom:24px;}
+.hint b{color:var(--ink);}
+.f{display:block;margin-bottom:15px;}
+.fl{display:block;font-family:var(--fm);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--slate-2);margin-bottom:6px;}
+.in{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-family:var(--fb);font-size:.92rem;transition:.18s;}
+textarea.in{resize:vertical;line-height:1.55;}
+.in:focus{outline:none;border-color:var(--signal);box-shadow:0 0 0 3px var(--signal-soft);}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;}
+.card-h .t{font-family:var(--fd);font-weight:700;font-size:1rem;}
+.ctrls{display:flex;gap:6px;}
+.mini{border:1px solid var(--line);background:var(--surface-2);border-radius:7px;width:30px;height:30px;display:grid;place-items:center;cursor:pointer;font-size:.95rem;color:var(--slate);}
+.mini:hover{border-color:var(--ink);color:var(--ink);}
+.mini.del:hover{color:#B42318;border-color:#B42318;}
+.add{width:100%;border:1.5px dashed var(--line);background:none;border-radius:10px;padding:12px;cursor:pointer;font-family:var(--fm);font-size:.82rem;color:var(--slate-2);transition:.18s;}
+.add:hover{border-color:var(--signal);color:var(--signal);}
+.color-f{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface);}
+.color-f input[type=color]{width:34px;height:34px;border:0;border-radius:6px;background:none;cursor:pointer;padding:0;}
+.color-f input[type=text]{border:0;outline:none;font-family:var(--fm);font-size:.85rem;width:90px;background:none;color:var(--ink);}
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+.imgwrap{display:flex;gap:16px;align-items:center;}
+.preview{width:130px;height:96px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);display:grid;place-items:center;overflow:hidden;flex:none;}
+.preview img{max-width:100%;max-height:100%;object-fit:contain;}
+.preview svg{width:90%;height:90%;}
+.stringlist .si{display:flex;gap:8px;margin-bottom:8px;}
+.stringlist .si .in{flex:1;}
+.note{font-size:.78rem;color:var(--slate-2);margin-top:5px;}
+.check{display:flex;align-items:center;gap:9px;font-size:.9rem;cursor:pointer;user-select:none;margin-bottom:14px;}
+.check input{width:18px;height:18px;accent-color:var(--signal);}
+.codeblock{background:#15171C;color:#D7E0EA;border-radius:10px;padding:16px;font-family:var(--fm);font-size:.8rem;line-height:1.6;white-space:pre;overflow:auto;margin:10px 0;}
+ol.steps{margin:0;padding-left:20px;color:var(--slate);font-size:.92rem;line-height:1.8;}
+.login{position:fixed;inset:0;z-index:300;background:var(--paper);display:none;place-items:center;padding:20px;}
+.login.show{display:grid;}
+.login .box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:34px;max-width:380px;width:100%;box-shadow:0 30px 60px -40px rgba(0,0,0,.4);}
+.login h1{font-size:1.4rem;margin-bottom:6px;}
+.login p{color:var(--slate);font-size:.9rem;margin-bottom:20px;}
+.login .err{color:#B42318;font-size:.85rem;min-height:18px;margin-top:8px;}
+.login .btn.primary{width:100%;justify-content:center;margin-top:6px;}
+@media(max-width:760px){.layout{grid-template-columns:1fr;}.side{position:static;height:auto;display:flex;flex-wrap:wrap;gap:4px;}.tab{width:auto;}.panel{padding:22px;}.row,.row3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="login" id="login"><div class="box">
+  <h1>WiFiHuset Admin</h1>
+  <p>Log ind for at redigere og udgive til din hjemmeside.</p>
+  <label class="f"><span class="fl">E-mail</span><input class="in" id="li-email" type="email" autocomplete="username"></label>
+  <label class="f"><span class="fl">Adgangskode</span><input class="in" id="li-pass" type="password" autocomplete="current-password"></label>
+  <button class="btn primary" id="li-btn">Log ind</button>
+  <div class="err" id="li-err"></div>
+</div></div>
+
+<div class="bar">
+  <div class="brand"><span class="mk"><svg viewBox="0 0 64 64" fill="none"><g stroke="#1B4BFF" stroke-width="4" stroke-linecap="round"><path d="M18 36a20 20 0 0 1 28 0"/><path d="M24 42a12 12 0 0 1 16 0"/></g><circle cx="32" cy="48" r="3.6" fill="#1B4BFF"/></svg></span>Admin</div>
+  <span class="acct" id="acct"></span>
+  <div class="sp"></div>
+  <span class="status" id="status">Klar</span>
+  <button class="btn" id="preview">Forhåndsvis ↗</button>
+  <button class="btn" id="export">Eksportér JSON</button>
+  <button class="btn" id="importBtn">Importér JSON</button>
+  <button class="btn" id="exportJs">Download config.js</button>
+  <button class="btn warn" id="reset">Nulstil</button>
+  <button class="btn" id="logout" style="display:none">Log ud</button>
+  <button class="btn go" id="publish">Gem &amp; udgiv ⤴</button>
+  <input type="file" id="importFile" accept="application/json" hidden>
+</div>
+
+<div class="pubnote" id="pubnote"></div>
+
+<div class="layout">
+  <nav class="side" id="tabs"></nav>
+  <main class="panel" id="panel"></main>
+</div>
+
+<script src="config.js"></script>
+<script>
+function clone(o){return JSON.parse(JSON.stringify(o));}
+function deepMerge(base,src){
+  if(Array.isArray(src))return src.slice();
+  if(typeof src!=='object'||src===null)return src;
+  var out=Array.isArray(base)?[]:Object.assign({},base);
+  for(var k in src){
+    if(typeof src[k]==='object'&&src[k]!==null&&!Array.isArray(src[k])&&base&&typeof base[k]==='object')out[k]=deepMerge(base[k],src[k]);
+    else out[k]=src[k];
+  } return out;
+}
+var DRAFT_KEY='wifihuset_draft';
+var FC=window.FIREBASE_CONFIG||{};
+var configured=!!(FC.apiKey&&window.firebase);
+var CONFIG=clone(window.DEFAULT_CONFIG);
+
+/* ---- theme applied to admin accents ---- */
+function hexA(hex,a){try{var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}catch(e){return hex;}}
+function applyTheme(){var t=CONFIG.theme,r=document.documentElement.style;r.setProperty('--signal',t.signal);r.setProperty('--signal-deep',t.signalDeep);r.setProperty('--gold',t.gold);r.setProperty('--signal-soft',hexA(t.signal,.08));}
+
+/* ---- status ---- */
+var statusEl=document.getElementById('status');
+function setStatus(m,cls){statusEl.textContent=m;statusEl.className='status'+(cls?(' '+cls):'');}
+
+/* ---- save: local draft (always) + auto-publish when logged in ---- */
+function saveLocal(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(CONFIG));}catch(e){}}
+function canPublish(){return configured&&firebase.apps.length&&firebase.auth().currentUser;}
+function publishSilent(){
+  if(!canPublish())return;
+  setStatus('Udgiver…');
+  firebase.firestore().doc('site/config').set(CONFIG)
+    .then(function(){setStatus('Udgivet ✓ live','ok');})
+    .catch(function(e){setStatus('Fejl — ikke udgivet','bad');console.warn(e);});
+}
+var saveT;
+function queueSave(){
+  applyTheme(); saveLocal();
+  if(canPublish()){ setStatus('Gemmer…'); clearTimeout(saveT); saveT=setTimeout(publishSilent,1200); }
+  else { setStatus('Gemt lokalt'); }
+}
+function publishNow(){
+  if(!configured){ saveLocal(); alert('Firebase er ikke sat op endnu — dine ændringer er gemt lokalt i denne browser.\n\nGå til fanen “Konto / Firebase” for opsætning, så kan du udgive live til alle enheder.'); return; }
+  if(!firebase.apps.length||!firebase.auth().currentUser){ showLogin(); return; }
+  setStatus('Udgiver…');
+  firebase.firestore().doc('site/config').set(CONFIG)
+    .then(function(){saveLocal();setStatus('Udgivet ✓ live nu','ok');})
+    .catch(function(e){setStatus('Udgivelse fejlede','bad');alert('Kunne ikke udgive:\n'+e.message+'\n\nTjek:\n• Firestore-regler tillader skrivning for indloggede\n• Billeder er ikke for store (et dokument må højst fylde ~1 MB — brug billed-URL i stedet for upload)');});
+}
+
+/* =========================== EDITOR HELPERS =========================== */
+function el(tag,attrs,...kids){var n=document.createElement(tag);attrs=attrs||{};
+  for(var k in attrs){var v=attrs[k];
+    if(k==='class')n.className=v;else if(k==='html')n.innerHTML=v;
+    else if(k.indexOf('on')===0&&typeof v==='function')n.addEventListener(k.slice(2),v);
+    else if(v!=null)n.setAttribute(k,v);}
+  kids.flat().forEach(function(c){if(c==null||c===false)return;n.appendChild(typeof c==='string'?document.createTextNode(c):c);});return n;}
+function fText(label,obj,key,opts){opts=opts||{};
+  var i=opts.area?el('textarea',{class:'in',rows:opts.rows||3}):el('input',{class:'in',type:opts.type||'text'});
+  i.value=obj[key]==null?'':obj[key];if(opts.ph)i.placeholder=opts.ph;
+  i.addEventListener('input',function(){obj[key]=i.value;queueSave();});
+  return el('label',{class:'f'},el('span',{class:'fl'},label),i);}
+function fNum(label,obj,key,opts){opts=opts||{};
+  var i=el('input',{class:'in',type:'number',step:opts.step||'0.1'});if(opts.min!=null)i.min=opts.min;if(opts.max!=null)i.max=opts.max;
+  i.value=obj[key]==null?'':obj[key];i.addEventListener('input',function(){obj[key]=parseFloat(i.value)||0;queueSave();});
+  return el('label',{class:'f'},el('span',{class:'fl'},label),i);}
+function fCheck(label,obj,key){var i=el('input',{type:'checkbox'});i.checked=!!obj[key];
+  i.addEventListener('change',function(){obj[key]=i.checked;queueSave();});return el('label',{class:'check'},i,el('span',{},label));}
+function fSelect(label,obj,key,options){var s=el('select',{class:'in'});
+  options.forEach(function(o){var op=el('option',{},o);if(o===obj[key])op.selected=true;s.appendChild(op);});
+  s.addEventListener('change',function(){obj[key]=s.value;queueSave();});return el('label',{class:'f'},el('span',{class:'fl'},label),s);}
+function fColor(label,theme,key){var c=el('input',{type:'color'});c.value=theme[key];var t=el('input',{type:'text'});t.value=theme[key];
+  function sync(v){theme[key]=v;c.value=v;t.value=v;queueSave();}
+  c.addEventListener('input',function(){sync(c.value);});
+  t.addEventListener('input',function(){if(/^#[0-9a-fA-F]{6}$/.test(t.value))sync(t.value);});
+  return el('div',{class:'f'},el('span',{class:'fl'},label),el('div',{class:'color-f'},c,t));}
+function stringList(arr,label,ph){var box=el('div',{class:'stringlist'});
+  function draw(){box.innerHTML='';arr.forEach(function(v,i){
+    var inp=el('input',{class:'in',value:v,placeholder:ph||''});
+    inp.addEventListener('input',function(){arr[i]=inp.value;queueSave();});
+    var del=el('button',{class:'mini del',title:'Slet',onclick:function(){arr.splice(i,1);draw();queueSave();}},'✕');
+    box.appendChild(el('div',{class:'si'},inp,del));});
+    box.appendChild(el('button',{class:'add',onclick:function(){arr.push('');draw();queueSave();}},'+ '+(label||'Tilføj')));}
+  draw();return box;}
+function listEditor(arr,renderItem,makeNew,opts){opts=opts||{};var wrap=el('div',{});
+  function draw(){wrap.innerHTML='';
+    arr.forEach(function(item,i){
+      var ctrls=el('div',{class:'ctrls'});
+      if(opts.reorder!==false){
+        ctrls.appendChild(el('button',{class:'mini',title:'Op',onclick:function(){if(i>0){var x=arr[i-1];arr[i-1]=arr[i];arr[i]=x;draw();queueSave();}}},'↑'));
+        ctrls.appendChild(el('button',{class:'mini',title:'Ned',onclick:function(){if(i<arr.length-1){var x=arr[i+1];arr[i+1]=arr[i];arr[i]=x;draw();queueSave();}}},'↓'));
+      }
+      ctrls.appendChild(el('button',{class:'mini del',title:'Slet',onclick:function(){if(confirm('Slet dette element?')){arr.splice(i,1);draw();queueSave();}}},'✕'));
+      var head=el('div',{class:'card-h'},el('div',{class:'t'},(opts.title?opts.title(item,i):'#'+(i+1))),ctrls);
+      wrap.appendChild(el('div',{class:'card'},head,...renderItem(item,i,draw)));
+    });
+    wrap.appendChild(el('button',{class:'add',onclick:function(){arr.push(makeNew());draw();queueSave();}},'+ '+(opts.addLabel||'Tilføj')));}
+  draw();return wrap;}
+function imageField(w){var prev=el('div',{class:'preview'});
+  function paint(){prev.innerHTML=w.img?('<img src="'+w.img+'" onerror="this.parentElement.innerHTML=(window.ART[\''+w.artKey+'\']||window.ART.generic)">'):(window.ART[w.artKey]||window.ART.generic);}
+  paint();
+  var url=el('input',{class:'in',type:'text',placeholder:'fx images/anthbot.jpg eller https://…'});
+  url.value=(w.img&&w.img.indexOf('data:')!==0)?w.img:'';
+  url.addEventListener('input',function(){w.img=url.value.trim();paint();queueSave();});
+  var file=el('input',{type:'file',accept:'image/*'});
+  file.addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;
+    if(f.size>900000){alert('Billedet er '+Math.round(f.size/1024)+' KB. Tip: brug hellere en billed-URL (læg filen i et /images-bibliotek) — så holder dit Firestore-dokument sig under grænsen på 1 MB.');}
+    var r=new FileReader();r.onload=function(ev){w.img=ev.target.result;url.value='';paint();queueSave();};r.readAsDataURL(f);});
+  var clear=el('button',{class:'btn',onclick:function(){w.img='';url.value='';paint();queueSave();}},'Ryd → brug illustration');
+  var right=el('div',{style:'flex:1'},el('div',{class:'fl',style:'margin-bottom:6px'},'Produktbillede (valgfrit)'),url,
+    el('div',{class:'note',style:'margin:6px 0 10px'},'Anbefalet: læg billedet i repoet (fx /images/navn.jpg) og skriv stien her. Upload-knappen indlejrer billedet som data — hold det under ~1 MB.'),file,
+    el('div',{style:'margin-top:8px'},clear));
+  return el('div',{class:'f imgwrap'},prev,right);}
+function head(p,title,lead,hint){p.appendChild(el('h2',{},title));if(lead)p.appendChild(el('p',{class:'lead'},lead));if(hint)p.appendChild(el('div',{class:'hint',html:hint}));}
+
+/* =========================== TABS =========================== */
+var TABS=[
+  {id:'brand',label:'Brand & tema',render:tBrand},
+  {id:'hero',label:'Hero',render:tHero},
+  {id:'method',label:'Metode',render:tMethod},
+  {id:'winners',label:'Testvindere',render:tWinners},
+  {id:'catalog',label:'Katalog',render:tCatalog},
+  {id:'standards',label:'Standarder',render:tStandards},
+  {id:'compare',label:'Sammenligning',render:tCompare},
+  {id:'helper',label:'Hjælper',render:tHelper},
+  {id:'offer',label:'Tilbudsformular',render:tOffer},
+  {id:'faq',label:'FAQ',render:tFaq},
+  {id:'footer',label:'Footer',render:tFooter},
+  {id:'account',label:'⚙ Konto / Firebase',render:tAccount},
+];
+var active='brand';
+var tabsEl=document.getElementById('tabs'),panel=document.getElementById('panel');
+function drawTabs(){tabsEl.innerHTML='';TABS.forEach(function(t){tabsEl.appendChild(el('button',{class:'tab'+(t.id===active?' active':''),onclick:function(){active=t.id;drawTabs();drawPanel();}},t.label));});}
+function drawPanel(){panel.innerHTML='';var t=TABS.find(function(x){return x.id===active;});t.render(panel);window.scrollTo(0,0);}
+
+function tBrand(p){head(p,'Brand & tema','Navn, tagline og farver for hele sitet.');
+  p.appendChild(fText('Sidenavn',CONFIG.brand,'name'));
+  p.appendChild(fText('Tagline (footer)',CONFIG.brand,'tagline',{area:true,rows:2}));
+  p.appendChild(fText('Browser-titel (SEO)',CONFIG.brand,'metaTitle'));
+  p.appendChild(el('h3',{style:'margin:24px 0 12px'},'Farvetema'));var t=CONFIG.theme;
+  p.appendChild(el('div',{class:'swatches'},fColor('Baggrund',t,'paper'),fColor('Kort-flade',t,'surface'),fColor('Flade 2',t,'surface2'),fColor('Tekst / mørk',t,'ink'),fColor('Accent (signal)',t,'signal'),fColor('Accent mørk',t,'signalDeep'),fColor('Guld (vinder)',t,'gold')));}
+function tHero(p){head(p,'Hero','Det øverste banner.');var h=CONFIG.hero;
+  p.appendChild(fText('Eyebrow (lille label)',h,'eyebrow'));
+  p.appendChild(el('div',{class:'row3'},fText('Overskrift linje 1',h,'line1'),fText('Linje 2',h,'line2'),fText('Linje 3 (accent)',h,'line3')));
+  p.appendChild(fText('Brødtekst',h,'lead',{area:true}));
+  p.appendChild(el('div',{class:'row'},fText('Knap 1 (primær)',h,'btnPrimary'),fText('Knap 2 (sekundær)',h,'btnGhost')));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Tillids-tal'));
+  p.appendChild(listEditor(h.stats,function(s){return [el('div',{class:'row'},fText('Tal',s,'v'),fText('Tekst',s,'l'))];},function(){return {v:'Nyt',l:'Label'};},{addLabel:'Tilføj tal',title:function(s){return s.v;}}));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Hero-kort (mesh)'));
+  p.appendChild(el('div',{class:'row3'},fText('Label',h,'cardLabel'),fText('Score',h,'cardScore'),fText('Score-tekst',h,'cardScoreLabel')));}
+function tMethod(p){head(p,'Metode','Sektionen “Sådan arbejder vi”.');var m=CONFIG.method;
+  p.appendChild(fText('Eyebrow',m,'eyebrow'));p.appendChild(fText('Overskrift',m,'heading'));p.appendChild(fText('Undertekst',m,'sub',{area:true,rows:2}));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Punkter'));
+  p.appendChild(listEditor(m.items,function(it){return [fText('Titel',it,'t'),fText('Tekst',it,'d',{area:true,rows:2})];},function(){return {t:'Nyt punkt',d:''};},{title:function(it){return it.t;},addLabel:'Tilføj punkt'}));}
+function tWinners(p){head(p,'Testvindere','De fremhævede kort. Markér én som “Bedste i test” for guld. Upload foto eller vælg illustration.');var wh=CONFIG.winnersHead;
+  p.appendChild(fText('Eyebrow',wh,'eyebrow'));p.appendChild(fText('Overskrift',wh,'heading'));p.appendChild(fText('Undertekst',wh,'sub',{area:true,rows:2}));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Vindere'));
+  p.appendChild(listEditor(CONFIG.winners,function(w){return [
+    el('div',{class:'row'},fText('Navn',w,'name'),fText('Kategori',w,'cat')),
+    el('div',{class:'row'},fText('Award-tekst',w,'award'),fNum('Score (0-10)',w,'score',{max:10,min:0})),
+    fCheck('Bedste i test (guld + flag)',w,'featured'),
+    fText('Vurdering',w,'verdict',{area:true,rows:3}),
+    el('div',{class:'row'},el('div',{},el('span',{class:'fl'},'Fordele (+)'),stringList(w.pros,'Tilføj fordel')),el('div',{},el('span',{class:'fl'},'Ulemper (–)'),stringList(w.cons,'Tilføj ulempe'))),
+    el('div',{class:'row'},fText('Pris-tekst',w,'price'),fSelect('Illustration',w,'artKey',window.ART_KEYS)),
+    imageField(w)
+  ];},function(){return {id:'w'+Date.now(),name:'Nyt produkt',cat:'Kategori',award:'Testvinder',featured:false,score:9.0,artKey:'generic',img:'',imgFit:'contain',price:'≈ 0 kr.',verdict:'',pros:['Fordel'],cons:['Ulempe']};},{title:function(w){return w.name;},addLabel:'Tilføj vinder'}));}
+function tCatalog(p){head(p,'Katalog','Alle anbefalede produkter. Kategorien styrer filter-knapperne.');var ch=CONFIG.catalogHead;
+  p.appendChild(fText('Eyebrow',ch,'eyebrow'));p.appendChild(fText('Overskrift',ch,'heading'));p.appendChild(fText('Undertekst',ch,'sub',{area:true,rows:2}));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Produkter ('+CONFIG.catalog.length+')'));
+  p.appendChild(listEditor(CONFIG.catalog,function(pr){return [el('div',{class:'row'},fText('Navn',pr,'name'),fText('Kategori',pr,'cat')),el('div',{class:'row'},fText('Protokol/tag',pr,'proto'),fNum('Score',pr,'score',{max:10,min:0})),fText('Vurdering',pr,'verdict',{area:true,rows:2})];},function(){return {name:'Nyt produkt',cat:'Netværk',proto:'WiFi',score:8.0,verdict:''};},{title:function(pr){return pr.name+' · '+pr.cat;},addLabel:'Tilføj produkt'}));}
+function tStandards(p){head(p,'Standarder','Forklaringer på Zigbee, Thread, Matter osv. Genkendte navne får automatisk det rigtige ikon.');var sh=CONFIG.standardsHead;
+  p.appendChild(fText('Eyebrow',sh,'eyebrow'));p.appendChild(fText('Overskrift',sh,'heading'));p.appendChild(fText('Undertekst',sh,'sub',{area:true,rows:2}));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Intro-bokse'));var si=CONFIG.standardsIntro;
+  p.appendChild(el('div',{class:'card'},fText('Venstre titel',si,'leftTitle'),fText('Venstre HTML',si,'leftHtml',{area:true,rows:4}),fText('Højre titel',si,'rightTitle'),fText('Højre HTML',si,'rightHtml',{area:true,rows:4})));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Standard-kort'));
+  p.appendChild(listEditor(CONFIG.standards,function(s){return [el('div',{class:'row'},fText('Navn',s,'n'),fText('Kicker',s,'k')),fText('Beskrivelse',s,'p',{area:true,rows:2}),fText('Kræver (HTML tilladt)',s,'need',{area:true,rows:2})];},function(){return {n:'Ny standard',k:'type · frekvens',p:'',need:''};},{title:function(s){return s.n;},addLabel:'Tilføj standard'}));}
+function tCompare(p){head(p,'Sammenligningstabel','Rækkerne i oversigtstabellen.');
+  p.appendChild(listEditor(CONFIG.compare,function(r){return [fText('Standard',r,'std'),el('div',{class:'row'},fText('Type',r,'type'),fText('Frekvens',r,'freq')),el('div',{class:'row'},fText('Kræver hub/router',r,'hub'),fText('Bedst til',r,'best'))];},function(){return {std:'Ny',type:'',freq:'',hub:'',best:''};},{title:function(r){return r.std;},addLabel:'Tilføj række'}));}
+function tHelper(p){head(p,'Hjælper','“Hvad skal jeg vælge?”-boksen.');
+  p.appendChild(fText('Titel',CONFIG.helper,'title'));
+  p.appendChild(el('h3',{style:'margin:18px 0 12px'},'Spørgsmål → svar'));
+  p.appendChild(listEditor(CONFIG.helper.rows,function(r){return [fText('Situation',r,'q'),fText('Anbefaling',r,'a')];},function(){return {q:'',a:'→ '};},{title:function(r){return r.q.slice(0,30)||'…';},addLabel:'Tilføj række'}));
+  p.appendChild(fText('Tip (bund)',CONFIG.helper,'tip',{area:true,rows:2}));}
+function tOffer(p){head(p,'Tilbudsformular','“Få 3 tilbud”-sektionen.');var o=CONFIG.offer;
+  p.appendChild(fText('Eyebrow',o,'eyebrow'));p.appendChild(fText('Overskrift',o,'heading'));p.appendChild(fText('Tekst',o,'text',{area:true,rows:2}));
+  p.appendChild(el('div',{},el('span',{class:'fl'},'Fordele (punktliste)'),stringList(o.benefits,'Tilføj fordel')));
+  p.appendChild(el('div',{class:'row'},fText('Formular-titel',o,'formTitle'),fText('Formular-undertekst',o,'formSub')));
+  p.appendChild(el('div',{},el('span',{class:'fl'},'Kategori-valg i dropdown'),stringList(o.formCats,'Tilføj kategori')));
+  p.appendChild(fText('Note under knap',o,'formNote'));}
+function tFaq(p){head(p,'FAQ','Ofte stillede spørgsmål.');var fh=CONFIG.faqHead;
+  p.appendChild(el('div',{class:'row'},fText('Eyebrow',fh,'eyebrow'),fText('Overskrift',fh,'heading')));
+  p.appendChild(el('h3',{style:'margin:18px 0 12px'},'Spørgsmål'));
+  p.appendChild(listEditor(CONFIG.faqs,function(f){return [fText('Spørgsmål',f,'q'),fText('Svar',f,'a',{area:true,rows:3})];},function(){return {q:'Nyt spørgsmål?',a:''};},{title:function(f){return f.q.slice(0,40);},addLabel:'Tilføj spørgsmål'}));}
+function tFooter(p){head(p,'Footer','Bundtekst, ansvarsfraskrivelse og link-kolonner.');var f=CONFIG.footer;
+  p.appendChild(fText('Affiliate-tekst (HTML tilladt)',f,'disclosure',{area:true,rows:4}));
+  p.appendChild(el('div',{class:'row'},fText('Copyright-linje',f,'copyright'),fText('Under-linje',f,'sub')));
+  p.appendChild(el('h3',{style:'margin:22px 0 12px'},'Link-kolonner'));
+  p.appendChild(listEditor(f.columns,function(col){return [fText('Kolonne-titel',col,'title'),el('div',{},el('span',{class:'fl'},'Links'),listEditor(col.links,function(l){return [el('div',{class:'row'},fText('Tekst',l,'label'),fText('Link (href)',l,'href'))];},function(){return {label:'Nyt link',href:'#'};},{title:function(l){return l.label;},addLabel:'Tilføj link'}))];},function(){return {title:'Ny kolonne',links:[{label:'Link',href:'#'}]};},{title:function(col){return col.title;},addLabel:'Tilføj kolonne'}));}
+
+function tAccount(p){
+  var connected=configured&&firebase.apps.length&&firebase.auth().currentUser;
+  head(p,'Konto / Firebase',
+    configured?'Firebase er konfigureret. Her kan du se status og logge ud.':'Sæt Firebase op én gang, så bliver “Gem & udgiv” live på alle enheder — uden filer eller commits.',
+    configured?(connected?('Forbundet ✓ — logget ind som <b>'+firebase.auth().currentUser.email+'</b>. Alt du redigerer udgives automatisk.'):'Firebase er konfigureret, men du er ikke logget ind.'):'<b>Status:</b> Ikke konfigureret. Indtil du udfylder Firebase i <code>config.js</code>, gemmes ændringer kun lokalt i denne browser.');
+  if(connected){ p.appendChild(el('button',{class:'btn warn',onclick:function(){firebase.auth().signOut();}},'Log ud')); }
+  var s=el('div',{class:'card'});
+  s.innerHTML='<div class="card-h"><div class="t">Opsætning (kun én gang)</div></div>'+
+    '<ol class="steps">'+
+    '<li>Gå til <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a> og opret et projekt (gratis).</li>'+
+    '<li><b>Build → Firestore Database → Create database</b> (vælg “Start in production mode”, vælg region eur3/europe-west).</li>'+
+    '<li><b>Build → Authentication → Get started → Sign-in method → Email/Password → Enable.</b></li>'+
+    '<li>Under <b>Authentication → Users → Add user</b>: opret din egen e-mail + adgangskode (det er dit admin-login).</li>'+
+    '<li><b>Project settings (tandhjul) → Your apps → Web (&lt;/&gt;)</b>: registrér en web-app og kopiér <code>firebaseConfig</code>-værdierne.</li>'+
+    '<li>Indsæt værdierne i <code>config.js</code> under <code>window.FIREBASE_CONFIG</code>, og commit/upload filen.</li>'+
+    '<li>I <b>Firestore → Rules</b>: indsæt reglerne herunder og tryk <b>Publish</b>.</li>'+
+    '</ol>'+
+    '<div class="fl" style="margin-top:14px">Firestore-regler (kopiér ind)</div>'+
+    '<div class="codeblock">rules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /site/config {\n      allow read: if true;            // alle må læse siden\n      allow write: if request.auth != null;  // kun indloggede må redigere\n    }\n  }\n}</div>'+
+    '<div class="note">Nøglerne i config.js er offentlige med vilje — det er login + reglerne ovenfor, der beskytter dit indhold. Når alt er udfyldt, genindlæs admin, log ind, og dine ændringer udgives live automatisk.</div>';
+  p.appendChild(s);
+}
+
+/* =========================== TOOLBAR =========================== */
+document.getElementById('publish').addEventListener('click',publishNow);
+document.getElementById('preview').addEventListener('click',function(){if(canPublish())publishSilent();window.open('index.html','_blank');});
+function buildConfigJs(){return '/* WiFiHuset config — genereret fra admin '+new Date().toLocaleString('da-DK')+' */\n'+
+  'window.FIREBASE_CONFIG = '+JSON.stringify(window.FIREBASE_CONFIG||{},null,2)+';\n'+
+  'window.ART = '+JSON.stringify(window.ART)+';\n'+
+  'window.ART_KEYS = '+JSON.stringify(window.ART_KEYS)+';\n'+
+  'window.STD_ICONS = '+JSON.stringify(window.STD_ICONS)+';\n'+
+  'window.DEFAULT_CONFIG = '+JSON.stringify(CONFIG,null,2)+';\n';}
+function download(name,text,mime){var b=new Blob([text],{type:mime});var u=URL.createObjectURL(b);var a=el('a',{href:u,download:name});document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);}
+document.getElementById('export').addEventListener('click',function(){download('wifihuset-config.json',JSON.stringify(CONFIG,null,2),'application/json');});
+document.getElementById('exportJs').addEventListener('click',function(){download('config.js',buildConfigJs(),'application/javascript');});
+document.getElementById('importBtn').addEventListener('click',function(){document.getElementById('importFile').click();});
+document.getElementById('importFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{var obj=JSON.parse(ev.target.result);CONFIG=deepMerge(clone(window.DEFAULT_CONFIG),obj);applyTheme();drawPanel();queueSave();setStatus('Importeret ✓','ok');}catch(err){alert('Kunne ikke læse filen: '+err.message);}};r.readAsText(f);e.target.value='';});
+document.getElementById('reset').addEventListener('click',function(){if(confirm('Nulstil ALT til standardindholdet?')){CONFIG=clone(window.DEFAULT_CONFIG);localStorage.removeItem(DRAFT_KEY);applyTheme();drawPanel();queueSave();setStatus('Nulstillet','ok');}});
+document.getElementById('logout').addEventListener('click',function(){if(configured&&firebase.apps.length)firebase.auth().signOut();});
+
+/* =========================== LOGIN =========================== */
+var loginEl=document.getElementById('login');
+function showLogin(){loginEl.classList.add('show');}
+function hideLogin(){loginEl.classList.remove('show');}
+document.getElementById('li-btn').addEventListener('click',doLogin);
+document.getElementById('li-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+function doLogin(){
+  var em=document.getElementById('li-email').value.trim(),pw=document.getElementById('li-pass').value,err=document.getElementById('li-err');
+  err.textContent='';
+  firebase.auth().signInWithEmailAndPassword(em,pw).catch(function(e){
+    err.textContent=(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'||e.code==='auth/user-not-found')?'Forkert e-mail eller adgangskode.':('Fejl: '+e.message);});
+}
+
+/* =========================== INIT =========================== */
+var pubnote=document.getElementById('pubnote'),acctEl=document.getElementById('acct'),logoutBtn=document.getElementById('logout');
+function loadDraftIfAny(){try{var d=localStorage.getItem(DRAFT_KEY);if(d)CONFIG=deepMerge(clone(window.DEFAULT_CONFIG),JSON.parse(d));}catch(e){}}
+function bootEditor(){applyTheme();drawTabs();drawPanel();}
+
+if(configured){
+  try{ if(!firebase.apps.length) firebase.initializeApp(FC); }catch(e){}
+  pubnote.innerHTML='<b>Live-tilstand:</b> Du redigerer direkte på hjemmesiden. Ændringer udgives automatisk til alle enheder, mens du arbejder.';
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){
+      hideLogin(); acctEl.textContent=user.email; logoutBtn.style.display='';
+      setStatus('Henter…');
+      firebase.firestore().doc('site/config').get().then(function(snap){
+        CONFIG = snap.exists ? deepMerge(clone(window.DEFAULT_CONFIG),snap.data()) : clone(window.DEFAULT_CONFIG);
+        saveLocal(); bootEditor(); setStatus('Forbundet ✓','ok');
+      }).catch(function(e){ loadDraftIfAny(); bootEditor(); setStatus('Offline-kladde','bad'); console.warn(e); });
+    }else{
+      acctEl.textContent=''; logoutBtn.style.display='none'; showLogin();
+    }
+  });
+}else{
+  pubnote.innerHTML='<b>Bemærk:</b> Firebase er ikke sat op endnu, så ændringer gemmes kun i denne browser. Åbn fanen <b>⚙ Konto / Firebase</b> for at gøre siden live på alle enheder.';
+  loadDraftIfAny(); bootEditor(); setStatus('Lokal tilstand');
+}
+</script>
+</body>
+</html>
