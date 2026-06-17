@@ -16,6 +16,17 @@ window.FIREBASE_CONFIG = {
   appId: ""
 };
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAOvmeOvR1VldLmbZf_2YXPOjKiZj8KPT8",
+  authDomain: "wifihuset-d7bb9.firebaseapp.com",
+  projectId: "wifihuset-d7bb9",
+  storageBucket: "wifihuset-d7bb9.firebasestorage.app",
+  messagingSenderId: "17546628449",
+  appId: "1:17546628449:web:506fe466278ed9b5b5c920",
+  measurementId: "G-38LLDH0SJ9"
+};
+
 /* ---- Indbyggede illustrationer (bruges når et produkt ikke har et foto) ---- */
 window.ART = {
   mower:`<svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Robotplæneklipper">
