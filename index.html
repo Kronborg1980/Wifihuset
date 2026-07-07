@@ -344,6 +344,31 @@ function __boot(){
 }
 
 function __render(remote){
+// --- TILFØJET FALLBACK START ---
+// Dette sikrer at siden renderes, selvom config.js mangler
+window.DEFAULT_CONFIG = window.DEFAULT_CONFIG || {
+  theme: { paper: "#EDEDE7", surface: "#FBFBF8", surface2: "#F4F4EF", ink: "#15171C", signal: "#1B4BFF", signalDeep: "#0E2FB8", gold: "#A9791A" },
+  brand: { name: "WiFiHuset", tagline: "Din guide til Smart Home." },
+  hero: { eyebrow: "Velkommen", line1: "Fremtidens", line2: "Smart Home", line3: "begynder her", lead: "Siden virker nu med fallback-data.", btnPrimary: "Start her", btnGhost: "Læs mere", stats: [], cardLabel: "Mesh", cardScore: "10", cardScoreLabel: "Score" },
+  method: { eyebrow: "Metode", heading: "Sådan gør vi", sub: "Vi tester grundigt", items: [] },
+  winnersHead: { eyebrow: "Testvindere", heading: "De bedste systemer", sub: "" },
+  winners: [],
+  catalogHead: { eyebrow: "Katalog", heading: "Alle produkter", sub: "" },
+  catalog: [],
+  standardsHead: { eyebrow: "Forstå teknologien", heading: "Standarder", sub: "" },
+  standardsIntro: { leftTitle: "Før", leftHtml: "...", rightTitle: "Nu", rightHtml: "..." },
+  standards: [],
+  compare: [],
+  helper: { title: "Hurtig hjælp", tip: "", rows: [] },
+  offer: { eyebrow: "Tilbud", heading: "Få hjælp til opsætning", text: "Få et uforpligtende tilbud.", formTitle: "Din opgave", formSub: "", formNote: "", benefits: [], formCats: [] },
+  faqHead: { eyebrow: "FAQ", heading: "Ofte stillede spørgsmål" },
+  faqs: [],
+  footer: { disclosure: "Uvildig guide", copyright: "© 2026 WiFiHuset", sub: "All rights reserved", columns: [] }
+};
+window.ART = window.ART || { generic: "<svg></svg>" };
+window.STD_ICONS = window.STD_ICONS || { _default: "" };
+// --- TILFØJET FALLBACK SLUT ---
+
 var C=JSON.parse(JSON.stringify(window.DEFAULT_CONFIG));
 if(remote) C=deepMerge(C,remote);
 
