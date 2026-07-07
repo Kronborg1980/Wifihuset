@@ -312,14 +312,124 @@ footer ul a:hover{color:#fff;}
 </div></footer>
 
 <script>
-/* ---------- bootstrap: load freshest config.js, resolve content from Firebase, then render ---------- */
+/* -------------------------------------------------------------------------
+   Komplet Fallback Data indbygget direkte i koden for at forhindre crash
+-------------------------------------------------------------------------- */
+window.DEFAULT_CONFIG = {
+  theme: { paper: "#EDEDE7", surface: "#FBFBF8", surface2: "#F4F4EF", ink: "#15171C", signal: "#1B4BFF", signalDeep: "#0E2FB8", gold: "#A9791A" },
+  brand: { name: "WiFiHuset", tagline: "Din uvildige guide til Smart Home og WiFi." },
+  hero: { 
+    eyebrow: "Ekspertguide", 
+    line1: "Fremtidens", 
+    line2: "Smart Home", 
+    line3: "begynder her", 
+    lead: "Find testvindere, sammenlign produkter og forstå forskellen på Zigbee, Thread og Matter. Vi hjælper dig i mål.", 
+    btnPrimary: "Se testvindere", 
+    btnGhost: "Forstå standarderne", 
+    stats: [
+      { v: "100+", l: "Testede enheder" },
+      { v: "100%", l: "Uvildig guide" }
+    ], 
+    cardLabel: "Måling af Mesh", 
+    cardScore: "9.8", 
+    cardScoreLabel: "Gennemsnit" 
+  },
+  method: { 
+    eyebrow: "Vores Metode", 
+    heading: "Sådan tester vi", 
+    sub: "Vi bygger på rå data og praktisk erfaring, ikke gætværk.", 
+    items: [
+      { t: "Rækkevidde", d: "Vi tester signalet i virkelige huse af mursten og beton." },
+      { t: "Stabilitet", d: "Systemerne stresses og belastes med mange enheder på én gang." },
+      { t: "Brugervenlighed", d: "Opsætningen skal være nem for alle, også uden teknisk snilde." },
+      { t: "Fremtidssikret", d: "Vi kigger ind i integrationer som Matter, Thread og Zigbee." }
+    ] 
+  },
+  winnersHead: { eyebrow: "Testvindere 2026", heading: "De bedste systemer", sub: "Håndplukkede løsninger, der giver dig allermest værdi for pengene." },
+  winners: [
+    { 
+      featured: true, 
+      award: "Bedst i test", 
+      cat: "Mesh WiFi", 
+      name: "TP-Link Deco BE85", 
+      verdict: "Absolut toppræstation og fuld Matter-kompatibilitet til det moderne hjem.", 
+      score: 9.5, 
+      pros: ["Lynhurtig WiFi 7 support", "Matter og Thread indbygget"], 
+      cons: ["Meget høj pris", "Enhederne er store"], 
+      price: "Fra 4.999 kr.", 
+      img: "", 
+      artKey: "generic" 
+    }
+  ],
+  catalogHead: { eyebrow: "Produktoversigt", heading: "Populære Anbefalinger", sub: "Et lille udvalg af de enheder, vi oftest peger folk mod." },
+  catalog: [
+    { cat: "Mesh WiFi", proto: "WiFi 6E", name: "Google Nest Wifi Pro", verdict: "Super stabilt system, især til Google Home-brugere.", score: 8.5 },
+    { cat: "Smart Hubs", proto: "Zigbee / Matter", name: "Aqara Hub M3", verdict: "Den ultimative hub til entusiasten, der vil bygge bro.", score: 9.2 }
+  ],
+  standardsHead: { eyebrow: "Teknologi", heading: "Standarder forklaret på dansk", sub: "Få styr på de tekniske begreber, der binder dit hjem sammen." },
+  standardsIntro: { 
+    leftTitle: "Før i tiden (Kaos)", 
+    leftHtml: "Det var et rod af forskellige apps, bokse og broer. Philips Hue krævede én hub, IKEA en anden, og ingenting talte automatisk sammen på tværs af mærkerne.", 
+    rightTitle: "Fremtiden (Fællesskab)", 
+    rightHtml: "Med nye standarder er målet ét fælles sprog. Hvis du køber et produkt med det rigtige logo, er du garanteret, at det virker med din valgte platform." 
+  },
+  standards: [
+    { n: "Zigbee", k: "Den bundstabile klassiker", p: "En meget stabil, velkendt og strømbesparende standard. Bruges bl.a. af Philips Hue.", need: "Kræver en hub / bridge" },
+    { n: "Thread", k: "Det hurtige Mesh-netværk", p: "Bygger et selvhelende netværk mellem dine enheder, der reagerer lynhurtigt.", need: "Kræver Thread Border Router" },
+    { n: "Matter", k: "Fremtidens universalsprog", p: "Det fælles sprog som Apple, Google, Amazon og Samsung endelig er blevet enige om.", need: "Virker på tværs af alt" }
+  ],
+  compare: [
+    { std: "Zigbee 3.0", type: "Mesh", freq: "2.4 GHz", hub: "Ja", best: "Pærer og sensorer" },
+    { std: "Thread", type: "Mesh", freq: "2.4 GHz", hub: "Border Router", best: "Batteridrevne sensorer" },
+    { std: "WiFi", type: "Stjerne", freq: "2.4 / 5 / 6 GHz", hub: "Nej (kun router)", best: "Kameraer og streaming" }
+  ],
+  helper: { 
+    title: "Hurtig Hjælp", 
+    tip: "Tip: Placer aldrig din router bag et tv, et spejl eller i et lukket metalskab.", 
+    rows: [
+      { q: "Kan jeg blande WiFi og Zigbee-enheder?", a: "Ja, det klares typisk gennem din hub eller app." },
+      { q: "Hvad virker bedst i huse med tyk beton?", a: "Et Mesh-system sat sammen med netværkskabler." }
+    ] 
+  },
+  offer: { 
+    eyebrow: "Tilbud", 
+    heading: "Brug for hjælp til det tekniske?", 
+    text: "Få 3 uforpligtende tilbud fra dygtige og lokale installatører, der kan sætte dit netværk op.", 
+    formTitle: "Beskriv din udfordring", 
+    formSub: "Det tager 2 minutter og er helt gratis.", 
+    formNote: "Dine oplysninger bruges kun til at indhente tilbud.", 
+    benefits: ["Autoriserede fagmænd", "Løsninger der faktisk dækker", "Gennemgang af dit specifikke behov"], 
+    formCats: ["Opsætning af Mesh WiFi", "Trækning af netværkskabler", "Smart Home montering"] 
+  },
+  faqHead: { eyebrow: "FAQ", heading: "Ofte stillede spørgsmål" },
+  faqs: [
+    { q: "Hvorfor rækker mit WiFi ikke ud i soveværelset?", a: "Det skyldes ofte, at den medfølgende router fra din udbyder står placeret uhensigtsmæssigt i den modsatte ende af huset. Et Mesh-system med flere satellitter kan fordele signalet meget bedre." },
+    { q: "Er det værd at vente på WiFi 7?", a: "For langt de fleste almindelige hjem er WiFi 6 eller 6E rigeligt. WiFi 7 giver markante hastigheder for feinschmeckere, men priserne er stadig meget høje." }
+  ],
+  footer: { 
+    disclosure: "<b>Transparens:</b> WiFiHuset er en uafhængig side. Vi tester og skriver om det udstyr, vi vurderer giver bedst mening for dig.", 
+    copyright: "© 2026 WiFiHuset", 
+    sub: "Alle rettigheder forbeholdes.", 
+    columns: [
+      { title: "Navigation", links: [{ href: "#testvindere", label: "Testvindere" }, { href: "#standarder", label: "Forstå teknologien" }, { href: "#faq", label: "FAQ" }] }
+    ] 
+  }
+};
+window.ART = { generic: "<svg viewBox='0 0 100 100'><rect width='100' height='100' fill='#F4F4EF'/><circle cx='50' cy='50' r='30' fill='#E6E5DE'/></svg>" };
+window.STD_ICONS = { _default: "<circle cx='12' cy='12' r='10'/>" };
+
+/* ---------- bootstrap: start rendering process ---------- */
 (function(){
   var online=/^https?:/.test(location.protocol);
   var s=document.createElement('script');
   s.src='config.js'+(online?('?v='+Date.now()):'');
-  s.onload=__boot; s.onerror=__boot;
+  
+  // Vi sikrer, at __boot kaldes uanset om config.js findes, er tom, eller kaster en 404 fejl
+  s.onload=__boot; 
+  s.onerror=__boot; 
   document.head.appendChild(s);
 })();
+
 function deepMerge(base,src){
   if(Array.isArray(src))return src.slice();
   if(typeof src!=='object'||src===null)return src;
@@ -329,6 +439,7 @@ function deepMerge(base,src){
     else out[k]=src[k];
   } return out;
 }
+
 function __boot(){
   var FC=window.FIREBASE_CONFIG||{};
   if(FC.apiKey && window.firebase){
@@ -336,132 +447,108 @@ function __boot(){
       if(!firebase.apps.length) firebase.initializeApp(FC);
       firebase.firestore().doc('site/config').get()
         .then(function(snap){ __render(snap&&snap.exists?snap.data():null); })
-        .catch(function(e){ console.warn('Firestore-læsning fejlede; bruger standard.',e); __render(null); });
+        .catch(function(e){ console.warn('Kunne ikke hente Firebase data; bruger standard opsætning.',e); __render(null); });
       return;
-    }catch(e){ console.warn('Firebase-init fejlede; bruger standard.',e); }
+    }catch(e){ console.warn('Firebase-init fejlede; bruger standard opsætning.',e); }
   }
+  // Hvis alt fejler, render med de indbyggede fallback-data
   __render(null);
 }
 
 function __render(remote){
-// --- TILFØJET FALLBACK START ---
-// Dette sikrer at siden renderes, selvom config.js mangler
-window.DEFAULT_CONFIG = window.DEFAULT_CONFIG || {
-  theme: { paper: "#EDEDE7", surface: "#FBFBF8", surface2: "#F4F4EF", ink: "#15171C", signal: "#1B4BFF", signalDeep: "#0E2FB8", gold: "#A9791A" },
-  brand: { name: "WiFiHuset", tagline: "Din guide til Smart Home." },
-  hero: { eyebrow: "Velkommen", line1: "Fremtidens", line2: "Smart Home", line3: "begynder her", lead: "Siden virker nu med fallback-data.", btnPrimary: "Start her", btnGhost: "Læs mere", stats: [], cardLabel: "Mesh", cardScore: "10", cardScoreLabel: "Score" },
-  method: { eyebrow: "Metode", heading: "Sådan gør vi", sub: "Vi tester grundigt", items: [] },
-  winnersHead: { eyebrow: "Testvindere", heading: "De bedste systemer", sub: "" },
-  winners: [],
-  catalogHead: { eyebrow: "Katalog", heading: "Alle produkter", sub: "" },
-  catalog: [],
-  standardsHead: { eyebrow: "Forstå teknologien", heading: "Standarder", sub: "" },
-  standardsIntro: { leftTitle: "Før", leftHtml: "...", rightTitle: "Nu", rightHtml: "..." },
-  standards: [],
-  compare: [],
-  helper: { title: "Hurtig hjælp", tip: "", rows: [] },
-  offer: { eyebrow: "Tilbud", heading: "Få hjælp til opsætning", text: "Få et uforpligtende tilbud.", formTitle: "Din opgave", formSub: "", formNote: "", benefits: [], formCats: [] },
-  faqHead: { eyebrow: "FAQ", heading: "Ofte stillede spørgsmål" },
-  faqs: [],
-  footer: { disclosure: "Uvildig guide", copyright: "© 2026 WiFiHuset", sub: "All rights reserved", columns: [] }
-};
-window.ART = window.ART || { generic: "<svg></svg>" };
-window.STD_ICONS = window.STD_ICONS || { _default: "" };
-// --- TILFØJET FALLBACK SLUT ---
+  var C=JSON.parse(JSON.stringify(window.DEFAULT_CONFIG));
+  if(remote) C=deepMerge(C,remote);
 
-var C=JSON.parse(JSON.stringify(window.DEFAULT_CONFIG));
-if(remote) C=deepMerge(C,remote);
+  /* theme */
+  function hexA(hex,a){try{var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}catch(e){return hex;}}
+  (function(t){var r=document.documentElement.style;
+    r.setProperty('--paper',t.paper);r.setProperty('--surface',t.surface);r.setProperty('--surface-2',t.surface2);
+    r.setProperty('--ink',t.ink);r.setProperty('--signal',t.signal);r.setProperty('--signal-deep',t.signalDeep);r.setProperty('--gold',t.gold);
+    r.setProperty('--signal-soft',hexA(t.signal,.08));r.setProperty('--gold-soft',hexA(t.gold,.10));})(C.theme);
+  function themedArt(svg){return svg.replace(/#15171C/g,C.theme.ink).replace(/#1B4BFF/g,C.theme.signal).replace(/#FBFBF8/g,C.theme.surface);}
+  window.themedArt=themedArt;
 
-/* theme */
-function hexA(hex,a){try{var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}catch(e){return hex;}}
-(function(t){var r=document.documentElement.style;
-  r.setProperty('--paper',t.paper);r.setProperty('--surface',t.surface);r.setProperty('--surface-2',t.surface2);
-  r.setProperty('--ink',t.ink);r.setProperty('--signal',t.signal);r.setProperty('--signal-deep',t.signalDeep);r.setProperty('--gold',t.gold);
-  r.setProperty('--signal-soft',hexA(t.signal,.08));r.setProperty('--gold-soft',hexA(t.gold,.10));})(C.theme);
-function themedArt(svg){return svg.replace(/#15171C/g,C.theme.ink).replace(/#1B4BFF/g,C.theme.signal).replace(/#FBFBF8/g,C.theme.surface);}
-window.themedArt=themedArt;
+  /* scalar bindings */
+  function getPath(o,p){return p.split('.').reduce(function(a,k){return a==null?a:a[k];},o);}
+  document.querySelectorAll('[data-cfg]').forEach(function(el){var v=getPath(C,el.dataset.cfg);if(v!=null)el.textContent=v;});
+  document.querySelectorAll('[data-cfg-html]').forEach(function(el){var v=getPath(C,el.dataset.cfgHtml);if(v!=null)el.innerHTML=v;});
+  document.title=C.brand.metaTitle||C.brand.name;
 
-/* scalar bindings */
-function getPath(o,p){return p.split('.').reduce(function(a,k){return a==null?a:a[k];},o);}
-document.querySelectorAll('[data-cfg]').forEach(function(el){var v=getPath(C,el.dataset.cfg);if(v!=null)el.textContent=v;});
-document.querySelectorAll('[data-cfg-html]').forEach(function(el){var v=getPath(C,el.dataset.cfgHtml);if(v!=null)el.innerHTML=v;});
-document.title=C.brand.metaTitle||C.brand.name;
+  var prRunner=function(n){return 'https://www.pricerunner.dk/search?q='+encodeURIComponent(n);};
+  function barsHTML(score){var f=Math.round(score/2),h='<div class="bars">';for(var i=1;i<=5;i++)h+='<span class="bar'+(i<=f?' on':'')+'"></span>';return h+'</div>';}
+  var ico={
+    star:'<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L10 14.4 4.9 17l1.1-5.6L1.8 7.5l5.7-.7z"/></svg>',
+    plus:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>',
+    minus:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 8h10"/></svg>',
+    arr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
+    check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 10l4 4 8-9"/></svg>'
+  };
+  var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
 
-var prRunner=function(n){return 'https://www.pricerunner.dk/search?q='+encodeURIComponent(n);};
-function barsHTML(score){var f=Math.round(score/2),h='<div class="bars">';for(var i=1;i<=5;i++)h+='<span class="bar'+(i<=f?' on':'')+'"></span>';return h+'</div>';}
-var ico={
-  star:'<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L10 14.4 4.9 17l1.1-5.6L1.8 7.5l5.7-.7z"/></svg>',
-  plus:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>',
-  minus:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 8h10"/></svg>',
-  arr:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>',
-  check:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 10l4 4 8-9"/></svg>'
-};
-var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+  document.getElementById('trust-strip').innerHTML=C.hero.stats.map(function(s){return '<div class="ti"><b>'+esc(s.v)+'</b><span>'+esc(s.l)+'</span></div>';}).join('');
+  document.getElementById('method-grid').innerHTML=C.method.items.map(function(m,i){return '<div class="method-item rv"><div class="n">'+String(i+1).padStart(2,'0')+'</div><h3>'+esc(m.t)+'</h3><p>'+esc(m.d)+'</p></div>';}).join('');
 
-document.getElementById('trust-strip').innerHTML=C.hero.stats.map(function(s){return '<div class="ti"><b>'+esc(s.v)+'</b><span>'+esc(s.l)+'</span></div>';}).join('');
-document.getElementById('method-grid').innerHTML=C.method.items.map(function(m,i){return '<div class="method-item rv"><div class="n">'+String(i+1).padStart(2,'0')+'</div><h3>'+esc(m.t)+'</h3><p>'+esc(m.d)+'</p></div>';}).join('');
+  document.getElementById('winners').innerHTML=C.winners.map(function(w){
+    var media=w.img?'<img src="'+w.img+'" alt="'+esc(w.name)+'" loading="lazy" style="object-fit:'+(w.imgFit||'contain')+'" onerror="this.outerHTML=themedArt((window.ART[\''+w.artKey+'\']||window.ART.generic))">':themedArt(window.ART[w.artKey]||window.ART.generic);
+    return '<article class="winner rv'+(w.featured?' top':'')+'">'+
+      '<div class="award '+(w.featured?'gold':'blue')+'">'+ico.star+esc(w.award)+'</div>'+
+      (w.featured?'<div class="topflag">'+ico.star+'Bedste i test</div>':'')+
+      '<div class="imgbox">'+media+'</div>'+
+      '<div class="body"><span class="cat-tag">'+esc(w.cat)+'</span><h3>'+esc(w.name)+'</h3><p class="verdict">'+esc(w.verdict)+'</p>'+
+      '<div class="score-row">'+barsHTML(w.score)+'<span class="score-num"><span class="cv" data-count="'+w.score+'">0.0</span><span class="un"> / 10</span></span></div>'+
+      '<ul class="pc">'+w.pros.map(function(p){return '<li class="pro">'+ico.plus+esc(p)+'</li>';}).join('')+w.cons.map(function(c){return '<li class="con">'+ico.minus+esc(c)+'</li>';}).join('')+'</ul>'+
+      '<div class="buy"><span class="price">Vejl. pris<b>'+esc(w.price)+'</b></span><a class="buylink" href="'+prRunner(w.name)+'" target="_blank" rel="noopener nofollow">Se aktuelle priser</a></div></div></article>';
+  }).join('');
 
-document.getElementById('winners').innerHTML=C.winners.map(function(w){
-  var media=w.img?'<img src="'+w.img+'" alt="'+esc(w.name)+'" loading="lazy" style="object-fit:'+(w.imgFit||'contain')+'" onerror="this.outerHTML=themedArt((window.ART[\''+w.artKey+'\']||window.ART.generic))">':themedArt(window.ART[w.artKey]||window.ART.generic);
-  return '<article class="winner rv'+(w.featured?' top':'')+'">'+
-    '<div class="award '+(w.featured?'gold':'blue')+'">'+ico.star+esc(w.award)+'</div>'+
-    (w.featured?'<div class="topflag">'+ico.star+'Bedste i test</div>':'')+
-    '<div class="imgbox">'+media+'</div>'+
-    '<div class="body"><span class="cat-tag">'+esc(w.cat)+'</span><h3>'+esc(w.name)+'</h3><p class="verdict">'+esc(w.verdict)+'</p>'+
-    '<div class="score-row">'+barsHTML(w.score)+'<span class="score-num"><span class="cv" data-count="'+w.score+'">0.0</span><span class="un"> / 10</span></span></div>'+
-    '<ul class="pc">'+w.pros.map(function(p){return '<li class="pro">'+ico.plus+esc(p)+'</li>';}).join('')+w.cons.map(function(c){return '<li class="con">'+ico.minus+esc(c)+'</li>';}).join('')+'</ul>'+
-    '<div class="buy"><span class="price">Vejl. pris<b>'+esc(w.price)+'</b></span><a class="buylink" href="'+prRunner(w.name)+'" target="_blank" rel="noopener nofollow">Se aktuelle priser</a></div></div></article>';
-}).join('');
+  var cats=['Alle'].concat(C.catalog.map(function(p){return p.cat;}).filter(function(v,i,a){return a.indexOf(v)===i;}));
+  var filtersEl=document.getElementById('filters');
+  filtersEl.innerHTML=cats.map(function(c,i){return '<button class="filter'+(i===0?' active':'')+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>';}).join('');
+  function renderCatalog(cat){
+    var list=cat==='Alle'?C.catalog:C.catalog.filter(function(p){return p.cat===cat;});
+    var el=document.getElementById('catalog');
+    if(!list.length){el.innerHTML='<div class="empty">Ingen produkter i denne kategori endnu.</div>';return;}
+    el.innerHTML=list.map(function(p){return '<article class="pcard"><div class="top"><span class="cat-tag">'+esc(p.cat)+'</span><span class="proto">'+esc(p.proto)+'</span></div>'+
+      '<h3>'+esc(p.name)+'</h3><p class="verdict">'+esc(p.verdict)+'</p>'+
+      '<div class="score-row">'+barsHTML(p.score)+'<span class="score-num">'+Number(p.score).toFixed(1)+'<span class="un"> / 10</span></span></div>'+
+      '<div class="buy"><span class="pr">'+(p.score>=9?'Topkarakter':'Anbefalet')+'</span><a class="seelink" href="'+prRunner(p.name)+'" target="_blank" rel="noopener nofollow">Se priser '+ico.arr+'</a></div></article>';}).join('');
+  }
+  renderCatalog('Alle');
+  filtersEl.addEventListener('click',function(e){var b=e.target.closest('.filter');if(!b)return;filtersEl.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active');});b.classList.add('active');renderCatalog(b.dataset.cat);});
 
-var cats=['Alle'].concat(C.catalog.map(function(p){return p.cat;}).filter(function(v,i,a){return a.indexOf(v)===i;}));
-var filtersEl=document.getElementById('filters');
-filtersEl.innerHTML=cats.map(function(c,i){return '<button class="filter'+(i===0?' active':'')+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>';}).join('');
-function renderCatalog(cat){
-  var list=cat==='Alle'?C.catalog:C.catalog.filter(function(p){return p.cat===cat;});
-  var el=document.getElementById('catalog');
-  if(!list.length){el.innerHTML='<div class="empty">Ingen produkter i denne kategori endnu.</div>';return;}
-  el.innerHTML=list.map(function(p){return '<article class="pcard"><div class="top"><span class="cat-tag">'+esc(p.cat)+'</span><span class="proto">'+esc(p.proto)+'</span></div>'+
-    '<h3>'+esc(p.name)+'</h3><p class="verdict">'+esc(p.verdict)+'</p>'+
-    '<div class="score-row">'+barsHTML(p.score)+'<span class="score-num">'+Number(p.score).toFixed(1)+'<span class="un"> / 10</span></span></div>'+
-    '<div class="buy"><span class="pr">'+(p.score>=9?'Topkarakter':'Anbefalet')+'</span><a class="seelink" href="'+prRunner(p.name)+'" target="_blank" rel="noopener nofollow">Se priser '+ico.arr+'</a></div></article>';}).join('');
-}
-renderCatalog('Alle');
-filtersEl.addEventListener('click',function(e){var b=e.target.closest('.filter');if(!b)return;filtersEl.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active');});b.classList.add('active');renderCatalog(b.dataset.cat);});
+  document.getElementById('stdcards').innerHTML=C.standards.map(function(s){
+    var path=(window.STD_ICONS[s.n]||window.STD_ICONS._default);
+    return '<div class="std rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+path+'</svg></div><span class="kicker">'+esc(s.k)+'</span><h3>'+esc(s.n)+'</h3><p>'+esc(s.p)+'</p><div class="needs">'+s.need+'</div></div>';
+  }).join('');
+  document.getElementById('cmp-body').innerHTML=C.compare.map(function(r){return '<tr><th>'+esc(r.std)+'</th><td>'+esc(r.type)+'</td><td>'+esc(r.freq)+'</td><td>'+esc(r.hub)+'</td><td>'+esc(r.best)+'</td></tr>';}).join('');
+  document.getElementById('helper-rows').innerHTML=C.helper.rows.map(function(r){return '<div class="helper-row"><div class="q">'+esc(r.q)+'</div><div class="a">'+esc(r.a)+'</div></div>';}).join('');
+  document.getElementById('benefits').innerHTML=C.offer.benefits.map(function(b){return '<li>'+ico.check+esc(b)+'</li>';}).join('');
+  document.getElementById('kat').innerHTML='<option>Vælg venligst…</option>'+C.offer.formCats.map(function(c){return '<option>'+esc(c)+'</option>';}).join('');
+  document.getElementById('leadbtn').addEventListener('click',function(){alert('Tak! I en live-version sendes din forespørgsel nu videre til installatører i dit område.');});
+  document.getElementById('faq-list').innerHTML=C.faqs.map(function(f){return '<details class="faq"><summary>'+esc(f.q)+'<span class="pl"></span></summary><div class="ans">'+esc(f.a)+'</div></details>';}).join('');
+  document.getElementById('foot-cols').innerHTML=C.footer.columns.map(function(col){return '<div><h4>'+esc(col.title)+'</h4><ul>'+col.links.map(function(l){return '<li><a href="'+esc(l.href)+'">'+esc(l.label)+'</a></li>';}).join('')+'</ul></div>';}).join('');
 
-document.getElementById('stdcards').innerHTML=C.standards.map(function(s){
-  var path=(window.STD_ICONS[s.n]||window.STD_ICONS._default);
-  return '<div class="std rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+path+'</svg></div><span class="kicker">'+esc(s.k)+'</span><h3>'+esc(s.n)+'</h3><p>'+esc(s.p)+'</p><div class="needs">'+s.need+'</div></div>';
-}).join('');
-document.getElementById('cmp-body').innerHTML=C.compare.map(function(r){return '<tr><th>'+esc(r.std)+'</th><td>'+esc(r.type)+'</td><td>'+esc(r.freq)+'</td><td>'+esc(r.hub)+'</td><td>'+esc(r.best)+'</td></tr>';}).join('');
-document.getElementById('helper-rows').innerHTML=C.helper.rows.map(function(r){return '<div class="helper-row"><div class="q">'+esc(r.q)+'</div><div class="a">'+esc(r.a)+'</div></div>';}).join('');
-document.getElementById('benefits').innerHTML=C.offer.benefits.map(function(b){return '<li>'+ico.check+esc(b)+'</li>';}).join('');
-document.getElementById('kat').innerHTML='<option>Vælg venligst…</option>'+C.offer.formCats.map(function(c){return '<option>'+esc(c)+'</option>';}).join('');
-document.getElementById('leadbtn').addEventListener('click',function(){alert('Tak! I en live-version sendes din forespørgsel nu videre til installatører i dit område.');});
-document.getElementById('faq-list').innerHTML=C.faqs.map(function(f){return '<details class="faq"><summary>'+esc(f.q)+'<span class="pl"></span></summary><div class="ans">'+esc(f.a)+'</div></details>';}).join('');
-document.getElementById('foot-cols').innerHTML=C.footer.columns.map(function(col){return '<div><h4>'+esc(col.title)+'</h4><ul>'+col.links.map(function(l){return '<li><a href="'+esc(l.href)+'">'+esc(l.label)+'</a></li>';}).join('')+'</ul></div>';}).join('');
+  /* interactions */
+  var burger=document.getElementById('burger'),navlinks=document.getElementById('navlinks');
+  burger.addEventListener('click',function(){navlinks.classList.toggle('open');});
+  navlinks.addEventListener('click',function(e){if(e.target.tagName==='A')navlinks.classList.remove('open');});
+  var navEl=document.getElementById('nav');
+  addEventListener('scroll',function(){navEl.classList.toggle('scrolled',scrollY>20);});
 
-/* interactions */
-var burger=document.getElementById('burger'),navlinks=document.getElementById('navlinks');
-burger.addEventListener('click',function(){navlinks.classList.toggle('open');});
-navlinks.addEventListener('click',function(e){if(e.target.tagName==='A')navlinks.classList.remove('open');});
-var navEl=document.getElementById('nav');
-addEventListener('scroll',function(){navEl.classList.toggle('scrolled',scrollY>20);});
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var el=en.target,t=parseFloat(el.dataset.count),s=null;
+      function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/900,1);el.textContent=(t*(1-Math.pow(1-p,3))).toFixed(1);if(p<1)requestAnimationFrame(step);else el.textContent=t.toFixed(1);}
+      requestAnimationFrame(step);io.unobserve(el);}});},{threshold:.6});
+    document.querySelectorAll('.cv').forEach(function(el){io.observe(el);});
+  }else{document.querySelectorAll('.cv').forEach(function(el){el.textContent=parseFloat(el.dataset.count).toFixed(1);});}
 
-var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(!reduce&&'IntersectionObserver' in window){
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var el=en.target,t=parseFloat(el.dataset.count),s=null;
-    function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/900,1);el.textContent=(t*(1-Math.pow(1-p,3))).toFixed(1);if(p<1)requestAnimationFrame(step);else el.textContent=t.toFixed(1);}
-    requestAnimationFrame(step);io.unobserve(el);}});},{threshold:.6});
-  document.querySelectorAll('.cv').forEach(function(el){io.observe(el);});
-}else{document.querySelectorAll('.cv').forEach(function(el){el.textContent=parseFloat(el.dataset.count).toFixed(1);});}
-
-if(!reduce&&window.gsap){
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.to('.hero .rv',{opacity:1,y:0,duration:.9,stagger:.1,ease:'power3.out'});
-  gsap.to('.mesh-card.rv',{opacity:1,y:0,duration:1,delay:.2,ease:'power3.out'});
-  gsap.utils.toArray('.rv').forEach(function(el){if(el.closest('.hero')||el.classList.contains('mesh-card'))return;
-    gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%'}});});
-}else{document.querySelectorAll('.rv').forEach(function(el){el.style.opacity=1;el.style.transform='none';});}
+  if(!reduce&&window.gsap){
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to('.hero .rv',{opacity:1,y:0,duration:.9,stagger:.1,ease:'power3.out'});
+    gsap.to('.mesh-card.rv',{opacity:1,y:0,duration:1,delay:.2,ease:'power3.out'});
+    gsap.utils.toArray('.rv').forEach(function(el){if(el.closest('.hero')||el.classList.contains('mesh-card'))return;
+      gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%'}});});
+  }else{document.querySelectorAll('.rv').forEach(function(el){el.style.opacity=1;el.style.transform='none';});}
 } /* end __render */
 </script>
 </body>
