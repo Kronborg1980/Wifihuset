@@ -17,6 +17,7 @@ python3 -m http.server 8000 --bind 127.0.0.1
 
 - `config.js` indeholder den oprindelige konfiguration, alle 19 katalogposter, de tidligere fremhævede vurderinger, guides, tabeller og FAQ.
 - `journal.js` tilføjer den nye forside, tre kuraterede historier og 20 længere gennemgange. ANTHBOT M9 Pro er en forhåndsanalyse; M5 er fortsat i arkivet. Filen initialiserer kun indhold, når der ikke allerede findes en eksporteret `journal` i konfigurationen.
+- `product-photos.js` knytter produktfotos, konkrete modelnavne og billedkilder til artikler. Kildedokumentation for de nye fotos findes i `images/products/photos/SOURCES.md`.
 - `site.js` viser først lokalt indhold og henter derefter eventuelt eksisterende Firebase-indhold. Blokerede eller langsomme eksterne scripts hindrer ikke visningen. Ældre cloud-dokumenter uden `journal` beholder det nye redaktionelle lag og hele arkivet.
 - `site.css` styrer det responsive design. Skrifttyperne er hostet lokalt; licenser ligger i `fonts/`.
 
@@ -28,7 +29,7 @@ JSON-eksport og download af `config.js` inkluderer også det nye redaktionelle i
 
 De nye artikler er tekniske analyser, ikke opdigtede førstehåndstests eller betaerfaringer. Der er ikke importeret eller verificeret eksterne anmeldelser. M9 Pro-navn, specifikationer, tilgængelighed og pris skal bekræftes før en egentlig produkttest eller købsanbefaling. Der er ingen overførsel af M5-karakteren til M9 Pro.
 
-`images/editorial/connected-home.png` er en AI-genereret stemningsillustration, mærket på forsiden. `images/products/` indeholder originale diagrammatiske kategoriillustrationer, tydeligt mærket som illustrationer; de er ikke præcise produktfotos. De tre eksisterende fotos i `images/` er bevaret med deres oprindelige filnavne og anvendes kun til de oprindelige produkter. Der hævdes ikke nye rettigheder eller ophav til de eksisterende fotos.
+`images/editorial/connected-home.png` er en AI-genereret stemningsillustration, mærket på forsiden. `images/products/` indeholder originale diagrammatiske kategoriillustrationer, tydeligt mærket som illustrationer; de er ikke præcise produktfotos. Seks katalogposter har nu rigtige produktfotos: Deco, ANTHBOT M5, Yale Doorman, IKEA-lys, Philips Hue og Aqara-sensorer. Eksempler fra en produktfamilie er mærket med det konkrete modelnavn. De tre eksisterende fotos i `images/` er bevaret med deres oprindelige filnavne og anvendes kun til de oprindelige produkter. Der hævdes ikke nye rettigheder eller ophav til produktfotos. De øvrige produktillustrationer afventer verificerede billeder; adgang til producenternes sider er endnu blokeret af cloudmiljøets netværkspolitik.
 
 Formularen til installationshjælp downloader en tekstfil lokalt. Der er ingen tilsluttet tilbuds- eller mailtjeneste. Der indsamles ikke personoplysninger gennem formularen. Prislinks åbner PriceRunner; siden henter ikke livepriser.
 

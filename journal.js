@@ -110,8 +110,12 @@
     ))
   ];
   entries[0].status = 'På radaren';
-  const photos = { 'deco-xe75-pro': 'images/tplink.webp', 'anthbot-m5': 'images/anthbot.webp', 'yale-doorman': 'images/yaledoor.jpg' };
-  entries.forEach(e => { e.image = photos[e.slug] || 'images/products/' + e.type + '.svg'; e.imageNote = photos[e.slug] ? 'Produktfoto fra det eksisterende billedarkiv' : 'Redaktionel illustration · ikke et produktfoto'; });
+  const photos = window.PRODUCT_PHOTOS || {};
+  entries.forEach(e => {
+    e.image = 'images/products/' + e.type + '.svg';
+    e.imageNote = 'Redaktionel illustration · ikke et produktfoto';
+    if (photos[e.slug]) Object.assign(e, photos[e.slug]);
+  });
   window.DEFAULT_CONFIG.journal = {
     version: 2,
     eyebrow: 'ET HJEM. TUSIND MULIGHEDER.',

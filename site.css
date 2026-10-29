@@ -7,3 +7,6 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 
 .arrow-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em;flex-shrink:0}.round-link .arrow-icon{width:23px;height:23px}.nav-cta .arrow-icon{width:19px;height:19px}
+
+/* Product photographs retain their complete silhouette and original colours. */
+.feature-media>img.photo{object-fit:contain;background:#f4f3ee;padding:30px}.feature-media:has(>img.photo){background:#f4f3ee}.feature-media:has(>img.photo) .feature-index{color:#58634c}.feature-media:has(>img.photo) .pill{box-shadow:0 1px 8px #15271715}.photo-source{display:block;margin-top:7px}.photo-source a{text-decoration:underline;text-underline-offset:3px}.gateway-photo{object-fit:contain!important;background:#f4f3ee;padding:26px}.photo-unavailable{display:grid;place-items:center;min-height:180px;background:#e8ebe1;color:#58694b;font-size:12px;text-align:center;padding:25px;width:100%;height:100%}.photo-unavailable span{max-width:220px}.article-visual .photo-unavailable{min-height:300px}
