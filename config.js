@@ -152,7 +152,7 @@ window.DEFAULT_CONFIG = {
   catalogHead:{
     eyebrow:"Alle anbefalinger",
     heading:"Vores anbefalede udstyr",
-    sub:"Filtrér efter kategori. Alle priser hentes live fra danske forhandlere via prissammenligning, så du altid ser det aktuelle niveau."
+    sub:"Filtrér efter kategori, og læs den længere gennemgang. Prislinks åbner en ekstern prissammenligning; siden viser ikke livepriser."
   },
   catalog:[
     {name:"TP-Link Deco XE75 Pro", cat:"Netværk", proto:"WiFi 6E", score:9.1, verdict:"Vores mesh-testvinder. Bedste balance mellem pris, hastighed og brugervenlighed."},
@@ -188,7 +188,7 @@ window.DEFAULT_CONFIG = {
   },
   standards:[
     {n:"Zigbee", k:"Lavenergi mesh · 2,4 GHz",
-     p:"Lavenergi-protokol hvor enhederne danner et selvhelende net og videresender hinandens signal. Pærer, sensorer og kontakter holder år på ét batteri.",
+     p:"Lavenergi-protokol hvor enhederne danner et selvhelende net og videresender hinandens signal. Batterisensorer kan have lang levetid; strømforsynede enheder kan udvide mesh-nettet.",
      need:"Kræver en <b>Zigbee-hub</b> (fx Philips Hue Bridge, Aqara, IKEA DIRIGERA)."},
     {n:"Z-Wave", k:"Lavenergi mesh · 868 MHz",
      p:"Ligner Zigbee, men kører på 868 MHz i Europa. Færre forstyrrelser fra WiFi og bedre rækkevidde gennem tykke mure — populært til alarm og sensorer.",
@@ -201,25 +201,25 @@ window.DEFAULT_CONFIG = {
      need:"Kører oven på <b>WiFi, Thread eller Ethernet</b>. Bluetooth bruges kun til opsætning."},
     {n:"Matter over WiFi", k:"Matter via dit WiFi",
      p:"Matter-enheder der bruger dit almindelige WiFi. Ideelt til ting med fast strøm: smart-stik, kontakter og apparater, hvor batteri ikke er en bekymring.",
-     need:"Kræver kun <b>din router</b> — ingen ekstra hub."},
+     need:"Kræver <b>WiFi og en kompatibel Matter-controller</b>. Ingen Zigbee-hub eller Thread Border Router til selve WiFi-enheden."},
     {n:"Matter over Thread", k:"Matter via Thread",
      p:"Matter-enheder der bruger Thread. Bedst til batteridrevne enheder som låse, sensorer og knapper — lang batteritid og lynhurtig respons.",
-     need:"Kræver en <b>Thread Border Router</b> i hjemmet."}
+     need:"Kræver en <b>Thread Border Router og en kompatibel Matter-controller</b>. Roller kan være samlet i én enhed."}
   ],
   compare:[
     {std:"WiFi / Mesh", type:"Netværk (IP)", freq:"2,4 / 5 / 6 GHz", hub:"Din router", best:"Strømførende enheder, kameraer, streaming"},
     {std:"Zigbee", type:"Lavenergi mesh", freq:"2,4 GHz", hub:"Zigbee-hub", best:"Pærer, sensorer, kontakter"},
     {std:"Z-Wave", type:"Lavenergi mesh", freq:"868 MHz (EU)", hub:"Z-Wave-hub", best:"Sensorer & alarm, færre forstyrrelser"},
     {std:"Thread", type:"Lavenergi mesh (IP)", freq:"2,4 GHz", hub:"Border Router", best:"Batterienheder, fundament for Matter"},
-    {std:"Matter over WiFi", type:"Fælles sprog", freq:"Via WiFi", hub:"Kun din router", best:"Stik, kontakter, apparater med strøm"},
-    {std:"Matter over Thread", type:"Fælles sprog", freq:"Via Thread", hub:"Thread Border Router", best:"Låse, sensorer, knapper på batteri"}
+    {std:"Matter over WiFi", type:"Fælles sprog", freq:"Via WiFi", hub:"Router + Matter-controller", best:"Stik, kontakter, apparater med strøm"},
+    {std:"Matter over Thread", type:"Fælles sprog", freq:"Via Thread", hub:"Border Router + Matter-controller", best:"Låse, sensorer, knapper på batteri"}
   ],
   helper:{
     title:"Hurtig hjælp: hvad skal jeg vælge?",
     rows:[
-      {q:"Jeg vil bare have, det virker — uden at tænke over mærker", a:"→ Køb Matter-mærket"},
+      {q:"Jeg vil bare have, det virker — uden at tænke over mærker", a:"→ Matter + en kompatibel controller"},
       {q:"Mange små sensorer der skal holde længe på batteri", a:"→ Thread / Zigbee"},
-      {q:"Smart-stik, kontakter og apparater med fast strøm", a:"→ Matter over WiFi"},
+      {q:"Smart-stik, kontakter og apparater med fast strøm", a:"→ Matter over WiFi + controller"},
       {q:"Skifter måske mellem Apple, Google og Alexa senere", a:"→ Matter"},
       {q:"Tykke mure og signalet skal langt gennem huset", a:"→ Z-Wave (868 MHz)"},
       {q:"Jeg har allerede Philips Hue eller IKEA-pærer", a:"→ Bliv på Zigbee-hub"}
@@ -243,12 +243,12 @@ window.DEFAULT_CONFIG = {
   },
   faqHead:{ eyebrow:"Ofte stillede spørgsmål", heading:"Det folk spørger os om" },
   faqs:[
-    {q:"Er WiFiHuset uvildigt?", a:"Ja. Vi udvælger og rangerer produkter ud fra de samme kriterier for hele kategorien. Vi tjener på affiliate-links, når du køber via siden, men det påvirker aldrig placeringer eller testvindere. Det står åbent i bunden af siden."},
+    {q:"Er WiFiHuset uvildigt?", a:"Vi arbejder med åbne kriterier og tydelige forbehold. Produktgennemgangene er mærket som tekniske analyser eller forhåndsanalyser. Tidligere vurderinger ligger i arkivet. Siden kan indeholde affiliate-links; økonomien er beskrevet i bunden. Egne målinger og betaerfaringer angives kun, når de kan dokumenteres."},
     {q:"Hvad er forskellen på Matter og Thread?", a:"Thread er måden, signalet sendes på (en lavenergi-radio), mens Matter er sproget, enhederne taler. En enhed kan bruge Matter over Thread eller Matter over WiFi. Kort sagt: Thread er vejen, Matter er aftalen om, at alle forstår hinanden."},
     {q:"Skal jeg vælge mesh-WiFi eller en kraftig router?", a:"Bor du i en lejlighed eller et lille hus med få vægge, kan én god router være rigeligt. Har du etager, tykke mure, en kælder eller en have, der skal dækkes, giver et mesh-system med flere punkter et langt mere stabilt og sømløst net."},
-    {q:"Behøver jeg en hub til et smart home?", a:"Det afhænger af teknologien. Matter over WiFi og rene WiFi-enheder kræver kun din router. Zigbee, Z-Wave og Thread/Matter-over-Thread kræver henholdsvis en hub eller en Border Router — som du måske allerede har i en HomePod, Apple TV eller Nest Hub."},
-    {q:"Kan en robotplæneklipper klare en have med mange forhindringer?", a:"De bedste kan. Vores testvinder, Anthbot M5 LiDAR, bruger LiDAR-navigation, der fungerer markant bedre under træer og i skygge end RTK-GPS-modeller, som kan blive følsomme ved høje hække og overdækkede områder."},
-    {q:"Hvor ofte opdaterer I anbefalingerne?", a:"Vurderingerne gennemgås løbende, og priserne hentes live via prissammenligning, så du altid ser det aktuelle niveau hos danske forhandlere. Datoen for seneste opdatering står i toppen af siden."}
+    {q:"Behøver jeg en hub til et smart home?", a:"Det afhænger af teknologien. Rene WiFi-enheder bruger dit netværk. Matter over WiFi kræver også en kompatibel Matter-controller. Zigbee og Z-Wave kræver deres respektive hubs; Matter over Thread kræver både en Thread Border Router og en Matter-controller. De sidste to roller kan ligge i samme enhed. Kontrollér den præcise Apple TV-, HomePod- eller Nest-model."},
+    {q:"Kan en robotplæneklipper klare en have med mange forhindringer?", a:"Det afhænger af den konkrete robot, sensorpakken og haven. Træer, smalle passager og høje hække stiller forskellige krav til navigationen. M5 ligger i arkivet, mens M9 Pro er på radaren. Der er endnu ikke dokumenteret egne M9 Pro-felttest på siden. Undersøg en model i en have, der ligner din, før du vælger."},
+    {q:"Hvor ofte opdaterer I anbefalingerne?", a:"Nye analyser og rettelser tilføjes redaktionelt. Tidligere karakterer er bevaret som arkivmateriale og skal ikke læses som nye tests. Prislinks åbner ekstern prissammenligning; vi henter ikke livepriser på siden. Kontrollér altid pris, modelvariant og lagerstatus hos forhandleren."}
   ],
   footer:{
     disclosure:"<b>Sådan tjener WiFiHuset penge.</b> Vi er en gratis, uafhængig portal. Når du køber via et link på siden, kan vi modtage en mindre kommission fra forhandleren — uden ekstra omkostning for dig. Det finansierer vores arbejde, men det påvirker aldrig, hvilke produkter der vinder en test eller får en topplacering. Vurderingerne bygger på de samme kriterier for alle.",

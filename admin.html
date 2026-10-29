@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WiFiHuset — Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -82,6 +81,11 @@ ol.steps{margin:0;padding-left:20px;color:var(--slate);font-size:.92rem;line-hei
 .login .err{color:#B42318;font-size:.85rem;min-height:18px;margin-top:8px;}
 .login .btn.primary{width:100%;justify-content:center;margin-top:6px;}
 @media(max-width:760px){.layout{grid-template-columns:1fr;}.side{position:static;height:auto;display:flex;flex-wrap:wrap;gap:4px;}.tab{width:auto;}.panel{padding:22px;}.row,.row3{grid-template-columns:1fr;}}
+
+@font-face{font-family:Space;src:url('fonts/space-grotesk.woff2') format('woff2');font-weight:300 700;font-display:swap}
+@font-face{font-family:Plex;src:url('fonts/ibm-plex-mono.woff2') format('woff2');font-display:swap}
+:root{--fd:Space,sans-serif;--fb:Space,sans-serif;--fm:Plex,monospace}
+.bar{background:#151b17;color:#f0f0e8;border-color:#354035}.bar .btn{border-radius:3px}.bar .btn.go{background:#d0f67a;color:#151b17;border-color:#d0f67a}.side .tab{border-radius:3px}.side .tab.active{background:#263b29;color:#e1f3cb}.pubnote{background:#e0e8d4;color:#35472a;border-color:#b9c9a4}.pubnote b{color:#283b20}.card,.in,.hint{border-radius:4px}summary:focus-visible,button:focus-visible{outline:2px solid #728d46;outline-offset:3px}
 </style>
 </head>
 <body>
@@ -118,6 +122,7 @@ ol.steps{margin:0;padding-left:20px;color:var(--slate);font-size:.92rem;line-hei
 </div>
 
 <script src="config.js"></script>
+<script src="journal.js"></script>
 <script>
 function clone(o){return JSON.parse(JSON.stringify(o));}
 function deepMerge(base,src){
@@ -155,8 +160,7 @@ function publishSilent(){
 var saveT;
 function queueSave(){
   applyTheme(); saveLocal();
-  if(canPublish()){ setStatus('Gemmer…'); clearTimeout(saveT); saveT=setTimeout(publishSilent,1200); }
-  else { setStatus('Gemt lokalt'); }
+  setStatus('Kladde gemt lokalt');
 }
 function publishNow(){
   if(!configured){ saveLocal(); alert('Firebase er ikke sat op endnu — dine ændringer er gemt lokalt i denne browser.\n\nGå til fanen “Konto / Firebase” for opsætning, så kan du udgive live til alle enheder.'); return; }
@@ -234,9 +238,10 @@ function head(p,title,lead,hint){p.appendChild(el('h2',{},title));if(lead)p.appe
 
 /* =========================== TABS =========================== */
 var TABS=[
-  {id:'brand',label:'Brand & tema',render:tBrand},
-  {id:'hero',label:'Hero',render:tHero},
-  {id:'method',label:'Metode',render:tMethod},
+  {id:'journal',label:'Forside & artikler',render:tJournal},
+  {id:'brand',label:'Brand & tema (arkiv)',render:tBrand},
+  {id:'hero',label:'Tidligere forside (arkiv)',render:tHero},
+  {id:'method',label:'Tidligere metode (arkiv)',render:tMethod},
   {id:'winners',label:'Testvindere',render:tWinners},
   {id:'catalog',label:'Katalog',render:tCatalog},
   {id:'standards',label:'Standarder',render:tStandards},
@@ -247,10 +252,35 @@ var TABS=[
   {id:'footer',label:'Footer',render:tFooter},
   {id:'account',label:'⚙ Konto / Firebase',render:tAccount},
 ];
-var active='brand';
+var active='journal';
 var tabsEl=document.getElementById('tabs'),panel=document.getElementById('panel');
 function drawTabs(){tabsEl.innerHTML='';TABS.forEach(function(t){tabsEl.appendChild(el('button',{class:'tab'+(t.id===active?' active':''),onclick:function(){active=t.id;drawTabs();drawPanel();}},t.label));});}
 function drawPanel(){panel.innerHTML='';var t=TABS.find(function(x){return x.id===active;});t.render(panel);window.scrollTo(0,0);}
+
+
+function tJournal(p){
+  var j=CONFIG.journal;
+  head(p,'Forside & produktanalyser','Redigér den nye forside og de længere gennemgange. Gamle katalogposter og karakterer bevares separat.','Skriv kun egne målinger og betaerfaringer, når de er dokumenteret. Illustrationsnoter skal følge billederne.');
+  p.appendChild(fText('Lille overskrift',j,'eyebrow'));
+  p.appendChild(el('div',{class:'row'},fText('Hovedoverskrift',j,'title'),fText('Fremhævet linje',j,'titleAccent')));
+  p.appendChild(fText('Introduktion',j,'intro',{area:true,rows:3}));
+  p.appendChild(el('h3',{style:'margin:25px 0 12px'},'Fremhævede artikler'));
+  p.appendChild(el('p',{class:'note'},'De første tre artikel-id’er vises på forsiden. Eksempel: anthbot-m9-pro, asus-zenwifi-bt10, aqara-u200.'));
+  p.appendChild(stringList(j.featured,'Tilføj artikel-id'));
+  j.entries.forEach(function(a){
+    var box=el('details',{class:'card'});
+    box.appendChild(el('summary',{style:'cursor:pointer;font-weight:600'},a.name+' · '+a.status));
+    var content=el('div',{style:'padding-top:20px'});
+    content.appendChild(el('div',{class:'row'},fText('Produktnavn',a,'name'),fText('Artikel-id (permanent link)',a,'slug')));
+    content.appendChild(el('div',{class:'row'},fText('Kategori',a,'category'),fText('Teknologi / overlinje',a,'kicker')));
+    content.appendChild(fSelect('Grundlag',a,'status',['På radaren','Teknisk analyse','Dokumenteret test','Fra arkivet']));
+    content.appendChild(fText('Kort introduktion',a,'summary',{area:true,rows:3}));
+    content.appendChild(fText('Billedsti / URL',a,'image'));
+    content.appendChild(fText('Billednote / dokumentation',a,'imageNote'));
+    content.appendChild(listEditor(a.body,function(section){return [fText('Afsnitsoverskrift',section,'heading'),fText('Artikeltekst',section,'text',{area:true,rows:7})];},function(){return {heading:'Nyt afsnit',text:''};},{title:function(section){return section.heading;},addLabel:'Tilføj afsnit'}));
+    box.appendChild(content);p.appendChild(box);
+  });
+}
 
 function tBrand(p){head(p,'Brand & tema','Navn, tagline og farver for hele sitet.');
   p.appendChild(fText('Sidenavn',CONFIG.brand,'name'));
@@ -320,7 +350,7 @@ function tAccount(p){
   var connected=configured&&firebase.apps.length&&firebase.auth().currentUser;
   head(p,'Konto / Firebase',
     configured?'Firebase er konfigureret. Her kan du se status og logge ud.':'Sæt Firebase op én gang, så bliver “Gem & udgiv” live på alle enheder — uden filer eller commits.',
-    configured?(connected?('Forbundet ✓ — logget ind som <b>'+firebase.auth().currentUser.email+'</b>. Alt du redigerer udgives automatisk.'):'Firebase er konfigureret, men du er ikke logget ind.'):'<b>Status:</b> Ikke konfigureret. Indtil du udfylder Firebase i <code>config.js</code>, gemmes ændringer kun lokalt i denne browser.');
+    configured?(connected?('Forbundet ✓ — logget ind som <b>'+firebase.auth().currentUser.email+'</b>. Ændringer gemmes som kladde, indtil du vælger Gem &amp; udgiv.'):'Firebase er konfigureret, men du er ikke logget ind.'):'<b>Status:</b> Ikke konfigureret. Indtil du udfylder Firebase i <code>config.js</code>, gemmes ændringer kun lokalt i denne browser.');
   if(connected){ p.appendChild(el('button',{class:'btn warn',onclick:function(){firebase.auth().signOut();}},'Log ud')); }
   var s=el('div',{class:'card'});
   s.innerHTML='<div class="card-h"><div class="t">Opsætning (kun én gang)</div></div>'+
@@ -335,13 +365,13 @@ function tAccount(p){
     '</ol>'+
     '<div class="fl" style="margin-top:14px">Firestore-regler (kopiér ind)</div>'+
     '<div class="codeblock">rules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /site/config {\n      allow read: if true;            // alle må læse siden\n      allow write: if request.auth != null;  // kun indloggede må redigere\n    }\n  }\n}</div>'+
-    '<div class="note">Nøglerne i config.js er offentlige med vilje — det er login + reglerne ovenfor, der beskytter dit indhold. Når alt er udfyldt, genindlæs admin, log ind, og dine ændringer udgives live automatisk.</div>';
+    '<div class="note">Nøglerne i config.js er offentlige med vilje — det er login + reglerne ovenfor, der beskytter dit indhold. Når alt er udfyldt, genindlæs admin, log ind, og brug Gem &amp; udgiv for at gøre ændringer live.</div>';
   p.appendChild(s);
 }
 
 /* =========================== TOOLBAR =========================== */
 document.getElementById('publish').addEventListener('click',publishNow);
-document.getElementById('preview').addEventListener('click',function(){if(canPublish())publishSilent();window.open('index.html','_blank');});
+document.getElementById('preview').addEventListener('click',function(){saveLocal();window.open('index.html?preview=1','_blank');});
 function buildConfigJs(){return '/* WiFiHuset config — genereret fra admin '+new Date().toLocaleString('da-DK')+' */\n'+
   'window.FIREBASE_CONFIG = '+JSON.stringify(window.FIREBASE_CONFIG||{},null,2)+';\n'+
   'window.ART = '+JSON.stringify(window.ART)+';\n'+
@@ -376,7 +406,7 @@ function bootEditor(){applyTheme();drawTabs();drawPanel();}
 
 if(configured){
   try{ if(!firebase.apps.length) firebase.initializeApp(FC); }catch(e){}
-  pubnote.innerHTML='<b>Live-tilstand:</b> Du redigerer direkte på hjemmesiden. Ændringer udgives automatisk til alle enheder, mens du arbejder.';
+  pubnote.innerHTML='<b>Redaktionel kladde:</b> Ændringer gemmes lokalt. Forhåndsvisning udgiver ikke. Kun knappen Gem &amp; udgiv ændrer liveindholdet.';
   firebase.auth().onAuthStateChanged(function(user){
     if(user){
       hideLogin(); acctEl.textContent=user.email; logoutBtn.style.display='';
