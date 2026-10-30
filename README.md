@@ -46,3 +46,9 @@ Kontrollen afprøver alle 20 artikler, billeder, katalogets søgning/filtre/pagi
 Den eksisterende miljøkommando `python3 /workspace/wifihuset-tools/smoke.py` henviser nu til denne kontrol. Levende processer skal startes igen efter gendannelse af miljøet.
 
 Firebase-login og produktionens Firestore-regler er ikke verificeret. Miljøets nuværende netværkspolitik blokerer Firebase-SDK’et. Repositoryet er tilknyttet GitHub Pages på wifihuset.dk. Kodeudgivelse foretages via hovedgrenen; DNS ændres ikke af projektets kode.
+
+## Visuel revision 03
+
+Den nye magasinvisning bruger `editorial.css` med lyse flader, koboltblå, sorte hovedhistorier og større produktfotos. De tre fremhævede kort findes også direkte i `index.html`, så billederne er tilgængelige før JavaScript. Offentlige scripts og stylesheets har fælles versionsparameter, og kendte fremhævede modeller bruger billedmanifestet frem for gamle gemte illustrationer. En browserkontrol efterprøver dette med en kladde, der indeholder gamle billedreferencer.
+
+Den aktuelle kode er kontrolleret lokalt. Live-domænet kan først kontrolleres fra cloudmiljøet, når `wifihuset.dk` og `www.wifihuset.dk` er aktiveret i netværksindstillingerne. GitHub Pages-status alene dokumenterer ikke, hvad brugerens browser modtager på domænet.

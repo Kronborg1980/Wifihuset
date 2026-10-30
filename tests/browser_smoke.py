@@ -50,7 +50,9 @@ with sync_playwright() as p:
  assert page.locator('#panel h2').inner_text()=='Forside & produktanalyser'
  page.locator('#panel input').nth(1).fill('Min nye danske forside')
  page.wait_for_function("JSON.parse(localStorage.getItem('wifihuset_draft')).journal.title==='Min nye danske forside'")
+ page.evaluate("""() => {const d=JSON.parse(localStorage.getItem('wifihuset_draft')); d.journal.entries.forEach(e=>{if(d.journal.featured.includes(e.slug)){e.image='https://example.com/old-render.jpg';e.imageNote='Redaktionel illustration';}});localStorage.setItem('wifihuset_draft',JSON.stringify(d));}""")
  page.goto(BASE+'/?preview=1',wait_until='networkidle');assert page.locator('#hero-title').inner_text()=='Min nye danske forside'
+ assert page.locator('#featured img[src*="/photos/"]').count()==3
  page.goto(BASE,wait_until='networkidle');assert page.locator('#hero-title').inner_text()!='Min nye danske forside'
  # Verify fresh mobile layout and accessible menu interactions.
  page.set_viewport_size({'width':390,'height':844});page.goto(BASE,wait_until='networkidle')

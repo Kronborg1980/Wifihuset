@@ -119,8 +119,8 @@
   window.DEFAULT_CONFIG.journal = {
     version: 2,
     eyebrow: 'ET HJEM. TUSIND MULIGHEDER.',
-    title: 'Fremtiden bor',
-    titleAccent: 'allerede her.',
+    title: 'Dit hjem.',
+    titleAccent: 'Næste niveau.',
     intro: 'Fra næste generations WiFi til robotter i haven. Vi går under overfladen på teknologien, der gør dit hjem lidt klogere.',
     featured: ['anthbot-m9-pro', 'asus-zenwifi-bt10', 'aqara-u200'],
     entries

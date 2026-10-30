@@ -40,7 +40,7 @@
     const known = config.journal.entries.filter(e => e.slug && e.name).map(e => {
       const photo = window.PRODUCT_PHOTOS?.[e.slug];
       // Upgrade shipped illustrations and known archive images, preserving an editor's custom photograph.
-      if (photo && (!e.image || /\.svg(?:[?#]|$)/i.test(e.image) || e.image === photo.image)) return {...e, ...photo};
+      if (photo && (config.journal.featured.includes(e.slug) || !e.image || /\.svg(?:[?#]|$)/i.test(e.image) || /illustration/i.test(e.imageNote || '') || e.image === photo.image)) return {...e, ...photo};
       return e;
     });
     const names = new Set(known.map(e => e.name.toLowerCase()));
