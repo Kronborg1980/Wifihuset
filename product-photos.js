@@ -1,5 +1,28 @@
 /* Verified photograph mappings. Do not substitute a different product for an unverified model. */
 window.PRODUCT_PHOTOS = {
+  'anthbot-m9-pro': {
+    image: 'images/products/photos/anthbot-m9-pro.png',
+    imageNote: 'Produktfoto · ANTHBOT M9 Pro · ANTHBOT',
+    imageModel: 'ANTHBOT M9 Pro',
+    imageSource: 'https://www.anthbot.com/products/m9-pro-robot-lawn-mower',
+    imageCredit: 'ANTHBOT · officielt produktkatalog'
+  },
+  'asus-zenwifi-bt10': {
+    image: 'images/products/photos/asus-zenwifi-bt10.png',
+    imageNote: 'Produktfoto · ASUS ZenWiFi BT10 · ASUS',
+    imageModel: 'ASUS ZenWiFi BT10, sæt med to enheder',
+    imageSource: 'https://www.asus.com/networking-iot-servers/whole-home-mesh-systems/asus-zenwifi/asus-zenwifi-bt10/',
+    imageCredit: 'ASUS · officiel produktside'
+  },
+  'aqara-u200': {
+    image: 'images/products/photos/aqara-u200.jpg',
+    imageNote: 'Produktfoto · Aqara U200 · Aqara, produktudsnit',
+    imageModel: 'Aqara Smart Lock U200 med tastatur',
+    imagePresentation: 'u200-crop',
+    imageSource: 'https://www.aqara.com/eu/product/smart-lock-u200/',
+    imageCredit: 'Aqara · officiel produktside'
+  },
+
   'deco-xe75-pro': {
     image: 'images/tplink.webp',
     imageNote: 'Produktfoto · TP-Link Deco XE75 Pro · eksisterende billedarkiv',

@@ -10,3 +10,12 @@
 
 /* Product photographs retain their complete silhouette and original colours. */
 .feature-media>img.photo{object-fit:contain;background:#f4f3ee;padding:30px}.feature-media:has(>img.photo){background:#f4f3ee}.feature-media:has(>img.photo) .feature-index{color:#58634c}.feature-media:has(>img.photo) .pill{box-shadow:0 1px 8px #15271715}.photo-source{display:block;margin-top:7px}.photo-source a{text-decoration:underline;text-underline-offset:3px}.gateway-photo{object-fit:contain!important;background:#f4f3ee;padding:26px}.photo-unavailable{display:grid;place-items:center;min-height:180px;background:#e8ebe1;color:#58694b;font-size:12px;text-align:center;padding:25px;width:100%;height:100%}.photo-unavailable span{max-width:220px}.article-visual .photo-unavailable{min-height:300px}
+
+/* Official photos replace the three featured product drawings. */
+.featured-grid>.feature-card .feature-media{aspect-ratio:1.3;min-height:0}
+.featured-grid>.feature-card .feature-media>img.photo{padding:20px;object-fit:contain;background:#ebe9e2}
+.product-photo-window{position:relative;width:100%;height:100%;aspect-ratio:1.3;overflow:hidden;background:#e3dfd7}
+.product-photo-window>img.photo-detail{position:absolute;width:210%;max-width:none;height:auto;left:-110%;top:-108%;object-fit:initial}
+.feature-media:has(.product-photo-window) .feature-index{color:#edf0e6}
+.article-visual .product-photo-window{aspect-ratio:1.3;border-radius:4px}
+@media(max-width:800px) and (min-width:541px){.featured-grid>.feature-card:first-child .feature-media{aspect-ratio:auto;min-height:260px}.featured-grid>.feature-card:first-child .feature-media>img.photo{height:100%;position:absolute}}

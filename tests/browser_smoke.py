@@ -13,6 +13,9 @@ with sync_playwright() as p:
  page.evaluate("Promise.all(Array.from(document.images).map(i=>{i.loading='eager';return i.decode().catch(()=>{});} ))")
  page.screenshot(path='/tmp/wifihuset-desktop.png',full_page=True)
  assert page.locator('#featured .feature-card').count()==3
+ assert page.locator('#featured img[src$=".svg"]').count()==0
+ for filename in ['anthbot-m9-pro.png','asus-zenwifi-bt10.png','aqara-u200.jpg']:
+  assert page.locator('#featured img[src$="'+filename+'"]').count()==1
  assert page.locator('#featured .feature-card').first.locator('h3').inner_text()=='ANTHBOT M9 Pro'
  assert page.locator('#catalog-panel').is_hidden()
  page.locator('#open-catalog').click()
