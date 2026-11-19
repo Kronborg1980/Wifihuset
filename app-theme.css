@@ -110,3 +110,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .brand-icon::before{content:"";position:absolute;inset:8px 9px;background:var(--mint-ink);clip-path:polygon(58% 0,12% 58%,44% 58%,36% 100%,88% 40%,56% 40%)}
 .nav-cta{white-space:nowrap}
 @media (max-width:560px){.nav-cta{display:none}}
+/* Savings calculator teaser */
+.spare-box{display:grid;gap:6px;margin:26px 0;padding:22px;border-radius:22px;text-decoration:none;color:#eef5f7;background:linear-gradient(140deg,#123a2e,#132a26 55%,#14212b);border:1px solid #3f8f72;box-shadow:0 24px 70px -40px rgba(127,231,192,.55)}
+.spare-box small{color:var(--mint);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+.spare-box b{font-size:26px;letter-spacing:-.03em}
+.spare-box span{color:#a9bcc6}
+.spare-box em{font-style:normal;font-weight:800;color:var(--mint)}
+.spare-box:hover{border-color:var(--mint)}
