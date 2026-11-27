@@ -80,7 +80,25 @@ with sync_playwright() as p:
  assert remote_page.locator('#result-count').inner_text()=='6 af 21 gennemgange'
  assert remote_page.locator('#featured .feature-card').count()==3
  remote_context.close()
+ # English: chosen with ?lang=en, remembered, translated everywhere, and switchable back to Danish.
+ en=context.new_page(); en.on('pageerror',lambda e:errors.append(str(e)))
+ en.goto(BASE+'/index.html?lang=en',wait_until='networkidle')
+ assert en.evaluate('document.documentElement.lang')=='en'
+ assert en.locator('#hero-title').inner_text()=='Your home.'
+ assert en.locator('#featured .feature-card').first.locator('.pill').inner_text()=='Hands-on review'
+ en.locator('#open-catalog').click(); assert en.locator('#result-count').inner_text()=='6 of 21 reviews'
+ en.locator('[data-cat="Lys"]').click(); assert en.locator('[data-cat="Lys"]').inner_text()=='Lighting'
+ assert en.locator('#faq-list summary').first.inner_text().startswith('Is WiFiHuset independent?')
+ for slug in en.evaluate('DEFAULT_CONFIG.journal.entries.map(e=>e.slug)'):
+  en.goto(BASE+'/review.html?produkt='+slug,wait_until='networkidle')
+  assert en.evaluate('document.documentElement.lang')=='en',slug
+  assert en.locator('.article-body h2').first.inner_text()=='What makes it interesting',slug
+  assert en.locator('.article-meta').inner_text().find('MIN. READ')>=0,slug
+ en.goto(BASE+'/growatt.html',wait_until='networkidle'); assert en.locator('h1').inner_text().startswith('WiFiHuset Energy AI.')
+ en.goto(BASE+'/index.html',wait_until='networkidle'); en.locator('.lang-switch').click(); en.wait_for_load_state('networkidle')
+ assert en.evaluate('document.documentElement.lang')=='da' and en.locator('#hero-title').inner_text()=='Dit hjem.'
+ en.close()
  assert not errors,errors
  assert not responses,responses
  browser.close()
- print('PASS: 3 featured stories; all 21 full articles; catalogue pagination/search/category/reset; guides/comparison/FAQ; privacy dialog; project download; editable journal/local preview; mobile menu; legacy cloud config and safe HTML; no overflow, broken local assets or JS errors.')
+ print('PASS: English version (detection, catalogue, 21 articles, Energy AI page, language switch); 3 featured stories; all 21 full articles; catalogue pagination/search/category/reset; guides/comparison/FAQ; privacy dialog; project download; editable journal/local preview; mobile menu; legacy cloud config and safe HTML; no overflow, broken local assets or JS errors.')
