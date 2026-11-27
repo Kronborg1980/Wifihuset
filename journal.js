@@ -8,7 +8,7 @@
   ];
   const entry = (name, slug, category, kicker, summary, type, body) => ({ name, slug, category, kicker, summary, type, body, status: 'Teknisk analyse' });
   const entries = [
-    entry('Aqara Permanent Outdoor Lights H1', 'aqara-h1-outdoor', 'Lys', 'Permanent udelys · Matter over Thread', 'Det smukkeste smart home-køb, vi har gjort i år. Nem at samle, nem at sætte op – og lyset får huset til at gløde hver eneste aften.', 'bulb', sections(
+    entry('Aqara Permanent Outdoor Lights H1', 'aqara-h1-outdoor', 'Lys', 'Julens lys · Matter over Thread', 'Det smukkeste smart home-køb, vi har gjort i år – og lige nu, hvor det er jul, er det svært at forestille sig huset uden. Nem at samle, nem at sætte op – og lyset får huset til at gløde hver eneste aften.', 'bulb', sections(
       'Nogle produkter skal man vænne sig til. Aqaras permanente udendørslys er det modsatte: de er en fornøjelse fra første aften. Vi har selv sat H1 op på huset, og vi blev overraskede over, hvor lidt der skulle til. Lysstrengen, controlleren og strømforsyningen klikker sammen uden værktøjsdrama, og selve monteringen langs tagudhænget er et spørgsmål om at rense overfladen, trække beskyttelsesfolien af og trykke lyspunkterne på plads efter afstandsguiden.\n\nI appen var lyset fundet og klar på få minutter. Ingen kryptiske koder, ingen gentagne parringsforsøg – bare en lysstreng, der tænder og gør, hvad man beder den om.\n\nOg så er der selve lyset. Det er vildt flot. Hvert lyspunkt styres for sig, så farverne kan glide over i hinanden langs facaden, mens den varme hvide giver huset et roligt, arkitektonisk skær på helt almindelige hverdagsaftener. Det er netop det, der gør permanent udelys interessant: Det er ikke en julepynt, der skal ned igen i januar, men belysning, der passer til hele året – stemningsfuldt i oktober, festligt i december og flot til sommerens lange aftener på terrassen.',
       'H1 fås i længderne 15, 30 og 45 meter. Hvert lyspunkt kan vise RGB-farver og justerbar hvid fra 2000 K til 9000 K – fra lunt, stearinlysagtigt gyldent til et skarpt, køligt hvidt, der også kan bruges som orienteringslys ved indkørslen. Aqara angiver op til 50 lumen pr. lyspunkt og en levetid på 50.000 timer.\n\nForbindelsen er der tænkt over: Lyset taler både Zigbee og Matter over Thread. Det betyder, at det kan styres fra Apple Home, Google Home, Alexa, SmartThings og Home Assistant – ikke kun fra Aqaras egen app. Med en kompatibel Aqara-hub (fx M3, M100 eller M200) får du adgang til alle Aqara-funktionerne, herunder automatiseringer med sensorer, knapper, låse og kameraer. Lyset kan for eksempel tænde, når døren låses op efter mørkets frembrud.\n\nEn indbygget mikrofon giver musiksynkronisering, hvor lyset pulserer og bølger i takt med musikken. Det er ikke noget, man bruger hver dag, men til havefesten er det et sjovt indslag. Lysstrengen er IP65-klassificeret, og strømforsyningen er IP67.',
       'Monteringen sker primært med klæbebagside. Den fungerer, men forarbejdet er afgørende: Rens og tør overfladen grundigt, og pres hvert punkt fast i mindst fem sekunder. På en dansk facade med blæst, regn og frost vil vi anbefale at bruge de medfølgende skruer som ekstra sikring – især på hjørner og udsatte steder. Producenten angiver en driftstemperatur fra −20 til 40 °C.\n\nMål tagudhænget, før du vælger længde. Overskydende streng kan klippes af, men snittet skal ligge mindst 15 cm fra det sidste lyspunkt. Vil du styre lyset via Matter, kræver det en Thread Border Router og en Matter-controller; Aqaras egne funktioner kræver en kompatibel Aqara-hub på opdateret firmware. Prisen ligger heller ikke i den billige ende: Aqaras EU-butik viste fra 189,99 €, da vi kiggede, og varianterne var periodevis udsolgt.\n\nVores dom er alligevel klar. Har du drømt om at få huset til at se lige så godt ud efter mørkets frembrud som om dagen, er Aqara H1 et af de mest givende smart home-køb, du kan gøre. Det er nemt, det er robust tænkt, og det er smukt. Vi er solgt.'
@@ -123,12 +123,12 @@
     if (photos[e.slug]) Object.assign(e, photos[e.slug]);
   });
   window.DEFAULT_CONFIG.journal = {
-    version: 2,
+    version: 3,
     eyebrow: 'ET HJEM. TUSIND MULIGHEDER.',
     title: 'Dit hjem.',
     titleAccent: 'Næste niveau.',
     intro: 'Fra næste generations WiFi til robotter i haven. Vi går under overfladen på teknologien, der gør dit hjem lidt klogere.',
-    featured: ['anthbot-m9-pro', 'asus-zenwifi-bt10', 'aqara-u200'],
+    featured: ['aqara-h1-outdoor', 'anthbot-m9-pro', 'asus-zenwifi-bt10'],
     entries
   };
 })();

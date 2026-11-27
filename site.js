@@ -168,6 +168,7 @@
         const remote=snap.data();
         const localCatalogue=config.catalog;
         const localEntries=config.journal.entries;
+        const localFeatured=config.journal.featured, localVersion=config.journal.version||0;
         config=merge(config,remote);
         // Retain the original archive when older cloud records contain only a partial catalogue.
         const remoteNames=new Set((config.catalog||[]).map(p=>p.name));
@@ -175,6 +176,8 @@
         // Keep newly shipped articles visible when the cloud document holds an older journal.
         const remoteSlugs=new Set((config.journal?.entries||[]).map(e=>e.slug));
         if(config.journal) config.journal.entries=[...(config.journal.entries||[]),...localEntries.filter(e=>!remoteSlugs.has(e.slug))];
+        // A newer shipped journal version decides the front-page picks over an older cloud selection.
+        if(config.journal && (remote.journal?.version||0) < localVersion) config.journal.featured=localFeatured;
         render();
       }
     } catch { /* Static local editorial content remains available. */ }
