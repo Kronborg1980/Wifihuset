@@ -13,16 +13,16 @@ with sync_playwright() as p:
  page.evaluate("Promise.all(Array.from(document.images).map(i=>{i.loading='eager';return i.decode().catch(()=>{});} ))")
  page.screenshot(path='/tmp/wifihuset-desktop.png',full_page=True)
  assert page.locator('#featured .feature-card').count()==3
- assert page.locator('#featured img[src$=".svg"]').count()==0
- for filename in ['anthbot-m9-pro.png','asus-zenwifi-bt10.png','aqara-u200.jpg']:
+ assert page.locator('#featured img[src$=".svg"]').count()==1  # Aqara H1 venter på et foto
+ for filename in ['anthbot-m9-pro.png','asus-zenwifi-bt10.png']:
   assert page.locator('#featured img[src$="'+filename+'"]').count()==1
- assert page.locator('#featured .feature-card').first.locator('h3').inner_text()=='ANTHBOT M9 Pro'
+ assert page.locator('#featured .feature-card').first.locator('h3').inner_text()=='Aqara Permanent Outdoor Lights H1'
  assert page.locator('#catalog-panel').is_hidden()
  page.locator('#open-catalog').click()
  assert page.locator('#catalog .feature-card').count()==6
- assert page.locator('#result-count').inner_text()=='6 af 20 gennemgange'
+ assert page.locator('#result-count').inner_text()=='6 af 21 gennemgange'
  page.locator('#more-products').click(); assert page.locator('#catalog .feature-card').count()==12
- page.locator('[data-cat="Lys"]').click(); assert page.locator('#catalog .feature-card').count()==2
+ page.locator('[data-cat="Lys"]').click(); assert page.locator('#catalog .feature-card').count()==3
  page.locator('#catalog-search').fill('ingenfinderdette'); assert page.locator('.empty').is_visible()
  page.locator('#reset-filters').click(); assert page.locator('#catalog .feature-card').count()==6
  page.locator('#catalog-search').fill('M5'); assert page.locator('#catalog h3').filter(has_text='Anthbot M5 LiDAR').count()==1
@@ -42,6 +42,7 @@ with sync_playwright() as p:
   page.goto(BASE+'/review.html?produkt='+slug,wait_until='networkidle')
   assert page.locator('.article-body section').count()==3,slug
   assert page.locator('.article-title h1').inner_text(),slug
+  page.evaluate('window.scrollTo(0,document.body.scrollHeight)'); page.wait_for_load_state('networkidle'); page.wait_for_function('Array.from(document.images).every(i=>i.complete)')
   assert page.evaluate('Array.from(document.images).every(i=>i.complete&&i.naturalWidth>0)'),slug
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),slug
  page.goto(BASE+'/review.html?produkt=not-real'); assert page.locator('.article-error').is_visible()
@@ -50,9 +51,9 @@ with sync_playwright() as p:
  assert page.locator('#panel h2').inner_text()=='Forside & produktanalyser'
  page.locator('#panel input').nth(1).fill('Min nye danske forside')
  page.wait_for_function("JSON.parse(localStorage.getItem('wifihuset_draft')).journal.title==='Min nye danske forside'")
- page.evaluate("""() => {const d=JSON.parse(localStorage.getItem('wifihuset_draft')); d.journal.entries.forEach(e=>{if(d.journal.featured.includes(e.slug)){e.image='https://example.com/old-render.jpg';e.imageNote='Redaktionel illustration';}});localStorage.setItem('wifihuset_draft',JSON.stringify(d));}""")
+ page.evaluate("""() => {const d=JSON.parse(localStorage.getItem('wifihuset_draft')); d.journal.entries.forEach(e=>{if(d.journal.featured.includes(e.slug)&&window.PRODUCT_PHOTOS[e.slug]){e.image='https://example.com/old-render.jpg';e.imageNote='Redaktionel illustration';}});localStorage.setItem('wifihuset_draft',JSON.stringify(d));}""")
  page.goto(BASE+'/?preview=1',wait_until='networkidle');assert page.locator('#hero-title').inner_text()=='Min nye danske forside'
- assert page.locator('#featured img[src*="/photos/"]').count()==3
+ assert page.locator('#featured img[src*="/photos/"]').count()==2
  page.goto(BASE,wait_until='networkidle');assert page.locator('#hero-title').inner_text()!='Min nye danske forside'
  # Verify fresh mobile layout and accessible menu interactions.
  page.set_viewport_size({'width':390,'height':844});page.goto(BASE,wait_until='networkidle')
@@ -76,10 +77,10 @@ with sync_playwright() as p:
  assert remote_page.locator('#standards-intro script').count()==0
  assert remote_page.locator('#standards-intro img').count()==0
  remote_page.locator('#open-catalog').click()
- assert remote_page.locator('#result-count').inner_text()=='6 af 20 gennemgange'
+ assert remote_page.locator('#result-count').inner_text()=='6 af 21 gennemgange'
  assert remote_page.locator('#featured .feature-card').count()==3
  remote_context.close()
  assert not errors,errors
  assert not responses,responses
  browser.close()
- print('PASS: 3 featured stories; all 20 full articles; catalogue pagination/search/category/reset; guides/comparison/FAQ; privacy dialog; project download; editable journal/local preview; mobile menu; legacy cloud config and safe HTML; no overflow, broken local assets or JS errors.')
+ print('PASS: 3 featured stories; all 21 full articles; catalogue pagination/search/category/reset; guides/comparison/FAQ; privacy dialog; project download; editable journal/local preview; mobile menu; legacy cloud config and safe HTML; no overflow, broken local assets or JS errors.')
