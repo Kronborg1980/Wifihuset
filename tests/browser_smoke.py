@@ -13,8 +13,8 @@ with sync_playwright() as p:
  page.evaluate("Promise.all(Array.from(document.images).map(i=>{i.loading='eager';return i.decode().catch(()=>{});} ))")
  page.screenshot(path='/tmp/wifihuset-desktop.png',full_page=True)
  assert page.locator('#featured .feature-card').count()==3
- assert page.locator('#featured img[src$=".svg"]').count()==1  # Aqara H1 venter på et foto
- for filename in ['anthbot-m9-pro.png','asus-zenwifi-bt10.png']:
+ assert page.locator('#featured img[src$=".svg"]').count()==0
+ for filename in ['aqara-h1-outdoor.jpg','anthbot-m9-pro.png','asus-zenwifi-bt10.png']:
   assert page.locator('#featured img[src$="'+filename+'"]').count()==1
  assert page.locator('#featured .feature-card').first.locator('h3').inner_text()=='Aqara Permanent Outdoor Lights H1'
  assert page.locator('#catalog-panel').is_hidden()
@@ -53,7 +53,7 @@ with sync_playwright() as p:
  page.wait_for_function("JSON.parse(localStorage.getItem('wifihuset_draft')).journal.title==='Min nye danske forside'")
  page.evaluate("""() => {const d=JSON.parse(localStorage.getItem('wifihuset_draft')); d.journal.entries.forEach(e=>{if(d.journal.featured.includes(e.slug)&&window.PRODUCT_PHOTOS[e.slug]){e.image='https://example.com/old-render.jpg';e.imageNote='Redaktionel illustration';}});localStorage.setItem('wifihuset_draft',JSON.stringify(d));}""")
  page.goto(BASE+'/?preview=1',wait_until='networkidle');assert page.locator('#hero-title').inner_text()=='Min nye danske forside'
- assert page.locator('#featured img[src*="/photos/"]').count()==2
+ assert page.locator('#featured img[src*="/photos/"]').count()==3
  page.goto(BASE,wait_until='networkidle');assert page.locator('#hero-title').inner_text()!='Min nye danske forside'
  # Verify fresh mobile layout and accessible menu interactions.
  page.set_viewport_size({'width':390,'height':844});page.goto(BASE,wait_until='networkidle')

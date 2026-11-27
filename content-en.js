@@ -210,6 +210,7 @@ window.CONTENT_EN = {
   },
 
   photos: {
+    'aqara-h1-outdoor': { imageNote: 'Our photo · Aqara Permanent Outdoor Lights H1 on the editor\u2019s house', imageModel: 'Aqara Permanent Outdoor Lights H1 along the eaves of a house, photographed in the evening with purple light' },
     'anthbot-m9-pro': { imageNote: 'Product photo · ANTHBOT M9 Pro · ANTHBOT', imageCredit: 'ANTHBOT · official product catalogue', imageModel: 'ANTHBOT M9 Pro' },
     'asus-zenwifi-bt10': { imageNote: 'Product photo · ASUS ZenWiFi BT10 · ASUS', imageCredit: 'ASUS · official product page', imageModel: 'ASUS ZenWiFi BT10, two-unit set' },
     'aqara-u200': { imageNote: 'Product photo · Aqara U200 · Aqara, product detail', imageCredit: 'Aqara · official product page', imageModel: 'Aqara Smart Lock U200 with keypad' },

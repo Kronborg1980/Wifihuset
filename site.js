@@ -34,7 +34,7 @@
   const EN = I18N.lang === 'en';
   const T = s => I18N.t(s);
   const CONTENT_EN = window.CONTENT_EN || {};
-  const isPhoto = e => /^(Produktfoto|Product photo)/.test(e.imageNote || '');
+  const isPhoto = e => /^(Produktfoto|Product photo|Eget foto|Our photo)/.test(e.imageNote || '');
   // English view of the editorial configuration. Article lists, featured picks and versions are left untouched.
   function localizeConfig(c) {
     if (!EN || !CONTENT_EN.config) return c;
@@ -76,7 +76,7 @@
   }
   const articleURL = slug => 'review.html?produkt=' + encodeURIComponent(slug) + (preview ? '&preview=1' : '');
   const priceURL = name => 'https://www.pricerunner.dk/search?q=' + encodeURIComponent(name);
-  function imageHTML(e, lazy = true) { if (e.imagePresentation === 'u200-crop') return `<div class="product-photo-window"><img src="${esc(safeURL(e.image))}" alt="${esc(e.imageModel || e.name)}" width="1965" height="2560" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} class="photo-detail"></div>`; return `<img src="${esc(safeURL(e.image || 'images/products/' + (e.type || 'hub') + '.svg'))}" alt="${esc(isPhoto(e) ? (e.imageModel || e.name) : T('Teknisk illustration til') + ' ' + e.name)}" width="800" height="520" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} class="${isPhoto(e) ? 'photo' : ''}">`; }
+  function imageHTML(e, lazy = true) { if (e.imagePresentation === 'u200-crop') return `<div class="product-photo-window"><img src="${esc(safeURL(e.image))}" alt="${esc(e.imageModel || e.name)}" width="1965" height="2560" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} class="photo-detail"></div>`; return `<img src="${esc(safeURL(e.image || 'images/products/' + (e.type || 'hub') + '.svg'))}" alt="${esc(isPhoto(e) ? (e.imageModel || e.name) : T('Teknisk illustration til') + ' ' + e.name)}" width="800" height="520" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} class="${isPhoto(e) ? (e.imageScene ? 'photo scene' : 'photo') : ''}">`; }
   function card(e, index = 0, archive = false) {
     return `<a class="feature-card" href="${articleURL(e.slug)}"><div class="feature-media">${imageHTML(e)}<span class="pill">${esc(T(e.status || 'Teknisk analyse'))}</span><span class="feature-index">${String(index + 1).padStart(2,'0')} /</span></div><div class="image-credit">${esc(e.imageNote)}</div><div class="feature-body"><span class="feature-category">${esc(T(e.category))} / ${esc(e.kicker)}</span><h3>${esc(e.name)}</h3><p>${esc(e.summary)}</p><div class="feature-bottom"><span>${T(e.status === 'På radaren' ? 'Læs forhåndsanalysen' : e.status === 'Egen test' ? 'Læs anmeldelsen' : archive ? 'Åbn gennemgangen' : 'Læs den tekniske analyse')}</span><span aria-hidden="true"><svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></div></div></a>`;
   }
