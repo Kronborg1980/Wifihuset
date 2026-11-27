@@ -52,3 +52,16 @@ Firebase-login og produktionens Firestore-regler er ikke verificeret. Miljøets 
 Den nye magasinvisning bruger `editorial.css` med lyse flader, koboltblå, sorte hovedhistorier og større produktfotos. De tre fremhævede kort findes også direkte i `index.html`, så billederne er tilgængelige før JavaScript. Offentlige scripts og stylesheets har fælles versionsparameter, og kendte fremhævede modeller bruger billedmanifestet frem for gamle gemte illustrationer. En browserkontrol efterprøver dette med en kladde, der indeholder gamle billedreferencer.
 
 Den aktuelle kode er kontrolleret lokalt. Live-domænet kan først kontrolleres fra cloudmiljøet, når `wifihuset.dk` og `www.wifihuset.dk` er aktiveret i netværksindstillingerne. GitHub Pages-status alene dokumenterer ikke, hvad brugerens browser modtager på domænet.
+
+## Engelsk version
+
+Siden findes på dansk og engelsk på de samme adresser. `i18n.js` vælger sproget i browseren, uden tredjepartstjenester og uden at sende IP-adressen nogen steder:
+
+1. `?lang=da` eller `?lang=en` i adressen (gemmes som valg)
+2. Et tidligere valg med DA/EN-knappen i menuen
+3. Søgemaskiner og automatiske browsere får altid dansk, så siden bevarer sin danske søgeplacering
+4. Enhedens tidszone er dansk, færøsk eller grønlandsk → dansk
+5. Browserens sprog er dansk, færøsk eller grønlandsk → dansk
+6. Alle andre → engelsk
+
+`content-en.js` indeholder de engelske artikler, katalogtekster, guides, FAQ og Energi AI-siden. Faste tekster i HTML og grænseflade-tekster i `site.js` oversættes via ordbogen i `i18n.js`. Redigeres en artikel på dansk i admin, skal den engelske tekst i `content-en.js` opdateres tilsvarende. En artikel uden engelsk tekst vises på dansk.
