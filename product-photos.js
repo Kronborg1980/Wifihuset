@@ -1,5 +1,11 @@
 /* Verified photograph mappings. Do not substitute a different product for an unverified model. */
 window.PRODUCT_PHOTOS = {
+  'aqara-h1-outdoor': {
+    image: 'images/products/photos/aqara-h1-outdoor.jpg',
+    imageNote: 'Eget foto · Aqara Permanent Outdoor Lights H1 på redaktionens hus',
+    imageModel: 'Aqara Permanent Outdoor Lights H1 langs tagudhænget på et hus, fotograferet om aftenen med lilla lys',
+    imageScene: true
+  },
   'anthbot-m9-pro': {
     image: 'images/products/photos/anthbot-m9-pro.png',
     imageNote: 'Produktfoto · ANTHBOT M9 Pro · ANTHBOT',

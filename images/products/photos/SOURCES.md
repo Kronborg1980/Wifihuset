@@ -21,3 +21,9 @@ Filerne er hentet i originalformat uden generativ billedbehandling. `product-pho
 | aqara-u200.jpg | https://www.aqara.com/eu/product/smart-lock-u200/ | https://www.aqara.com/wp-content/uploads/2024/07/2560-smart-lock-U200_01-scaled.jpg |
 
 ANTHBOT-modellen er identificeret i producentens eget `products.json`-katalog under titlen ANTHBOT M9 PRO. ASUS-fotoet kommer fra BT10-sidens `og:image`. Aqara-fotoet vises som et CSS-beskåret udsnit af producentens billede, så selve låsen og tastaturet er i fokus. Den oprindelige fil bevares uændret. Der er ikke genereret erstatningsprodukter eller ændret produktdetaljer.
+
+## Egne fotos
+
+| Lokal fil | Motiv | Kilde |
+| --- | --- | --- |
+| aqara-h1-outdoor.jpg | Aqara Permanent Outdoor Lights H1 monteret på redaktørens hus | Eget foto, Lasse Kronborg (WiFiHuset), november 2026. Husnummeret er sløret; billedet er nedskaleret til 1600 px. |
